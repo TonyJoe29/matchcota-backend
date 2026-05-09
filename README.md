@@ -6,8 +6,7 @@ Backend escolar para una plataforma de adopcion de mascotas.
 
 - Node.js
 - Express
-- MySQL como base principal
-- MongoDB opcional para crecer con logs/notificaciones
+- SQLite
 - JWT para autenticacion
 - Roles: `admin`, `soporte`, `usuario`
 
@@ -17,14 +16,40 @@ Backend escolar para una plataforma de adopcion de mascotas.
 npm install
 ```
 
-Crear la base de datos en MySQL:
+Si no existe `.env`, crea uno desde el ejemplo:
 
 ```bash
-mysql -u root -p < database/schema.sql
-mysql -u root -p < database/seed.sql
+copy .env.example .env
 ```
 
-Levantar servidor:
+## Base De Datos
+
+Este proyecto usa SQLite. Eso significa que la base de datos es un archivo local:
+
+```txt
+database/matchcota.sqlite
+```
+
+Para crear la base por primera vez:
+
+```bash
+npm run db:init
+```
+
+Para borrar y recrear la base desde cero:
+
+```bash
+npm run db:reset
+```
+
+Los scripts usan:
+
+```txt
+database/schema.sql
+database/seed.sql
+```
+
+## Levantar Servidor
 
 ```bash
 npm run dev
@@ -34,6 +59,12 @@ URL base:
 
 ```txt
 http://localhost:3000
+```
+
+Prueba rapida:
+
+```txt
+GET http://localhost:3000/
 ```
 
 ## Usuarios De Prueba
@@ -52,7 +83,7 @@ password: Usuario123!
 
 ```txt
 src/
-  config/        conexiones MySQL y MongoDB
+  config/        conexion SQLite
   controllers/   logica HTTP
   middlewares/   auth, roles, errores y validaciones
   models/        consultas a base de datos
@@ -62,27 +93,14 @@ src/
 database/
   schema.sql
   seed.sql
+  matchcota.sqlite
+postman/
+  Matchcota Backend.postman_collection.json
 ```
 
-## Modelos Principales
-
-- `users`
-- `roles`
-- `pets`
-- `adoption_requests`
-- `alert_preferences`
-- `support_incidents`
-- `notifications`
-- `species`
-- `breeds`
-- `sizes`
-- `cities`
-
-## Endpoints Minimos
+## Endpoints Principales
 
 ```txt
-GET    /
-
 POST   /auth/register
 POST   /auth/login
 GET    /auth/me
@@ -104,9 +122,6 @@ GET    /adoptions
 GET    /adoptions/:id
 PATCH  /adoptions/:id/status
 
-GET    /alerts/me
-PUT    /alerts/me
-
 POST   /support/incidents
 GET    /support/incidents
 PATCH  /support/incidents/:id/status
@@ -124,10 +139,11 @@ GET    /catalogs/cities
 
 ## Flujo MVP En Postman
 
-1. `POST /auth/login` con usuario admin o usuario.
+1. `POST /auth/login` con usuario normal.
 2. Copiar el `token`.
-3. En rutas protegidas usar header `Authorization: Bearer TOKEN`.
+3. Usar header `Authorization: Bearer TOKEN`.
 4. Crear mascota con `POST /pets`.
 5. Crear solicitud con `POST /adoptions`.
 6. Ver solicitudes con `GET /adoptions/my-requests`.
-7. Cambiar estatus como admin con `PATCH /adoptions/:id/status`.
+7. Iniciar sesion como admin.
+8. Cambiar estatus con `PATCH /adoptions/:id/status`.

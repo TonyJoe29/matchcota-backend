@@ -13,6 +13,11 @@ const errorHandler = (error, _req, res, _next) => {
     message = 'Ya existe un registro con esos datos.';
   }
 
+  if (error.code === 'SQLITE_CONSTRAINT') {
+    statusCode = 409;
+    message = 'No se pudo guardar el registro porque viola una regla de la base de datos.';
+  }
+
   res.status(statusCode).json({
     error: message,
     details: error.details || undefined

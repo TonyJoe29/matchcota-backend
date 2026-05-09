@@ -1,28 +1,26 @@
-USE matchcota_db;
-
-INSERT IGNORE INTO roles (id, name) VALUES
+INSERT OR IGNORE INTO roles (id, name) VALUES
   (1, 'admin'),
   (2, 'soporte'),
   (3, 'usuario');
 
-INSERT IGNORE INTO species (id, name) VALUES
+INSERT OR IGNORE INTO species (id, name) VALUES
   (1, 'Perro'),
   (2, 'Gato'),
   (3, 'Otro');
 
-INSERT IGNORE INTO breeds (id, species_id, name) VALUES
+INSERT OR IGNORE INTO breeds (id, species_id, name) VALUES
   (1, 1, 'Schnauzer'),
   (2, 1, 'Golden Retriever'),
   (3, 1, 'Mestizo'),
   (4, 2, 'Calico'),
   (5, 2, 'Mestizo');
 
-INSERT IGNORE INTO sizes (id, name) VALUES
+INSERT OR IGNORE INTO sizes (id, name) VALUES
   (1, 'Pequeno'),
   (2, 'Mediano'),
   (3, 'Grande');
 
-INSERT IGNORE INTO cities (id, name, state) VALUES
+INSERT OR IGNORE INTO cities (id, name, state) VALUES
   (1, 'Guadalajara', 'Jalisco'),
   (2, 'Zapopan', 'Jalisco'),
   (3, 'Guanajuato', 'Guanajuato'),
@@ -30,7 +28,7 @@ INSERT IGNORE INTO cities (id, name, state) VALUES
   (5, 'Puebla', 'Puebla');
 
 -- Password admin: Admin123!
-INSERT IGNORE INTO users (
+INSERT OR IGNORE INTO users (
   id, username, email, password_hash, name, location, role_id
 ) VALUES (
   1,
@@ -43,7 +41,7 @@ INSERT IGNORE INTO users (
 );
 
 -- Password usuario: Usuario123!
-INSERT IGNORE INTO users (
+INSERT OR IGNORE INTO users (
   id, username, email, password_hash, name, location, role_id
 ) VALUES (
   2,
@@ -55,7 +53,7 @@ INSERT IGNORE INTO users (
   3
 );
 
-INSERT IGNORE INTO pets (
+INSERT OR IGNORE INTO pets (
   id, owner_id, name, species_id, breed_id, age, gender, size_id, city_id,
   photo_url, health_status, special_needs, is_sterilized, is_vaccinated,
   compatible_dogs, compatible_cats, compatible_children, description
@@ -64,6 +62,6 @@ INSERT IGNORE INTO pets (
   'https://foto_blacky.example/blacky.jpg',
   'Tiene un problema de higado',
   'Pasear dos veces al dia y chequeos cada seis meses',
-  TRUE, TRUE, FALSE, FALSE, FALSE,
+  1, 1, 0, 0, 0,
   'Color negro, juguetona, territorial y dormilona'
 );

@@ -143,7 +143,7 @@ const update = async (id, data) => {
 };
 
 const softDelete = async (id) => {
-  await query("UPDATE pets SET deleted_at = NOW(), status = 'inactiva' WHERE id = ?", [id]);
+  await query("UPDATE pets SET deleted_at = CURRENT_TIMESTAMP, status = 'inactiva' WHERE id = ?", [id]);
 };
 
 module.exports = {

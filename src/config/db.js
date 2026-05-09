@@ -1,42 +1,78 @@
-const mysql = require('mysql2/promise');
+const path = require('path');
+const sqlite3 = require('sqlite3');
+const { open } = require('sqlite');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: Number(process.env.DB_PORT || 3306),
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'matchcota_db',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+let dbPromise;
+
+const getDbPath = () => {
+  return process.env.DB_FILE || path.join(__dirname, '..', '..', 'database', 'matchcota.sqlite');
+};
+
+const getDb = async () => {
+  if (!dbPromise) {
+    dbPromise = open({
+      filename: getDbPath(),
+      driver: sqlite3.Database
+    });
+
+    const db = await dbPromise;
+    await db.exec('PRAGMA foreign_keys = ON;');
+  }
+
+  return dbPromise;
+};
+
+const isSelectQuery = (sql) => {
+  const normalized = sql.trim().toLowerCase();
+  return normalized.startsWith('select') || normalized.startsWith('pragma');
+};
 
 const query = async (sql, params = []) => {
-  const [rows] = await pool.execute(sql, params);
-  return rows;
+  const db = await getDb();
+
+  if (isSelectQuery(sql)) {
+    return db.all(sql, params);
+  }
+
+  const result = await db.run(sql, params);
+
+  return {
+    insertId: result.lastID,
+    affectedRows: result.changes
+  };
 };
 
 const transaction = async (callback) => {
-  const connection = await pool.getConnection();
+  const db = await getDb();
+
+  const connection = {
+    execute: async (sql, params = []) => {
+      if (isSelectQuery(sql)) {
+        const rows = await db.all(sql, params);
+        return [rows];
+      }
+
+      const result = await db.run(sql, params);
+      return [{ insertId: result.lastID, affectedRows: result.changes }];
+    }
+  };
 
   try {
-    await connection.beginTransaction();
+    await db.exec('BEGIN IMMEDIATE TRANSACTION;');
     const result = await callback(connection);
-    await connection.commit();
+    await db.exec('COMMIT;');
     return result;
   } catch (error) {
-    await connection.rollback();
+    await db.exec('ROLLBACK;');
     throw error;
-  } finally {
-    connection.release();
   }
 };
 
 module.exports = {
-  pool,
+  getDb,
   query,
   transaction
 };
