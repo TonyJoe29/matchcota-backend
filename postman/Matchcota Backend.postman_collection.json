@@ -1,0 +1,191 @@
+{
+  "info": {
+    "name": "Matchcota Backend MVP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"adis06@gmail.com\",\n  \"password\": \"Usuario123!\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@matchcota.test\",\n  \"password\": \"Admin123!\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"nuevo_user\",\n  \"email\": \"nuevo@matchcota.test\",\n  \"password\": \"Usuario123!\",\n  \"name\": \"Nuevo Usuario\",\n  \"birth_date\": \"2000-06-20\",\n  \"location\": \"Guadalajara, Jalisco\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mascotas",
+      "item": [
+        {
+          "name": "Listar Mascotas",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/pets?species=Perro&city=Zapopan"
+          }
+        },
+        {
+          "name": "Crear Mascota",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Luna\",\n  \"species\": \"Perro\",\n  \"breed\": \"Mestizo\",\n  \"age\": 2,\n  \"gender\": \"hembra\",\n  \"size\": \"Mediano\",\n  \"city\": \"Guadalajara\",\n  \"photo_url\": \"https://example.com/luna.jpg\",\n  \"is_sterilized\": true,\n  \"is_vaccinated\": true,\n  \"compatible_dogs\": true,\n  \"compatible_cats\": false,\n  \"compatible_children\": true,\n  \"description\": \"Muy tranquila y sociable\"\n}"
+            },
+            "url": "{{baseUrl}}/pets"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Adopciones",
+      "item": [
+        {
+          "name": "Crear Solicitud",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pet_id\": 1,\n  \"motivation\": \"Quiero darle un hogar responsable y tengo experiencia con mascotas.\",\n  \"home_suitable\": true,\n  \"special_care_experience\": false,\n  \"message\": \"Tengo tiempo y espacio suficiente.\"\n}"
+            },
+            "url": "{{baseUrl}}/adoptions"
+          }
+        },
+        {
+          "name": "Mis Solicitudes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/adoptions/my-requests"
+          }
+        },
+        {
+          "name": "Cambiar Estatus Admin",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"en_proceso\"\n}"
+            },
+            "url": "{{baseUrl}}/adoptions/1/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Stats",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/admin/stats"
+      }
+    }
+  ]
+}
