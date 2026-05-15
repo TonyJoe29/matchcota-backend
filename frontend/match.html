@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Solicitudes de Adopción</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .titulo-principal { font-family: 'Pacifico', cursive; }
+        .avatar-user { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+        .avatar-pet { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .btn-action { border-radius: 20px; font-weight: 700; font-size: 0.85rem; transition: all 0.3s; }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .match-line { width: 30px; height: 2px; background-color: #f1dfc7; margin: 0 15px; }
+        @media (max-width: 768px) {
+            .match-line { display: none; }
+            .request-header { flex-direction: column; text-align: center; }
+            .request-actions { width: 100%; margin-top: 15px; }
+        }
+    </style>
+</head>
+<body class="bg-main text-hard-brown-color">
+
+    <div class="container-fluid min-vh-100">
+        <div class="row min-vh-100">
+            
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">PRINCIPAL</small>
+                        <a href="home.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i> Inicio
+                        </a>
+                        <a href="directory.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i> Directorio
+                        </a>
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">MI CUENTA</small>
+                        <a href="profile.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-user mr-2"></i> Mi Perfil
+                        </a>
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i> <span>Solicitudes</span>
+                            </div>
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">2</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid py-2 py-md-4">
+                    
+                    <div class="mb-4">
+                        <h2 class="titulo-principal text-hard-brown-color m-0">
+                            <i class="fas fa-heart text-hard-pink mr-2"></i> Solicitudes de Adopción
+                        </h2>
+                        <small class="text-soft-brown-color">Revisa quiénes quieren darle un hogar a tus mascotas</small>
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-12 mb-3">
+                            <div class="card bg-card border-soft shadow-sm" style="border-radius: 15px;">
+                                <div class="card-body p-3">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                        
+                                        <div class="d-flex align-items-center mb-3 mb-md-0 flex-grow-1">
+                                            <div class="d-flex align-items-center cursor-pointer" onclick="location.href='profile.html'" style="cursor:pointer">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="avatar-user bg-soft border border-soft mr-3" alt="Usuario">
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold text-hard-brown-color">Felix Arana</h6>
+                                                    <small class="text-soft-brown-color">Guadalajara · <span class="text-aqua">Adoptante confiable</span></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="match-line"></div>
+
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-pet bg-orange-soft border border-hard mr-3">
+                                                    <i class="fas fa-dog text-hard-brown-color"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold text-hard-brown-color">Blacky</h6>
+                                                    <small class="text-soft-brown-color">Schnauzer</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center request-actions">
+                                            <button class="btn btn-action bg-soft border-soft text-soft-brown-color mr-2 px-3">
+                                                <i class="fas fa-user-search mr-1"></i> Perfil
+                                            </button>
+                                            <button class="btn btn-action bg-orange text-white px-3 mr-2">
+                                                <i class="fas fa-comment-alt mr-1"></i> Chat
+                                            </button>
+                                            <button class="btn btn-action bg-card-pink border-pink text-pink px-3">
+                                                <i class="fas fa-times mr-1"></i> Rechazar
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="mt-3 p-2 bg-soft rounded border border-soft">
+                                        <small class="text-soft-brown-color italic">
+                                            <i class="fas fa-quote-left mr-2 opacity-50"></i>
+                                            "Hola, tengo un jardín grande y busco una compañera para mis tardes de caminata..."
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="card bg-card border-soft shadow-sm" style="border-radius: 15px;">
+                                <div class="card-body p-3">
+                                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                        
+                                        <div class="d-flex align-items-center mb-3 mb-md-0 flex-grow-1">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Maria" class="avatar-user bg-soft border border-soft mr-3" alt="Usuario">
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold text-hard-brown-color">Maria Elena</h6>
+                                                    <small class="text-soft-brown-color">Zapopan · <span class="text-pink">Nueva adoptante</span></small>
+                                                </div>
+                                            </div>
+                                            <div class="match-line"></div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-pet bg-orange-soft border border-hard mr-3">
+                                                    <i class="fas fa-cat text-hard-brown-color"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold text-hard-brown-color">Mía</h6>
+                                                    <small class="text-soft-brown-color">Gato Persa</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center request-actions">
+                                            <button class="btn btn-action bg-soft border-soft text-soft-brown-color mr-2 px-3">
+                                                <i class="fas fa-user-search mr-1"></i> Perfil
+                                            </button>
+                                            <button class="btn btn-action bg-orange text-white px-3 mr-2">
+                                                <i class="fas fa-comment-alt mr-1"></i> Chat
+                                            </button>
+                                            <button class="btn btn-action bg-card-pink border-pink text-pink px-3">
+                                                <i class="fas fa-times mr-1"></i> Rechazar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <div class="paw-mark d-none d-md-block">
+            <i class="fas fa-paw"></i>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>`r`n</body>
+</html>

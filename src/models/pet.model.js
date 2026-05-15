@@ -103,6 +103,13 @@ const list = async (filters = {}) => {
   );
 };
 
+const listByOwner = async (ownerId) => {
+  return query(
+    `${petSelect} WHERE p.owner_id = ? AND p.deleted_at IS NULL ORDER BY p.created_at DESC`,
+    [ownerId]
+  );
+};
+
 const findById = async (id) => {
   const rows = await query(`${petSelect} WHERE p.id = ? AND p.deleted_at IS NULL LIMIT 1`, [id]);
   return rows[0] || null;
@@ -149,6 +156,7 @@ const softDelete = async (id) => {
 module.exports = {
   create,
   list,
+  listByOwner,
   findById,
   update,
   softDelete

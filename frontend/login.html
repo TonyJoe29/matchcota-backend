@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Iniciar sesion</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .brand-script { font-family: 'Pacifico', cursive; }
+        .login-shell { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+        .login-card { border-radius: 28px; overflow: hidden; max-width: 1060px; width: 100%; }
+        .login-hero { background: linear-gradient(135deg, #fde5ee, #ffe8c7 55%, #dff2ec); }
+        .soft-input { border-radius: 16px; border-color: #f1dfc7; background: #fffdfb; }
+        .soft-input:focus { border-color: #dea866; box-shadow: 0 0 0 .2rem rgba(222, 168, 102, .22); }
+        .quick-btn { border-radius: 18px; font-weight: 800; }
+        @media (max-width: 767px) {
+            .login-shell { padding: 12px; align-items: start; }
+            .login-card { border-radius: 20px; }
+        }
+    </style>
+</head>
+<body class="bg-main">
+    <main class="login-shell">
+        <div class="card login-card border-soft shadow-lg bg-card">
+            <div class="row no-gutters">
+                <section class="col-12 col-md-5 login-hero p-4 p-lg-5 d-flex flex-column justify-content-between">
+                    <div>
+                        <a href="home.html" class="text-decoration-none text-hard-brown-color font-weight-bold">
+                            <i class="fas fa-paw text-hard-pink mr-2"></i>Matchcota
+                        </a>
+                        <h1 class="brand-script text-hard-brown-color mt-4 mb-3">Bienvenido</h1>
+                        <p class="text-soft-brown-color mb-4">
+                            Entra como usuario o admin para demostrar perfiles, mascotas, solicitudes y panel de control.
+                        </p>
+                    </div>
+                    <div class="bg-card border border-soft rounded p-3">
+                        <small class="font-weight-bold text-hard-brown-color d-block mb-2">Cuentas de demo</small>
+                        <p class="mb-1 text-soft-brown-color"><b>Admin:</b> admin@matchcota.test / Admin123!</p>
+                        <p class="mb-0 text-soft-brown-color"><b>Usuario:</b> adis06@gmail.com / Usuario123!</p>
+                    </div>
+                </section>
+
+                <section class="col-12 col-md-7 p-4 p-lg-5">
+                    <ul class="nav nav-pills mb-4" id="auth-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active bg-orange text-white" href="#" data-auth-tab="login">Iniciar sesion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-hard-brown-color" href="#" data-auth-tab="register">Registrar usuario</a>
+                        </li>
+                    </ul>
+
+                    <div id="auth-message" class="mb-3"></div>
+
+                    <form id="login-form" class="auth-panel">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-hard-brown-color" for="login-email">Email</label>
+                            <input class="form-control soft-input" id="login-email" name="email" type="email" value="adis06@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-hard-brown-color" for="login-password">Password</label>
+                            <input class="form-control soft-input" id="login-password" name="password" type="password" value="Usuario123!" required>
+                        </div>
+                        <button class="btn bg-orange text-white btn-block quick-btn py-2" type="submit">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Entrar
+                        </button>
+                        <div class="row mt-3">
+                            <div class="col-12 col-md-6 mb-2">
+                                <button class="btn btn-outline-secondary btn-block quick-btn" type="button" data-demo-login="user">
+                                    Demo usuario
+                                </button>
+                            </div>
+                            <div class="col-12 col-md-6 mb-2">
+                                <button class="btn btn-outline-secondary btn-block quick-btn" type="button" data-demo-login="admin">
+                                    Demo admin
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="register-form" class="auth-panel d-none">
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6">
+                                <label class="font-weight-bold text-hard-brown-color" for="register-name">Nombre</label>
+                                <input class="form-control soft-input" id="register-name" name="name" required>
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label class="font-weight-bold text-hard-brown-color" for="register-username">Username</label>
+                                <input class="form-control soft-input" id="register-username" name="username" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-hard-brown-color" for="register-email">Email</label>
+                            <input class="form-control soft-input" id="register-email" name="email" type="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-hard-brown-color" for="register-password">Password</label>
+                            <input class="form-control soft-input" id="register-password" name="password" type="password" minlength="8" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-hard-brown-color" for="register-location">Ciudad</label>
+                            <input class="form-control soft-input" id="register-location" name="location" placeholder="Guadalajara, Jalisco">
+                        </div>
+                        <button class="btn bg-hard-pink text-white btn-block quick-btn py-2" type="submit">
+                            <i class="fas fa-user-plus mr-2"></i>Crear cuenta
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+    <div class="paw-mark"><i class="fas fa-paw"></i></div>
+    <script src="app.js"></script>
+</body>
+</html>

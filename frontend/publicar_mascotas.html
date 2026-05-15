@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Mascota</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .titulo-principal {
+            font-family: 'Pacifico', cursive;
+        }
+        /* Ajustes menores para igualar el mockup */
+        .btn-pill-custom {
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+        }
+        .input-custom {
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .border-dashed {
+            border-style: dashed !important;
+            border-width: 2px !important;
+        }
+        .etiqueta-pequena {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-main text-hard-brown-color pb-5">
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
+
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color  text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <i class="fas fa-paw paw-mark"></i>
+
+                <div class="container-fluid py-4 px-md-5">
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <button class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 font-weight-bold" style="font-size: 0.9rem;">
+                            <i class="fas fa-arrow-left mr-1"></i> Volver
+                        </button>
+                        <h2 class="m-0 titulo-principal d-flex align-items-center text-hard-brown-color">
+                            <i class="far fa-file-alt mr-2"></i> Publicar Mascota
+                        </h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-9">
+                            
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-4">
+                                    <h6 class="text-orange-color font-weight-bold mb-3 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-camera mr-2"></i> FOTO
+                                    </h6>
+                                    <div class="degradado-rosa-naranja border-pink border-dashed rounded d-flex flex-column align-items-center justify-content-center" style="height: 180px; cursor: pointer;">
+                                        <i class="fas fa-camera fa-2x mb-2 text-hard-brown-color"></i>
+                                        <span class="font-weight-bold text-hard-brown-color">Arrastra o haz clic para subir foto</span>
+                                        <small class="text-pink">JPG, PNG, WEBP - Máx 5 MB</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-4">
+                                    <h6 class="text-orange-color font-weight-bold mb-4 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-paw mr-2"></i> DATOS BÁSICOS
+                                    </h6>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Especie</label>
+                                            <div class="d-flex">
+                                                <button class="btn btn-pill-custom bg-orange text-white border-hard mr-2 shadow-sm"><i class="fas fa-dog"></i> Perro</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft mr-2"><i class="fas fa-cat"></i> Gato</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft"><i class="fas fa-paw"></i> Otro</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Género</label>
+                                            <div class="d-flex">
+                                                <button class="btn btn-pill-custom bg-orange text-white border-hard mr-2 shadow-sm"><i class="fas fa-venus"></i> Hembra</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft"><i class="fas fa-mars"></i> Macho</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Raza</label>
+                                            <input type="text" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="Schnauzer">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Edad (Años)</label>
+                                            <input type="number" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="8">
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Tamaño</label>
+                                            <div class="d-flex">
+                                                <button class="btn btn-pill-custom bg-orange text-white border-hard mr-2 shadow-sm">Pequeño</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft mr-2">Mediano</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft">Grande</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Ubicación</label>
+                                            <input type="text" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="Guadalajara, Jalisco">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-4">
+                                    <h6 class="text-pink font-weight-bold mb-4 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-heart mr-2"></i> SALUD
+                                    </h6>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">¿Esterilizado/a?</label>
+                                            <div class="d-flex">
+                                                <button class="btn btn-pill-custom bg-orange text-white border-hard mr-2 shadow-sm"><i class="fas fa-check"></i> Sí</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft"><i class="fas fa-times"></i> No</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">¿Vacunado/a?</label>
+                                            <div class="d-flex">
+                                                <button class="btn btn-pill-custom bg-orange text-white border-hard mr-2 shadow-sm"><i class="fas fa-check"></i> Sí</button>
+                                                <button class="btn btn-pill-custom bg-card text-soft-brown-color border-soft"><i class="fas fa-times"></i> No</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 mt-2">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Estado de Salud</label>
+                                            <textarea class="form-control input-custom bg-card border-soft text-soft-brown-color" rows="2">Tiene un problema de hígado.</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            
+                            <h6 class="text-orange-color font-weight-bold mb-3 etiqueta-pequena text-uppercase">
+                                <i class="far fa-eye mr-2"></i> VISTA PREVIA
+                            </h6>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px; overflow: hidden;">
+                                <div class="degradado-rosa-naranja d-flex justify-content-center align-items-center" style="height: 180px;">
+                                    <i class="fas fa-dog fa-5x text-hard-brown-color"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h6 class="font-weight-bold text-hard-brown-color mb-3">Schnauzer • Hembra</h6>
+                                    
+                                    <div class="mb-3">
+                                        <span class="badge badge-pill bg-card border-soft text-soft-brown-color font-weight-normal px-2 py-1 mb-1 shadow-sm">
+                                            <i class="fas fa-map-marker-alt text-orange-color"></i> Guadalajara
+                                        </span>
+                                        <span class="badge badge-pill bg-card border-soft text-soft-brown-color font-weight-normal px-2 py-1 mb-1 shadow-sm">
+                                            <i class="fas fa-ruler"></i> Pequeña
+                                        </span>
+                                        <span class="badge badge-pill bg-aqua-soft border-aqua text-aqua font-weight-normal px-2 py-1 mb-1 shadow-sm">
+                                            <i class="fas fa-cut"></i> Esterilizada
+                                        </span>
+                                    </div>
+                                    
+                                    <p class="text-soft-brown-color mb-0" style="font-size: 0.85rem;">Gordita, juguetona y dormilona...</p>
+                                </div>
+                            </div>
+
+                            <div class="card bg-card border-soft shadow-sm" style="border-radius: 15px;">
+                                <div class="card-body">
+                                    <h6 class="text-orange-color font-weight-bold mb-2 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-check-square text-success mr-1"></i> COMPLETADO
+                                    </h6>
+                                    <div class="progress mb-2 rounded-pill" style="height: 8px;">
+                                        <div class="progress-bar bg-orange" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between text-soft-brown-color" style="font-size: 0.75rem;">
+                                        <span>70%</span>
+                                        <span>5/7 campos</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>`r`n</body>
+</html>

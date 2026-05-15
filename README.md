@@ -64,6 +64,7 @@ http://localhost:3000
 Frontend integrado:
 
 ```txt
+http://localhost:3000/frontend/login.html
 http://localhost:3000/frontend/home.html
 http://localhost:3000/frontend/admin.html
 ```
@@ -103,7 +104,9 @@ database/
   matchcota.sqlite
 frontend/
   paginas HTML conectadas a la API
-  admin.html para demo de usuarios, solicitudes, mascotas e incidencias
+  login.html para iniciar sesion real con JWT
+  vistas de usuario: perfil, directorio, publicar mascota, mis mascotas y solicitudes
+  vistas admin: panel, gestion de mascotas, estadisticas e incidencias
 postman/
   Matchcota Backend.postman_collection.json
 ```
@@ -121,6 +124,7 @@ GET    /users/alerts
 PUT    /users/alerts
 
 GET    /pets
+GET    /pets/my
 GET    /pets/:id
 POST   /pets
 PUT    /pets/:id

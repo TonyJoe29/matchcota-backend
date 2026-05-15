@@ -9,13 +9,14 @@ const upsert = async (userId, data) => {
     `INSERT INTO alert_preferences (
       user_id, active, species_ids, breed_ids, city_ids, min_age, max_age
     ) VALUES (?, ?, ?, ?, ?, ?, ?)
-    ON DUPLICATE KEY UPDATE
-      active = VALUES(active),
-      species_ids = VALUES(species_ids),
-      breed_ids = VALUES(breed_ids),
-      city_ids = VALUES(city_ids),
-      min_age = VALUES(min_age),
-      max_age = VALUES(max_age)`,
+    ON CONFLICT(user_id) DO UPDATE SET
+      active = excluded.active,
+      species_ids = excluded.species_ids,
+      breed_ids = excluded.breed_ids,
+      city_ids = excluded.city_ids,
+      min_age = excluded.min_age,
+      max_age = excluded.max_age,
+      updated_at = CURRENT_TIMESTAMP`,
     [
       userId,
       data.active ?? true,

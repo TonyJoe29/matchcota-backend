@@ -8,9 +8,10 @@ const {
   listPetsValidator
 } = require('../validators/pet.validator');
 
-router.get('/', listPetsValidator, validate, petsController.listPets);
-router.get('/:id', petsController.getPet);
 router.post('/', authMiddleware, createPetValidator, validate, petsController.createPet);
+router.get('/', listPetsValidator, validate, petsController.listPets);
+router.get('/my', authMiddleware, petsController.myPets);
+router.get('/:id', petsController.getPet);
 router.put('/:id', authMiddleware, updatePetValidator, validate, petsController.updatePet);
 router.delete('/:id', authMiddleware, petsController.deletePet);
 

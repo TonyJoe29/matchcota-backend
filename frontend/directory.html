@@ -12,14 +12,11 @@
 </head>
 
 <body class="bg-main">
-    <!-- #Main Container -->
-    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
-        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
             
-            <nav class="col-md-2 ">
-                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
-                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
-                <div class="card bg-card border-soft shadow-sm vh-100">
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
                     <div class="card-body p-2">
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
                             PRINCIPAL
@@ -35,7 +32,6 @@
                             <span>Directorio</span>
                         </a>
 
-                        <!-- MI CUENTA -->
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
                             MI CUENTA
                         </small>
@@ -79,201 +75,199 @@
             </nav>
 
 
-            <main class="col-md-10 p-3">
-                <div class="row">
-                    <div class="col">
-                        <h2 class="text-hard-brown-color font-weight-bold">Directorio de mascotas</h2> <!-- Directorio de mascotas -->
-                        <small class="text-hard-brown-color">Encuentra a tu compañero ideal con nuestros filtros</small>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card bg-card border-soft rounded-lg shadow-sm">
-                            <div class="card-body">
-                                <!-- TITULO -->
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-cog text-orange-color mr-2"></i>
-                                    <h6 class="mb-0 font-weight-bold text-soft-brown-color">
-                                        FILTROS
-                                    </h6>
-                                </div>
-                                <!-- Busqueda -->
-                                <div class="mb-3">
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        BUSCAR
-                                    </small>
-
-                                    <input type="text"
-                                        class="form-control bg-soft border-soft"
-                                        placeholder="Nombre, raza...">
-                                </div>
-
-                                <!-- ESPECIE -->
-                                <div class="mb-3">
-
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        ESPECIE
-                                    </small>
-
-                                    <div class="d-flex flex-wrap">
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Todas
-                                        </button>
-
-                                        <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mr-2 mb-2">
-                                            <span><i class="fas fa-dog"></i> Perros</span>
-                                            Perro
-                                        </button>
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            <span><i class="fas fa-cat"></i> Gatos</span>
-                                            Gato
-                                        </button>
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mb-2">
-                                            <span><i class="fas fa-otter"></i> Otros</span>
-                                            Otro
-                                        </button>
-
-                                    </div>
-                                </div>
-
-                                <!-- TAMAÑO -->
-                                <div class="mb-3">
-
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        TAMAÑO
-                                    </small>
-
-                                    <div class="d-flex flex-wrap">
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Todos
-                                        </button>
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Pequeño
-                                        </button>
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Mediano
-                                        </button>
-
-                                        <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mb-2">
-                                            Grande
-                                        </button>
-
-                                    </div>
-                                </div>
-
-                                <!-- GENERO -->
-                                <div class="mb-3">
-
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        GÉNERO
-                                    </small>
-
-                                    <div class="d-flex flex-wrap">
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Todos
-                                        </button>
-
-                                        <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
-                                            Hembra
-                                        </button>
-
-                                        <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mb-2">
-                                            Macho
-                                        </button>
-
-                                    </div>
-                                </div>
-
-                                <!-- CIUDAD -->
-                                <div class="mb-4">
-
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        CIUDAD
-                                    </small>
-
-                                    <select class="custom-select bg-soft border-soft text-soft-brown-color">
-                                        <option>Todas</option>
-                                    </select>
-                                </div>
-
-                                <!-- Edad -->
-                                <div class="mb-4">
-                                    <small class="font-weight-bold text-soft-brown-color d-block mb-2">
-                                        EDAD MÁXIMA (AÑOS)
-                                    </small>
-
-                                    <input type="range" class="form-control-range" min="0" max="15" step="1" value="8">
-
-                                    <div class="d-flex justify-content-between">
-                                        <small class="text-soft-brown-color">0</small>
-                                        <small class="text-soft-brown-color">8 años</small>
-                                        <small class="text-soft-brown-color">15</small>
-                                    </div>
-
-                                </div>
-
-                                <!-- BOTON -->
-                                <button class="btn btn-block bg-soft border border-soft rounded-pill text-hard-brown-color font-weight-bold">
-                                    <span><i class="fas fa-redo-alt"></i></span>
-                                    Limpiar filtros
-                                </button>
-
-                            </div>
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid py-0 py-md-3">
+                    <div class="row mb-4">
+                        <div class="col">
+                            <h2 class="text-hard-brown-color font-weight-bold">Directorio de mascotas</h2> 
+                            <small class="text-hard-brown-color">Encuentra a tu compañero ideal con nuestros filtros</small>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <!-- Macotas -->
-                        <h5 class="text-orange-color font-weight-bold mb-3">
-                            <i class="fas fa-star"></i> MASCOTAS DESTACADAS
-                        </h5>
+                    
+                    <div class="row">
+                        <div class="col-12 col-lg-3 mb-4 mb-lg-0">
+                            <div class="card bg-card border-soft rounded-lg shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-cog text-orange-color mr-2"></i>
+                                        <h6 class="mb-0 font-weight-bold text-soft-brown-color">
+                                            FILTROS
+                                        </h6>
+                                    </div>
+                                    <div class="mb-3">
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            BUSCAR
+                                        </small>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
-                                    
-                                    <div class="bg-soft text-center p-4"> <!-- Aquí iría la imagen -->
-                                        <i class="fas fa-dog fa-5x"></i>
+                                        <input type="text"
+                                            class="form-control bg-soft border-soft"
+                                            placeholder="Nombre, raza...">
                                     </div>
 
-                                    <div class="card-body bg-card">
-                                        <h5 class="text-hard-brown-color font-weight-bold mb-1">Luna</h5>
-                                        <small class="text-soft-brown-color">Schnauzer · Guadalajara</small>
+                                    <div class="mb-3">
 
-                                        <div class="mt-3">
-                                            <span class="badge bg-orange-soft border border-hard">Pequeño</span>
-                                            <span class="badge bg-card border border-soft">Hembra</span>
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            ESPECIE
+                                        </small>
+
+                                        <div class="d-flex flex-wrap">
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Todas
+                                            </button>
+
+                                            <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mr-2 mb-2">
+                                                <span><i class="fas fa-dog"></i> Perros</span>
+                                                Perro
+                                            </button>
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                <span><i class="fas fa-cat"></i> Gatos</span>
+                                                Gato
+                                            </button>
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mb-2">
+                                                <span><i class="fas fa-otter"></i> Otros</span>
+                                                Otro
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            TAMAÑO
+                                        </small>
+
+                                        <div class="d-flex flex-wrap">
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Todos
+                                            </button>
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Pequeño
+                                            </button>
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Mediano
+                                            </button>
+
+                                            <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mb-2">
+                                                Grande
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            GÉNERO
+                                        </small>
+
+                                        <div class="d-flex flex-wrap">
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Todos
+                                            </button>
+
+                                            <button class="btn btn-sm bg-soft border border-soft rounded-pill text-soft-brown-color mr-2 mb-2">
+                                                Hembra
+                                            </button>
+
+                                            <button class="btn btn-sm bg-orange border border-hard rounded-pill text-white mb-2">
+                                                Macho
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            CIUDAD
+                                        </small>
+
+                                        <select class="custom-select bg-soft border-soft text-soft-brown-color">
+                                            <option>Todas</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <small class="font-weight-bold text-soft-brown-color d-block mb-2">
+                                            EDAD MÁXIMA (AÑOS)
+                                        </small>
+
+                                        <input type="range" class="form-control-range" min="0" max="15" step="1" value="8">
+
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-soft-brown-color">0</small>
+                                            <small class="text-soft-brown-color">8 años</small>
+                                            <small class="text-soft-brown-color">15</small>
                                         </div>
 
-                                        <div class="mt-2">
-                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                    </div>
+
+                                    <button class="btn btn-block bg-soft border border-soft rounded-pill text-hard-brown-color font-weight-bold">
+                                        <span><i class="fas fa-redo-alt"></i></span>
+                                        Limpiar filtros
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-lg-9">
+                            <h5 class="text-orange-color font-weight-bold mb-3">
+                                <i class="fas fa-star"></i> MASCOTAS DESTACADAS
+                            </h5>
+
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm border border-hard pet-card h-100">
+                                        
+                                        <div class="bg-soft text-center p-4"> <i class="fas fa-dog fa-5x"></i>
+                                        </div>
+
+                                        <div class="card-body bg-card d-flex flex-column">
+                                            <h5 class="text-hard-brown-color font-weight-bold mb-1">Luna</h5>
+                                            <small class="text-soft-brown-color mb-3">Schnauzer · Guadalajara</small>
+
+                                            <div class="mt-auto">
+                                                <div class="mb-2">
+                                                    <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                                    <span class="badge bg-card border border-soft">Hembra</span>
+                                                </div>
+
+                                                <div>
+                                                    <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
-                                    <div class="bg-soft text-center p-4">
-                                        <i class="fas fa-dog fa-5x"></i>
-                                    </div>
-
-                                    <div class="card-body bg-card">
-                                        <h5 class="text-hard-brown-color font-weight-bold mb-1">Rocky</h5>
-                                        <small class="text-soft-brown-color">Labrador · CDMX</small>
-
-                                        <div class="mt-3">
-                                            <span class="badge bg-orange-soft border border-hard">Grande</span>
-                                            <span class="badge bg-card border border-soft">Macho</span>
+                                <div class="col-12 col-sm-6 col-lg-4 mb-4">
+                                    <div class="card shadow-sm border border-hard pet-card h-100">
+                                        <div class="bg-soft text-center p-4">
+                                            <i class="fas fa-dog fa-5x"></i>
                                         </div>
 
-                                        <div class="mt-2">
-                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                        <div class="card-body bg-card d-flex flex-column">
+                                            <h5 class="text-hard-brown-color font-weight-bold mb-1">Rocky</h5>
+                                            <small class="text-soft-brown-color mb-3">Labrador · CDMX</small>
+
+                                            <div class="mt-auto">
+                                                <div class="mb-2">
+                                                    <span class="badge bg-orange-soft border border-hard">Grande</span>
+                                                    <span class="badge bg-card border border-soft">Macho</span>
+                                                </div>
+
+                                                <div>
+                                                    <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -283,12 +277,15 @@
                 </div>
             </main>
         </div>
+        
+        <div class="paw-mark d-none d-md-block">
+            <i class="fas fa-paw"></i>
+        </div>
     </div>
 
-<div class="paw-mark">
-    <i class="fas fa-paw"></i>
-</div>
-
-    <script src="app.js"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+    <script src="app.js"></script>`r`n</body>
 </html>

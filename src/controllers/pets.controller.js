@@ -102,6 +102,15 @@ const listPets = async (req, res, next) => {
   }
 };
 
+const myPets = async (req, res, next) => {
+  try {
+    const pets = await petModel.listByOwner(req.user.id);
+    res.json({ data: pets });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getPet = async (req, res, next) => {
   try {
     const pet = await petModel.findById(req.params.id);
@@ -175,6 +184,7 @@ const deletePet = async (req, res, next) => {
 
 module.exports = {
   listPets,
+  myPets,
   getPet,
   createPet,
   updatePet,
