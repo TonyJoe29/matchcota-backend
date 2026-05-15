@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Mascotita</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="bg-main">
+    <!-- #Main Container -->
+    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
+        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+            
+            <nav class="col-md-2 ">
+                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
+                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
+                <div class="card bg-card border-soft shadow-sm vh-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded  text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <!-- MI CUENTA -->
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+
+                    </div>
+                </div>
+            </nav>
+
+
+            <main class="col-md-10 p-3">
+                <div class="container-fluid py-3">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6 d-flex align-items-center">
+
+                            <button class="btn bg-card border border-soft rounded-pill text-hard-brown-color btn-sm px-3 mr-3">
+                                <i class="fas fa-arrow-left"></i>
+                                Volver
+                            </button>
+
+                            <small class="text-soft-brown-color">
+                                Directorio / Luna
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <!-- SIDEBAR -->
+                        <div class="col-lg-3 mb-4">
+
+                            <div class="card bg-card border-soft rounded-lg overflow-hidden">
+
+                                <div class="degradado-rosa-naranja p-3">
+
+                                    <div class="d-flex justify-content-between mb-5">
+
+                                        <span class="badge badge-pill bg-card text-hard-brown-color px-3 py-2">
+                                            <i class="fas fa-tag text-orange-color"></i>
+                                            B108
+                                        </span>
+
+                                    </div>
+
+                                    <div class="text-center py-5">
+                                        <!-- Aquí va la foto -->
+                                        <i class="fas fa-dog"
+                                        style="font-size:120px;"></i>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row no-gutters text-center">
+
+                                    <div class="col-3 border border-soft py-3">
+                                        <i class="fas fa-dog"></i>
+                                    </div>
+
+                                    <div class="col-3 border border-soft py-3">
+                                        <i class="fas fa-paw text-orange-color"></i>
+                                    </div>
+
+                                    <div class="col-3 border border-soft py-3">
+                                        <i class="fas fa-bolt text-warning"></i>
+                                    </div>
+
+                                    <div class="col-3 border border-soft py-3">
+                                        <i class="fas fa-heart text-danger"></i>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-9">
+                            <!-- Info -->
+                            <div class="card bg-card border-soft rounded-lg mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h1 class="text-hard-brown-color font-weight-bold mb-2">
+                                                Luna <i class="fas fa-dog text-orange-color"></i>
+                                            </h1>
+
+                                            <h6 class="text-soft-brown-color mb-3">
+                                                Schnauzer • Hembra • 8 años • Guadalajara
+                                            </h6>
+
+                                            <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2">
+                                                <i class="fas fa-map-pin"></i>  Guadalajara
+                                            </span>
+
+                                            <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2">
+                                                <i class="fas fa-ruler"></i>  Pequeño
+                                            </span>
+
+                                            <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2 mr-2">
+                                                <i class="fas fa-cut"></i> Esterilizada
+                                            </span>
+
+                                            <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2">
+                                                <i class="fas fa-syringe"></i> Vacunada
+                                            </span>
+
+                                        </div>
+
+                                        <button class="btn bg-soft-pink border border-pink rounded-circle"
+                                                style="width:50px;height:50px;">
+                                            <i class="far fa-heart text-pink"></i>
+                                        </button>
+
+                                    </div>
+
+                                    <hr class="border-soft">
+
+                                    <h6 class="font-weight-bold text-orange-color mb-4">
+                                        <i class="far fa-file-alt text-soft-brown-color"></i>
+                                        DESCRIPCIÓN
+                                    </h6>
+
+                                    <p class="text-hard-brown-color mb-0">
+                                        Negra y gordita, juguetona, territorial y dormilona.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- SALUD -->
+                            <div class="card bg-card border-soft rounded-lg mb-4">
+
+                                <div class="card-body">
+
+                                    <h6 class="font-weight-bold text-orange-color mb-4">
+                                        <i class="fas fa-heart text-hard-pink"></i> SALUD
+                                    </h6>
+
+                                    <div class="alert bg-soft border border-hard text-orange-color">
+                                        <i class="fas fa-exclamation-circle"></i> Problema de hígado
+                                    </div>
+
+                                    <p class="text-hard-brown-color mb-0">
+                                        <i class="fas fa-star"></i> Pasear 2 veces al día, chequeos cada 6 meses.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- COMPATIBILIDAD -->
+                            <div class="card bg-card border-soft rounded-lg mb-4">
+
+                                <div class="card-body">
+
+                                    <h6 class="font-weight-bold text-orange-color mb-4">
+                                        <i class="fas fa-handshake"></i> COMPATIBILIDAD
+                                    </h6>
+
+                                    <div class="row">
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+
+                                                <div class="mb-2">
+                                                    <i class="fas fa-dog fa-3x"></i> 
+                                                </div>
+
+                                                <div class="text-danger font-weight-bold">
+                                                    <i class="fas fa-times"></i> Perros
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+
+                                                <div class="mb-2">
+                                                    <i class="fas fa-cat fa-3x"></i> 
+                                                </div>
+
+                                                <div class="text-danger font-weight-bold">
+                                                    <i class="fas fa-times"></i>  Gatos
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <div class="bg-aqua-soft border border-aqua rounded text-center py-4">
+
+                                                <div class="mb-2">
+                                                    <i class="fas fa-male fa-3x"></i>
+                                                </div>
+
+                                                <div class="text-aqua font-weight-bold">
+                                                    <i class="fas fa-check-square"></i> Adultos
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+
+                                                <div class="mb-2">
+                                                    <i class="fas fa-child fa-3x"></i>
+                                                </div>
+
+                                                <div class="text-danger font-weight-bold">
+                                                    <i class="fas fa-times"></i> Niños
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="card bg-card border-soft rounded-lg">
+                                <div class="card-body">
+
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-10 mb-3 mb-md-0">
+
+                                            <button class="btn bg-orange text-white btn-block rounded-pill py-3 font-weight-bold">
+                                                <i class="fas fa-paw"></i>
+                                                ¡Quiero adoptar a Luna!
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-2 text-md-left">
+                                            <button class="btn bg-card border border-soft rounded-circle">
+                                                <i class="fas fa-external-link-alt text-aqua"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+<div class="paw-mark">
+    <i class="fas fa-paw"></i>
+</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

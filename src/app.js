@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use('/frontend', express.static(path.join(__dirname, '..', 'frontend')));
 
 app.get('/', (_req, res) => {
   res.json({
@@ -24,6 +26,10 @@ app.get('/', (_req, res) => {
     status: 'ok',
     version: '1.0.0'
   });
+});
+
+app.get('/frontend', (_req, res) => {
+  res.redirect('/frontend/home.html');
 });
 
 app.use('/auth', authRoutes);

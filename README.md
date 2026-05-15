@@ -61,6 +61,12 @@ URL base:
 http://localhost:3000
 ```
 
+Frontend integrado:
+
+```txt
+http://localhost:3000/frontend/home.html
+```
+
 Prueba rapida:
 
 ```txt
@@ -94,6 +100,8 @@ database/
   schema.sql
   seed.sql
   matchcota.sqlite
+frontend/
+  paginas HTML conectadas a la API
 postman/
   Matchcota Backend.postman_collection.json
 ```

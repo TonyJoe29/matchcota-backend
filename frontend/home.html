@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Inicio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="bg-main">
+    <!-- #Main Container -->
+    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
+        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+            <nav class="col-md-2 ">
+                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
+                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
+                <div class="card bg-card border-soft shadow-sm vh-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color  text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <!-- MI CUENTA -->
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            
+            <main class="col-md-10 p-3">
+                <div class="container-fluid p-4">
+                    <!-- Inicio -->
+                    <div class="card border border-hard rounded-lg shadow-sm degradado-rosa-naranja mb-4">
+                        <div class="card-body p-5">
+                            <div class="row align-items-center">
+
+                                <div class="col-md-6">
+                                    <h1 class="font-weight-bold text-hard-brown-color">
+                                        Encuentra a tu <br> compañero perfecto
+                                        <i class="fas fa-paw text-orange-color small"></i>
+                                    </h1>
+
+                                    <p class="text-hard-brown-color">
+                                        Miles de mascotas esperan un hogar lleno de amor.
+                                        Filtra por especie, raza y ciudad.
+                                    </p>
+
+                                    <button class="btn rounded-pill text-white px-4 mr-2 bg-orange">
+                                        <i class="fas fa-search"></i> Explorar mascotas
+                                    </button>
+
+                                    <button class="btn rounded-pill text-white px-4 bg-hard-pink">
+                                        <i class="fas fa-plus"></i> Publicar mascota
+                                    </button>
+                                </div>
+
+                                <div class="col-md-6 text-center text-hard-pink">
+                                    <i class="fas fa-dog fa-5x mx-2"></i>
+                                    <i class="fas fa-cat fa-5x mx-2"></i>
+                                    <br><br>
+                                    <i class="fas fa-otter fa-4x mx-2"></i>
+                                    <i class="fas fa-paw fa-4x mx-2"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Busqueda -->
+                    <div class="row mb-4">
+                        <div class="col-md-5">
+                            <div class="input-group shadow-sm">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text bg-card border border-right-0 border-hard text-pink" >
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+
+                                <input class="form-control border border-left-0 border-hard" placeholder="Busca por raza, ciudad, especie...">
+
+                                <div class="input-group-append">
+                                    <button class="btn text-white px-4 bg-orange" >
+                                        Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datos -->
+                    <div class="row mb-4">
+
+                        <div class="col-md-2">
+                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                                <div class="card-body d-flex align-items-center">
+                                    <i class="fas fa-paw fa-2x text-pink mr-3"></i>
+                                    <div>
+                                        <h3 class="mb-0 text-hard-brown-color">248</h3>
+                                        <small class="text-hard-brown-color">Mascotas disponibles</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                                <div class="card-body d-flex align-items-center">
+                                    <i class="fas fa-check-square fa-2x text-aqua mr-3"></i>
+                                    <div>
+                                        <h3 class="mb-0 text-hard-brown-color">93</h3>
+                                        <small class="text-hard-brown-color">Adopciones exitosas</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                                <div class="card-body d-flex align-items-center">
+                                    <i class="fas fa-users fa-2x text-hard-pink mr-3"></i>
+                                    <div>
+                                        <h3 class="mb-0 text-hard-brown-color">512</h3>
+                                        <small class="text-hard-brown-color">Usuarios registrados</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                                <div class="card-body d-flex align-items-center">
+                                    <i class="fas fa-map-marker-alt fa-2x text-orange-color mr-3"></i>
+                                    <div>
+                                        <h3 class="mb-0 text-hard-brown-color">18</h3>
+                                        <small class="text-hard-brown-color">Ciudades activas</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Macotas -->
+                    <h5 class="text-orange-color font-weight-bold mb-3">
+                        <i class="fas fa-star"></i> MASCOTAS DESTACADAS
+                    </h5>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                                
+                                <div class="bg-soft text-center p-4"> <!-- Aquí iría la imagen -->
+                                    <i class="fas fa-dog fa-5x"></i>
+                                </div>
+
+                                <div class="card-body bg-card">
+                                    <h5 class="text-hard-brown-color font-weight-bold mb-1">Luna</h5>
+                                    <small class="text-soft-brown-color">Schnauzer · Guadalajara</small>
+
+                                    <div class="mt-3">
+                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                        <span class="badge bg-card border border-soft">Hembra</span>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                                <div class="bg-soft text-center p-4">
+                                    <i class="fas fa-dog fa-5x"></i>
+                                </div>
+
+                                <div class="card-body bg-card">
+                                    <h5 class="text-hard-brown-color font-weight-bold mb-1">Rocky</h5>
+                                    <small class="text-soft-brown-color">Labrador · CDMX</small>
+
+                                    <div class="mt-3">
+                                        <span class="badge bg-orange-soft border border-hard">Grande</span>
+                                        <span class="badge bg-card border border-soft">Macho</span>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                                <div class="bg-pink text-center p-4">
+                                    <i class="fas fa-cat fa-5x"></i>
+                                </div>
+
+                                <div class="card-body bg-card">
+                                    <h5 class="text-hard-brown-color font-weight-bold mb-1">Mía</h5>
+                                    <small class="text-soft-brown-color">Persa · Monterrey</small>
+
+                                    <div class="mt-3">
+                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                        <span class="badge bg-card border border-soft">Hembra</span>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                                <div class="bg-green text-center p-4">
+                                    <i class="fas fa-otter fa-5x"></i>
+                                </div>
+
+                                <div class="card-body bg-card">
+                                    <h5 class="text-hard-brown-color font-weight-bold mb-1">Coco</h5>
+                                    <small class="text-soft-brown-color">Conejo · Guadalajara</small>
+
+                                    <div class="mt-3">
+                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                        <span class="badge bg-card border border-soft">Macho</span>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+<div class="paw-mark">
+    <i class="fas fa-paw"></i>
+</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

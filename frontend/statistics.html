@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Matchcota|Panel de Estadísticas</title>
+
+</head>
+<body class="bg-main">
+    <!-- #Main Container -->
+    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
+        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+            
+            <!-- Navbar de soporte -->
+            <nav class="col-md-2 ">
+                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
+                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
+                <div class="card bg-card border-soft shadow-sm vh-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded  text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <!-- MI CUENTA -->
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            TÉCNICOS
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-calculator mr-2 text-aqua"></i>
+                            <span>Estadísticas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-exclamation-circle mr-2 text-hard-pink"></i>
+                            <span>Incidencias</span>
+                        </a>
+
+                    </div>
+                </div>
+            </nav>
+            
+            <main class="col-md-10 p-3">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="text-hard-brown-color font-weight-bold">Panel de estadísticas</h2> <!-- Panel de estadísticas -->
+                            <small class="text-hard-brown-color">Métricas generales de la plataforma</small>
+                        </div>
+                    </div>
+
+                    <!-- Row tarjetas de estadísticas -->
+                    <div class="row ">
+                        <div class="col-md-9">
+                            <div class="row pt-3">
+                                <div class="col-md-3">
+                                    <div class="border rounded p-3 h-100 bg-card border-hard">
+                                        <div class = "row mb-1">
+                                            <div class = "col-md-4 d-flex justify-content-center align-items-center ">
+                                                <i class="fas fa-paw fa-2x text-pink"></i>
+                                            </div>
+                                            <div class = "col-md-8">
+                                                <h3 class="text-hard-brown-color font-weight-bold d-block">
+                                                    248
+                                                </h3>
+                                                <p class="mb-0 mt-2 text-hard-brown-color">
+                                                    Mascotas activas
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="border rounded p-3 h-100 bg-card border-hard">
+                                        <div class = "row mb-1">
+                                            <div class = "col-md-4 d-flex justify-content-center align-items-center ">
+                                                <i class="fas fa-hand-holding-heart fa-2x text-pink"></i>
+                                            </div>
+                                            <div class = "col-md-8">
+                                                <h3 class="text-hard-brown-color font-weight-bold d-block">
+                                                    93
+                                                </h3>
+                                                <p class="mb-0 mt-2 text-hard-brown-color">
+                                                    Adopciones exitosas
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="border rounded p-3 h-100 bg-card border-hard">
+                                        <div class = "row mb-1">
+                                            <div class = "col-md-4 d-flex justify-content-center align-items-center ">
+                                                <i class="fas fa-users fa-2x text-pink"></i>
+                                            </div>
+                                            <div class = "col-md-8">
+                                                <h3 class="text-hard-brown-color font-weight-bold d-block">
+                                                    512
+                                                </h3>
+                                                <p class="mb-0 mt-2 text-hard-brown-color">
+                                                    Usuarios totales
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="border rounded p-3 h-100 bg-card border-hard">
+                                        <div class = "row mb-1">
+                                            <div class = "col-md-4 d-flex justify-content-center align-items-center ">
+                                                <i class="fas fa-envelope fa-2x text-pink"></i>
+                                            </div>
+                                            <div class = "col-md-8">
+                                                <h3 class="text-hard-brown-color font-weight-bold d-block">
+                                                    174
+                                                </h3>
+                                                <p class="mb-0 mt-2 text-hard-brown-color">
+                                                    Solcitudes activas
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row estadísticas con porcentajes -->
+                    <div class="row pt-4">
+
+                        <!-- Distribución por especie -->
+                        <div class="col-md-6">
+                            <div class="card p-4 border rounded border-hard bg-card ">
+                                <h5 class="font-weight-bold text-orange-color mb-4">
+                                    <i class="fas fa-paw"></i> DISTRIBUCIÓN POR ESPECIE
+                                </h5>
+                                <!-- Perros -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <span><i class="fas fa-dog"></i> Perros</span>
+                                        <strong id="perros-text"></strong>
+                                    </div>
+
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="perros-bar"
+                                            class="progress-bar bg-orange progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Gatos -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <span><i class="fas fa-cat"></i> Gatos</span>
+                                        <strong id="gatos-text"></strong>
+                                    </div>
+
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="gatos-bar"
+                                            class="progress-bar bg-hard-pink progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Otros -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <span><i class="fas fa-otter"></i> Otros</span>
+                                        <strong id="otros-text"></strong>
+                                    </div>
+
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="otros-bar"
+                                            class="progress-bar bg-aqua-bar progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Top ciudades -->
+                         <div class="col-md-6">
+                            <div class="card p-4 border rounded border-hard bg-card">
+                                <h5 class="font-weight-bold text-orange-color mb-4">
+                                    <i class="fas fa-map-pin"></i> TOP CIUDADES
+                                </h5>
+
+                                <!-- CIUDAD 1 -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <strong id="ciudad-1-nombre"></strong>
+                                        <strong id="ciudad-1-mascotas"></strong>
+                                    </div>
+
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="ciudad-1-bar"
+                                            class="progress-bar bg-hard-pink     progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CIUDAD 2 -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <strong id="ciudad-2-nombre"></strong>
+                                        <strong id="ciudad-2-mascotas"></strong>
+                                    </div>
+                                    
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="ciudad-2-bar"
+                                            class="progress-bar bg-hard-pink     progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CIUDAD 3 -->
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2 text-hard-brown-color">
+                                        <strong id="ciudad-3-nombre"></strong>
+                                        <strong id="ciudad-3-mascotas"></strong>
+                                    </div>
+                                    
+                                    <div class="progress bg-orange-soft" style="height:10px;">
+                                        <div id="ciudad-3-bar"
+                                            class="progress-bar bg-hard-pink     progress-bar-striped progress-bar-animated rounded"
+                                            role="progressbar">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Row Adopciones recientes -->
+                    <div class="row pt-4">
+                        <div class="col-md-12">
+                            <div class="card p-4 border rounded border-hard bg-card ">
+                                <h5 class="font-weight-bold text-orange-color mb-4">
+                                    <i class="fas fa-calendar-alt"></i> ADOPCIONES RECIENTES
+                                </h5>
+
+                                <!-- Tabla Adopciones Recientes -->
+                                <div class="mb-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless align-middle ">
+                                            <thead class="bg-orange-soft text-soft-brown-color">
+                                                <tr>
+                                                    <th>MASCOTA</th>
+                                                    <th>ADOPTANTE</th>
+                                                    <th>CIUDAD</th>
+                                                    <th>FECHA</th>
+                                                    <th>ESTADO</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-hard-brown-color">
+
+                                                <tr class="border-top border-soft">
+                                                    <td><i class="fas fa-dog mr-2 text-orange-color"></i>Max</td>
+                                                    <td>Carlos M.</td>
+                                                    <td>Guadalajara</td>
+                                                    <td>05/02/2026</td>
+                                                    <td>
+                                                        <span class="badge rounded-pill px-3 py-2 bg-aqua-soft text-aqua border border-aqua w-50">
+                                                            <i class="fas fa-check-square mr-1"></i> Completada
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="border-top border-soft">
+                                                    <td><i class="fas fa-cat mr-2 text-orange-color"></i>Michi</td>
+                                                    <td>Laura S.</td>
+                                                    <td>CDMX</td>
+                                                    <td>03/02/2026</td>
+                                                    <td>
+                                                        <span class="badge rounded-pill px-3 py-2 bg-aqua-soft text-aqua border border-aqua w-50">
+                                                            <i class="fas fa-check-square mr-1"></i> Completada
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="border-top border-soft">
+                                                    <td><i class="fas fa-dog mr-2 text-orange-color"></i>Luna</td>
+                                                    <td>Adilene N.</td>
+                                                    <td>Guadalajara</td>
+                                                    <td>31/01/2026</td>
+                                                    <td>
+                                                        <span class="badge rounded-pill px-3 py-2 bg-card-pink text-pink border border-pink w-50">
+                                                            <i class="fas fa-hourglass-half mr-1"></i> En proceso
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="border-top border-soft">
+                                                    <td><i class="fas fa-otter mr-2 text-orange-color"></i>Bunny</td>
+                                                    <td>Mario T.</td>
+                                                    <td>Monterrey</td>
+                                                    <td>28/01/2026</td>
+                                                    <td>
+                                                        <span class="badge rounded-pill px-3 py-2 bg-aqua-soft text-aqua border border-aqua w-50">
+                                                            <i class="fas fa-check-square mr-1"></i> Completada
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+        <div class="paw-mark">
+            <i class="fas fa-paw"></i>
+        </div>
+    </div>
+
+    <script>
+        //Simular datos para gráficas
+        const mascotas = {
+            perros: 148,
+            gatos: 74,
+            otros: 26
+        };
+
+        const ciudades = {
+            ciudad_1 : {nombre : "Guadalajara", mascotas : 82},
+            ciudad_2 : {nombre : "CDMX", mascotas : 67},
+            ciudad_3 : {nombre : "Monterrey", mascotas : 45}
+        }
+
+        const total_mascotas = mascotas.perros + mascotas.gatos + mascotas.otros;
+
+        const porc_perros = ((mascotas.perros/total_mascotas)*100).toFixed(0)
+        const porc_gatos = ((mascotas.gatos/total_mascotas)*100).toFixed(0)
+        const porc_otros = ((mascotas.otros/total_mascotas)*100).toFixed(0)
+        
+        const porc_ciudad_1 = ((ciudades.ciudad_1.mascotas/total_mascotas)*100).toFixed(0)
+        const porc_ciudad_2 = ((ciudades.ciudad_2.mascotas/total_mascotas)*100).toFixed(0)
+        const porc_ciudad_3 = ((ciudades.ciudad_3.mascotas/total_mascotas)*100).toFixed(0)
+
+        function cargarBarras() {
+            //MASCOTAS
+            document.getElementById("perros-bar").style.width = porc_perros + "%";
+            document.getElementById("gatos-bar").style.width = porc_gatos + "%";
+            document.getElementById("otros-bar").style.width = porc_otros + "%";
+
+            document.getElementById("perros-text").innerText = mascotas.perros + " (" + porc_perros + "%)";
+            document.getElementById("gatos-text").innerText = mascotas.gatos + " (" + porc_gatos + "%)";
+            document.getElementById("otros-text").innerText = mascotas.otros + " (" + porc_otros + "%)";
+
+            //CIUDADES
+            document.getElementById("ciudad-1-bar").style.width = porc_ciudad_1 + "%";
+            document.getElementById("ciudad-2-bar").style.width = porc_ciudad_2 + "%";
+            document.getElementById("ciudad-3-bar").style.width = porc_ciudad_3 + "%";
+
+            document.getElementById("ciudad-1-nombre").innerText = ciudades.ciudad_1.nombre;
+            document.getElementById("ciudad-1-mascotas").innerText = ciudades.ciudad_1.mascotas + " mascotas" + " (" + porc_ciudad_1 + "%)";
+            document.getElementById("ciudad-2-nombre").innerText = ciudades.ciudad_2.nombre;
+            document.getElementById("ciudad-2-mascotas").innerText = ciudades.ciudad_2.mascotas + " mascotas" + " (" + porc_ciudad_2 + "%)";
+            document.getElementById("ciudad-3-nombre").innerText = ciudades.ciudad_3.nombre;
+            document.getElementById("ciudad-3-mascotas").innerText = ciudades.ciudad_3.mascotas + " mascotas" + " (" + porc_ciudad_3 + "%)";
+        }
+
+        cargarBarras();
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+    <script src="app.js"></script>
+</body>
+</html>

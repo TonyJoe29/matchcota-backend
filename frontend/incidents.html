@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Matchcota|Panel de incidencias</title>
+
+</head>
+<body class="bg-main">
+    <!-- #Main Container -->
+    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
+        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+            
+            <!-- Navbar de soporte -->
+            <nav class="col-md-2 ">
+                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
+                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
+                <div class="card bg-card border-soft shadow-sm vh-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded  text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <!-- MI CUENTA -->
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            TÉCNICOS
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-calculator mr-2 text-aqua"></i>
+                            <span>Estadísticas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-exclamation-circle mr-2 text-hard-pink"></i>
+                            <span>Incidencias</span>
+                        </a>
+
+                    </div>
+                </div>
+            </nav>
+            
+            <main class="col-md-10 p-3">
+                <div class="container-fluid py-4">
+
+                    <!-- HEADER -->
+                     <div class="row">
+                        <div class="col">
+                            <h2 class="text-hard-brown-color font-weight-bold">Panel de Incidencias</h2> <!-- Panel de Incidencias -->
+                            <small class="text-hard-brown-color">Reportes, quejas y problemas de los usuarios</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <!-- ABIERTAS -->
+                        <div class="col-lg-6 mb-4">
+
+                            <h6 class="font-weight-bold text-hard-orange-color mb-3">
+                                <i class="fas fa-circle text-hard-pink mr-2"></i>
+                                ABIERTAS (3)
+                            </h6>
+
+                            <!-- CARD -->
+                            <div class="card bg-card border-soft rounded-lg mb-4">
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-9">
+
+                                            <h5 class="font-weight-bold text-hard-brown-color">
+                                                Información incorrecta en ficha de mascota
+                                            </h5>
+
+                                            <p class="text-soft-brown-color small">
+                                                El usuario reporta que la foto de "Rocky"
+                                                no corresponde a la mascota real.
+                                            </p>
+
+                                            <div class="small text-soft-brown-color mb-3">
+                                                <i class="fas fa-user"></i>
+                                                carlos@gmail.com
+
+                                                <span class="mx-2">•</span>
+
+                                                <i class="far fa-calendar-alt"></i>
+                                                06/03/2026
+                                            </div>
+
+                                            <span class="badge badge-pill bg-soft-pink border border-pink text-pink px-3 py-2">
+                                                Alta
+                                            </span>
+
+                                            <span class="badge badge-pill bg-orange-soft border border-hard text-hard-orange-color px-3 py-2">
+                                                Queja
+                                            </span>
+
+                                        </div>
+
+                                        <div class="col-md-3 text-md-right mt-3 mt-md-0">
+
+                                            <button class="btn bg-aqua-soft text-aqua font-weight-bold border border-aqua btn-sm rounded-pill mb-2">
+                                                Resolver
+                                            </button>
+
+                                            <br>
+
+                                            <button class="btn bg-card border border-soft rounded-pill btn-sm text-hard-brown-color">
+                                                <i class="far fa-comment-alt"></i>
+                                                Chat
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- CARD -->
+                            <div class="card bg-card border-soft rounded-lg mb-4">
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-9">
+
+                                            <h5 class="font-weight-bold text-hard-brown-color">
+                                                No puedo subir fotos de mi mascota
+                                            </h5>
+
+                                            <p class="text-soft-brown-color small">
+                                                Al intentar subir foto, la página se congela
+                                                y pierde los datos del formulario.
+                                            </p>
+
+                                            <div class="small text-soft-brown-color mb-3">
+                                                <i class="fas fa-user"></i>
+                                                maria@gmail.com
+
+                                                <span class="mx-2">•</span>
+
+                                                <i class="far fa-calendar-alt"></i>
+                                                07/03/2026
+                                            </div>
+
+                                            <span class="badge badge-pill bg-orange-soft border border-hard text-hard-orange-color px-3 py-2">
+                                                Media
+                                            </span>
+
+                                            <span class="badge badge-pill bg-orange-soft border border-hard text-hard-orange-color px-3 py-2">
+                                                Duda
+                                            </span>
+
+                                        </div>
+
+                                        <div class="col-md-3 text-md-right mt-3 mt-md-0">
+
+                                            <button class="btn bg-aqua-soft text-aqua font-weight-bold border border-aqua btn-sm rounded-pill mb-2">
+                                                Resolver
+                                            </button>
+
+                                            <br>
+
+                                            <button class="btn bg-card border border-soft rounded-pill btn-sm text-hard-brown-color">
+                                                <i class="far fa-comment-alt"></i>
+                                                Chat
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- CARD -->
+                            <div class="card bg-card border-soft rounded-lg">
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-9">
+
+                                            <h5 class="font-weight-bold text-hard-brown-color">
+                                                Solicitud de adopción duplicada
+                                            </h5>
+
+                                            <p class="text-soft-brown-color small">
+                                                Se enviaron dos solicitudes para la misma
+                                                mascota por error del sistema.
+                                            </p>
+
+                                            <div class="small text-soft-brown-color mb-3">
+                                                <i class="fas fa-user"></i>
+                                                lau_san
+
+                                                <span class="mx-2">•</span>
+
+                                                <i class="far fa-calendar-alt"></i>
+                                                08/03/2026
+                                            </div>
+
+                                            <span class="badge badge-pill bg-soft-pink border border-pink text-pink px-3 py-2">
+                                                Alta
+                                            </span>
+
+                                            <span class="badge badge-pill bg-orange-soft border border-hard text-hard-orange-color px-3 py-2">
+                                                Soporte
+                                            </span>
+
+                                        </div>
+
+                                        <div class="col-md-3 text-md-right mt-3 mt-md-0">
+
+                                            <button class="btn bg-aqua-soft text-aqua font-weight-bold border border-aqua btn-sm rounded-pill mb-2">
+                                                Resolver
+                                            </button>
+
+                                            <br>
+
+                                            <button class="btn bg-card border border-soft rounded-pill btn-sm text-hard-brown-color">
+                                                <i class="far fa-comment-alt"></i>
+                                                Chat
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- RESUELTAS -->
+                        <div class="col-lg-6">
+
+                            <h6 class="font-weight-bold text-hard-orange-color mb-3">
+                                <i class="fas fa-check-square text-aqua mr-2"></i>
+                                RESUELTAS (5)
+                            </h6>
+
+                            <!-- ITEM -->
+                            <div class="card bg-card border-soft rounded-lg mb-3">
+                                <div class="card-body">
+
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-9">
+
+                                            <h5 class="font-weight-bold text-hard-brown-color">
+                                                Problema de inicio de sesión
+                                            </h5>
+
+                                            <p class="text-soft-brown-color small">
+                                                El usuario no podía entrar con su contraseña;
+                                                se reseteó correctamente.
+                                            </p>
+
+                                            <div class="small text-soft-brown-color">
+                                                <i class="fas fa-user"></i>
+                                                adis06@gmail.com
+
+                                                <span class="mx-2">•</span>
+
+                                                <i class="far fa-calendar-alt"></i>
+                                                01/03/2026
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-3 text-md-right mt-3 mt-md-0">
+
+                                            <div class="rounded-circle bg-aqua-soft border border-aqua d-inline-flex align-items-center justify-content-center"
+                                                style="width:90px;height:90px;">
+
+                                                <small class="text-aqua font-weight-bold">
+                                                    <i class="fas fa-check-square"></i>
+                                                    Resuelta
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- ITEM -->
+                            <div class="card bg-card border-soft rounded-lg mb-3">
+                                <div class="card-body">
+
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-9">
+
+                                            <h5 class="font-weight-bold text-hard-brown-color">
+                                                Mascota ya adoptada aparece disponible
+                                            </h5>
+
+                                            <p class="text-soft-brown-color small">
+                                                Se actualizó el estado correctamente en el sistema.
+                                            </p>
+
+                                            <div class="small text-soft-brown-color">
+                                                <i class="fas fa-user"></i>
+                                                jorge@gmail.com
+
+                                                <span class="mx-2">•</span>
+
+                                                <i class="far fa-calendar-alt"></i>
+                                                02/03/2026
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-3 text-md-right mt-3 mt-md-0">
+
+                                            <div class="rounded-circle bg-aqua-soft border border-aqua d-inline-flex align-items-center justify-content-center"
+                                                style="width:90px;height:90px;">
+
+                                                <small class="text-aqua font-weight-bold">
+                                                    <i class="fas fa-check-square"></i>
+                                                    Resuelta
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+
+        </div>
+        <div class="paw-mark">
+            <i class="fas fa-paw"></i>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+    <script src="app.js"></script>
+</body>
+</html>

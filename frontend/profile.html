@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    
+    <title>Matchcota|Perfil</title>
+</head>
+<body class="bg-main">
+    <!-- #Main Container -->
+    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
+        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
+            
+            <nav class="col-md-2 ">
+                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
+                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
+                <div class="card bg-card border-soft shadow-sm vh-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded  text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <!-- MI CUENTA -->
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="#"
+                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+
+                    </div>
+                </div>
+            </nav>
+            
+            <main class="col-md-10 p-3">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="text-hard-brown-color font-weight-bold">Mi perfil</h2> <!-- Mi perfil -->
+                            <small class="text-hard-brown-color">Información personal y datos del adoptante</small>
+                        </div>
+                    </div>
+                    <!-- Row debajo de título para separar en dos columnas-->
+                    <div class="row ">
+                        <!-- Columnas perfil del adoptante -->
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-center mt-4">
+                                <div class="card shadow rounded overflow-hidden bg-card border border-hard">
+                                    <div class="degradado-rosa-naranja" style="height: 10vh ;"></div>
+                                    <div class = "card-body">
+                                        <!-- Nombre y red social -->
+                                        <div class="text-center mb-4">
+                                            <h4 class="mb-1 text-hard-brown-color">Adilene Nava Díaz</h4>
+                                            <p class="text-soft-brown-color small mb-0">
+                                                @Adi_06 · Guadalajara
+                                            </p>
+                                        </div>
+
+                                        <!-- Información usuario -->
+                                        <div class="d-flex justify-content-center mb-4 ">
+                                            <span class="badge rounded-pill px-3 py-2 w-50 mr-1 bg-soft border border-soft font-weight-bold text-soft-brown-color" >
+                                                Usuario general
+                                            </span>
+                                            <span class="badge rounded-pill px-3 py-2 font-weight-bold w-40 ml-1 text-pink border border-pink bg-soft-pink">
+                                                Desde ene 2026
+                                            </span>
+                                        </div>
+
+                                        <!-- Solicituures, adopciones, alertas --->
+                                        <div class ="row text-center mb-4">
+                                            <div class="col">
+                                                    <h5 class="text-orange-color mb-0">1</h5>
+                                                    <small class="text-soft-brown-color">SOLICITUDES</small>
+                                            </div>
+                                            <div class="col">
+                                                    <h5 class="text-orange-color mb-0">0</h5>
+                                                    <small class="text-soft-brown-color">ADOPCIONES</small>
+                                            </div>
+                                            <div class="col">
+                                                    <h5 class="text-orange-color mb-0">3</h5>
+                                                    <small class="text-soft-brown-color">ALERTAS</small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Botones --->
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn rounded-pill font-weight-bold border py-2 mb-2 w-100 bg-soft border-soft text-soft-brown-color">
+                                                <i class="fas fa-pen mr-2"></i>
+                                                Editar perfil
+                                            </button>
+                                            <button class="btn rounded-pill text-white font-weight-bold py-2 px-4 w-100 bg-hard-pink text-soft-brown-color">
+                                                <i class="fas fa-bell me-2"></i>
+                                                Configurar alertas
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        
+                        <!-- Columnas datos del adoptante -->
+                        <div class=" col-md-9 "> 
+                            <!--- Información -->
+                            <div class="card shadow-sm rounded-4 mt-4 mb-4 bg-card border-hard" >
+                                <div class="card-body ">
+                                    <h5 class="mb-4 text-orange-color"><i class="fas fa-user mr-2"></i>INFORMACIÓN PERSONAL</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    NOMBRE COMPLETO
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    Adilene F. Nava Díaz
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    CORREO
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    adis06@gmail.com
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    FECHA DE NACIMIENTO
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    20/06/2000
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    OCUPACIÓN
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    Asesora de finanzas
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    INGRESO MENSUAL
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    $15,000 MXN
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    MIEMBRO DESDE
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    18/01/2026
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--- Vivienda -->
+                            <div class="card shadow-sm rounded-4 mb-4 bg-card border-hard" >
+                                <div class="card-body p-">
+                                    <h5 class="mb-4 text-orange-color"><i class="fas fa-home mr-2"></i>CONDICIONES DE VIVIENDA</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    TIPO DE VIVIENDA
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    Casa
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    TIPO DE ESPACIO
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    Jardín
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    ESPACIO DISPONIBLE
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    40 m²
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    TIEMPO DISPONIBLE
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    10 hrs/día
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    HIJOS &lt;12 AÑOS
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    No
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--- Experiencia -->
+                            <div class="card shadow-sm rounded-4 mb-4 bg-card border-hard" >
+                                <div class="card-body p-">
+                                    <h5 class="mb-4 text-orange-color"><i class="fas fa-paw mr-2"></i>EXPERIENCIA CON MASCOTAS</h5>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    EXPERIENCIA PREVIA
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    Ninguna
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="border rounded p-3 h-100 bg-soft border-soft">
+                                                <small class="text-soft-brown-color font-weight-bold d-block">
+                                                    MASCOTAS ACTUALES
+                                                </small>
+                                                <p class="font-weight-bold mb-0 mt-2 text-hard-brown-color small">
+                                                    No
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js" integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+</body>
+</html>

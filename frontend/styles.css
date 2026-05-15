@@ -1,0 +1,107 @@
+ /*Colores backgrounds*/
+.bg-main{
+    background-color:#ffecda !important ;
+}
+
+.bg-card{
+    background-color:#fffdfb !important ;
+}
+
+.bg-soft{
+    background-color:#fdf8f2 !important;
+}
+
+.bg-soft-pink{
+    background-color:#fde5ee !important;
+}
+
+.bg-card-pink{
+    background-color:#fde5ee !important ;
+}
+
+.bg-hard-pink{
+    background-color:#ff5ea1 !important ;
+}
+
+.bg-orange{
+        background-color:#dea866 !important ;
+}
+
+.bg-orange-soft{
+        background-color:#F3DFC6 !important ;
+}
+
+.bg-aqua-bar{
+        background-color:#b8e6da !important ;
+}
+
+.bg-aqua-soft{
+        background-color:#dff2ec !important ;
+}
+
+/*Colores borders*/
+.border-hard{
+    border-color: #ffc272 !important ;
+}
+
+.border-soft{
+    border-color: #f1dfc7 !important ;
+}
+
+.border-pink{
+    border-color: #ffbcd5 !important ;
+}
+
+.border-aqua{
+    border-color: #95cbcb !important ;
+}
+
+
+/*Colores text*/
+.text-hard-orange-color{
+    color:#d1811e !important;
+}
+
+.text-orange-color{
+    color:#dea866 !important;
+}
+
+.text-soft-brown-color{
+    color:rgb(147, 109, 62);
+}
+
+.text-hard-brown-color{
+    color:rgb(103, 57, 0);
+}
+
+.text-pink{
+    color:#d75c8b !important;
+}
+
+.text-hard-pink{
+    color:#ff5ea1
+}
+
+.text-aqua{
+    color:#008C8C !important;
+}
+
+/*Extras*/
+
+.degradado-rosa-naranja{
+    background: linear-gradient(90deg,#fde5ee,#ffe8c7);
+}
+
+.pet-card img{
+    width:90px;
+    height:90px;
+}
+
+.paw-mark{
+    position:fixed;
+    right:50px;
+    bottom:40px;
+    font-size:90px;
+    color:#f4d8bb !important;
+    opacity:.4;
+}
