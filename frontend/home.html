@@ -12,63 +12,49 @@
 </head>
 
 <body class="bg-main">
-    <!-- #Main Container -->
-    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
-        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
-            <nav class="col-md-2 ">
-                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
-                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
-                <div class="card bg-card border-soft shadow-sm vh-100">
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
+            
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
                     <div class="card-body p-2">
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
                             PRINCIPAL
                         </small>
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color  text-decoration-none mb-1">
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
                             <i class="fas fa-home mr-2 text-orange-color"></i>
                             <span>Inicio</span>
                         </a>
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
                             <i class="fas fa-search mr-2 text-aqua"></i>
                             <span>Directorio</span>
                         </a>
 
-                        <!-- MI CUENTA -->
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
                             MI CUENTA
                         </small>
 
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
-
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-user mr-2"></i>
                             <span>Mi Perfil</span>
                         </a>
 
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
-
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-paw mr-2 text-orange-color"></i>
                             <span>Mis Mascotas</span>
                         </a>
 
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
-
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-envelope mr-2 text-pink"></i>
                                 <span>Solicitudes</span>
                             </div>
-
                             <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
                                 1
                             </span>
                         </a>
 
-                        <a href="#"
-                        class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
-
+                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-edit mr-2"></i>
                             <span>Gestor</span>
                         </a>
@@ -76,17 +62,13 @@
                 </div>
             </nav>
 
-            
-            <main class="col-md-10 p-3">
-                <div class="container-fluid p-4">
-                    <!-- Inicio -->
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid p-2 p-md-4">
                     <div class="card border border-hard rounded-lg shadow-sm degradado-rosa-naranja mb-4">
-                        <div class="card-body p-5">
-                            <div class="row align-items-center">
-
-                                <div class="col-md-6">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="row align-items-center text-center text-md-left"> <div class="col-12 col-md-6 mb-4 mb-md-0">
                                     <h1 class="font-weight-bold text-hard-brown-color">
-                                        Encuentra a tu <br> compañero perfecto
+                                        Encuentra a tu <br class="d-none d-md-block"> compañero perfecto
                                         <i class="fas fa-paw text-orange-color small"></i>
                                     </h1>
 
@@ -95,31 +77,29 @@
                                         Filtra por especie, raza y ciudad.
                                     </p>
 
-                                    <button class="btn rounded-pill text-white px-4 mr-2 bg-orange">
+                                    <button class="btn rounded-pill text-white px-4 mr-0 mr-md-2 mb-2 mb-md-0 bg-orange">
                                         <i class="fas fa-search"></i> Explorar mascotas
                                     </button>
 
-                                    <button class="btn rounded-pill text-white px-4 bg-hard-pink">
+                                    <button class="btn rounded-pill text-white px-4 mb-2 mb-md-0 bg-hard-pink">
                                         <i class="fas fa-plus"></i> Publicar mascota
                                     </button>
                                 </div>
 
-                                <div class="col-md-6 text-center text-hard-pink">
-                                    <i class="fas fa-dog fa-5x mx-2"></i>
-                                    <i class="fas fa-cat fa-5x mx-2"></i>
-                                    <br><br>
-                                    <i class="fas fa-otter fa-4x mx-2"></i>
-                                    <i class="fas fa-paw fa-4x mx-2"></i>
+                                <div class="col-12 col-md-6 text-center text-hard-pink">
+                                    <i class="fas fa-dog fa-4x fa-md-5x mx-2"></i>
+                                    <i class="fas fa-cat fa-4x fa-md-5x mx-2"></i>
+                                    <br class="d-none d-md-block"><br class="d-none d-md-block">
+                                    <i class="fas fa-otter fa-3x fa-md-4x mx-2 mt-3 mt-md-0"></i>
+                                    <i class="fas fa-paw fa-3x fa-md-4x mx-2 mt-3 mt-md-0"></i>
                                 </div>
 
                             </div>
                         </div>
                     </div>
 
-                    <!-- Busqueda -->
                     <div class="row mb-4">
-                        <div class="col-md-5">
-                            <div class="input-group shadow-sm">
+                        <div class="col-12 col-md-8 col-lg-5"> <div class="input-group shadow-sm">
                                 <div class="input-group-prepend ">
                                     <span class="input-group-text bg-card border border-right-0 border-hard text-pink" >
                                         <i class="fas fa-search"></i>
@@ -129,7 +109,7 @@
                                 <input class="form-control border border-left-0 border-hard" placeholder="Busca por raza, ciudad, especie...">
 
                                 <div class="input-group-append">
-                                    <button class="btn text-white px-4 bg-orange" >
+                                    <button class="btn text-white px-3 px-md-4 bg-orange" >
                                         Buscar
                                     </button>
                                 </div>
@@ -137,11 +117,9 @@
                         </div>
                     </div>
 
-                    <!-- Datos -->
                     <div class="row mb-4">
-
-                        <div class="col-md-2">
-                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+                            <div class="card bg-card border border-hard shadow-sm h-100 py-2">
                                 <div class="card-body d-flex align-items-center">
                                     <i class="fas fa-paw fa-2x text-pink mr-3"></i>
                                     <div>
@@ -152,8 +130,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+                            <div class="card bg-card border border-hard shadow-sm h-100 py-2">
                                 <div class="card-body d-flex align-items-center">
                                     <i class="fas fa-check-square fa-2x text-aqua mr-3"></i>
                                     <div>
@@ -164,8 +142,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+                            <div class="card bg-card border border-hard shadow-sm h-100 py-2">
                                 <div class="card-body d-flex align-items-center">
                                     <i class="fas fa-users fa-2x text-hard-pink mr-3"></i>
                                     <div>
@@ -176,8 +154,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card bg-card border border-hard shadow-sm" style="height: 15vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-3">
+                            <div class="card bg-card border border-hard shadow-sm h-100 py-2">
                                 <div class="card-body d-flex align-items-center">
                                     <i class="fas fa-map-marker-alt fa-2x text-orange-color mr-3"></i>
                                     <div>
@@ -190,96 +168,97 @@
 
                     </div>
 
-                    <!-- Macotas -->
-                    <h5 class="text-orange-color font-weight-bold mb-3">
+                    <h5 class="text-orange-color font-weight-bold mb-3 mt-4">
                         <i class="fas fa-star"></i> MASCOTAS DESTACADAS
                     </h5>
 
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
-                                
-                                <div class="bg-soft text-center p-4"> <!-- Aquí iría la imagen -->
+                        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                            <div class="card shadow-sm border border-hard pet-card h-100">
+                                <div class="bg-soft text-center p-4"> 
                                     <i class="fas fa-dog fa-5x"></i>
                                 </div>
 
-                                <div class="card-body bg-card">
+                                <div class="card-body bg-card d-flex flex-column">
                                     <h5 class="text-hard-brown-color font-weight-bold mb-1">Luna</h5>
-                                    <small class="text-soft-brown-color">Schnauzer · Guadalajara</small>
+                                    <small class="text-soft-brown-color mb-3">Schnauzer · Guadalajara</small>
 
-                                    <div class="mt-3">
-                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
-                                        <span class="badge bg-card border border-soft">Hembra</span>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                    <div class="mt-auto"> <div class="mb-2">
+                                            <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                            <span class="badge bg-card border border-soft">Hembra</span>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                            <div class="card shadow-sm border border-hard pet-card h-100">
                                 <div class="bg-soft text-center p-4">
                                     <i class="fas fa-dog fa-5x"></i>
                                 </div>
 
-                                <div class="card-body bg-card">
+                                <div class="card-body bg-card d-flex flex-column">
                                     <h5 class="text-hard-brown-color font-weight-bold mb-1">Rocky</h5>
-                                    <small class="text-soft-brown-color">Labrador · CDMX</small>
+                                    <small class="text-soft-brown-color mb-3">Labrador · CDMX</small>
 
-                                    <div class="mt-3">
-                                        <span class="badge bg-orange-soft border border-hard">Grande</span>
-                                        <span class="badge bg-card border border-soft">Macho</span>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                    <div class="mt-auto">
+                                        <div class="mb-2">
+                                            <span class="badge bg-orange-soft border border-hard">Grande</span>
+                                            <span class="badge bg-card border border-soft">Macho</span>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                            <div class="card shadow-sm border border-hard pet-card h-100">
                                 <div class="bg-pink text-center p-4">
                                     <i class="fas fa-cat fa-5x"></i>
                                 </div>
 
-                                <div class="card-body bg-card">
+                                <div class="card-body bg-card d-flex flex-column">
                                     <h5 class="text-hard-brown-color font-weight-bold mb-1">Mía</h5>
-                                    <small class="text-soft-brown-color">Persa · Monterrey</small>
+                                    <small class="text-soft-brown-color mb-3">Persa · Monterrey</small>
 
-                                    <div class="mt-3">
-                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
-                                        <span class="badge bg-card border border-soft">Hembra</span>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                    <div class="mt-auto">
+                                        <div class="mb-2">
+                                            <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                            <span class="badge bg-card border border-soft">Hembra</span>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizada</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="card shadow-sm border border-hard pet-card" style="height: 40vh;">
+                        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                            <div class="card shadow-sm border border-hard pet-card h-100">
                                 <div class="bg-green text-center p-4">
                                     <i class="fas fa-otter fa-5x"></i>
                                 </div>
 
-                                <div class="card-body bg-card">
+                                <div class="card-body bg-card d-flex flex-column">
                                     <h5 class="text-hard-brown-color font-weight-bold mb-1">Coco</h5>
-                                    <small class="text-soft-brown-color">Conejo · Guadalajara</small>
+                                    <small class="text-soft-brown-color mb-3">Conejo · Guadalajara</small>
 
-                                    <div class="mt-3">
-                                        <span class="badge bg-orange-soft border border-hard">Pequeño</span>
-                                        <span class="badge bg-card border border-soft">Macho</span>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                    <div class="mt-auto">
+                                        <div class="mb-2">
+                                            <span class="badge bg-orange-soft border border-hard">Pequeño</span>
+                                            <span class="badge bg-card border border-soft">Macho</span>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-aqua-soft border border-aqua">Esterilizado</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

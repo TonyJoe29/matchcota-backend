@@ -101,6 +101,7 @@ const setNavLinks = () => {
     ['Mi Perfil', 'profile.html'],
     ['Solicitudes', 'profile.html#solicitudes'],
     ['Gestor', 'pet_detail.html?id=1'],
+    ['Panel Admin', 'admin.html'],
     ['Estad', 'statistics.html'],
     ['Incidencias', 'incidents.html']
   ];
@@ -112,6 +113,19 @@ const setNavLinks = () => {
       link.href = found[1];
     }
   });
+
+  const navBody = qs('nav .card-body');
+  const hasAdminLink = Array.from(links).some((link) => link.textContent.includes('Panel Admin'));
+
+  if (navBody && !hasAdminLink) {
+    navBody.insertAdjacentHTML('beforeend', `
+      <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">ADMIN</small>
+      <a href="admin.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+        <i class="fas fa-tools mr-2 text-orange-color"></i>
+        <span>Panel Admin</span>
+      </a>
+    `);
+  }
 };
 
 const renderShellMessage = (main, message, type = 'danger') => {
@@ -494,6 +508,224 @@ const renderIncidents = async (main) => {
   await load();
 };
 
+const loadAllPetsForAdmin = async () => {
+  const statuses = ['disponible', 'en_proceso', 'adoptada', 'inactiva'];
+  const responses = await Promise.all(
+    statuses.map((status) => api(`/pets?status=${status}`).catch(() => ({ data: [] })))
+  );
+  const pets = responses.flatMap((response) => response.data || []);
+  return pets.filter((pet, index, all) => all.findIndex((item) => item.id === pet.id) === index);
+};
+
+const renderAdmin = async (main) => {
+  const adminToken = await loginDemo('admin');
+
+  const draw = async (message = '') => {
+    const [stats, usersResponse, requestsResponse, incidentsResponse, pets] = await Promise.all([
+      api('/admin/stats', { token: adminToken }),
+      api('/admin/users', { token: adminToken }),
+      api('/adoptions', { token: adminToken }),
+      api('/support/incidents', { token: adminToken }),
+      loadAllPetsForAdmin()
+    ]);
+
+    const users = usersResponse.data || [];
+    const requests = requestsResponse.data || [];
+    const incidents = incidentsResponse.data || [];
+
+    main.innerHTML = `
+      <div class="container-fluid p-2 p-md-4">
+        <div id="admin-message">${message ? renderStatus(message, 'success') : ''}</div>
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4">
+          <div>
+            <h2 class="text-hard-brown-color font-weight-bold mb-1">Panel de administracion</h2>
+            <small class="text-hard-brown-color">Funciones principales para la demo: usuarios, solicitudes, mascotas e incidencias.</small>
+          </div>
+          <div class="mt-3 mt-lg-0">
+            <button id="clear-session" class="btn bg-soft border border-soft rounded-pill text-hard-brown-color">
+              <i class="fas fa-sign-out-alt"></i> Reiniciar sesion demo
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12 col-sm-6 col-lg-3 mb-3"><div class="card bg-card border-hard h-100"><div class="card-body"><h3>${stats.users?.total || 0}</h3><small>Usuarios</small></div></div></div>
+          <div class="col-12 col-sm-6 col-lg-3 mb-3"><div class="card bg-card border-hard h-100"><div class="card-body"><h3>${stats.pets?.total_registradas || 0}</h3><small>Mascotas</small></div></div></div>
+          <div class="col-12 col-sm-6 col-lg-3 mb-3"><div class="card bg-card border-hard h-100"><div class="card-body"><h3>${stats.adoptions?.total_solicitudes || 0}</h3><small>Solicitudes</small></div></div></div>
+          <div class="col-12 col-sm-6 col-lg-3 mb-3"><div class="card bg-card border-hard h-100"><div class="card-body"><h3>${stats.support?.incidencias_abiertas || 0}</h3><small>Incidencias abiertas</small></div></div></div>
+        </div>
+
+        <div class="card bg-card border-hard mb-4">
+          <div class="card-body">
+            <h5 class="text-orange-color font-weight-bold mb-3"><i class="fas fa-envelope mr-2"></i>Solicitudes de adopcion</h5>
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <thead class="bg-orange-soft text-soft-brown-color"><tr><th>ID</th><th>Mascota</th><th>Usuario</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody>
+                  ${requests.map((request) => `
+                    <tr class="border-top border-soft">
+                      <td>${request.id}</td>
+                      <td>${request.pet_name}</td>
+                      <td>${request.requester_username}</td>
+                      <td><span class="badge bg-orange-soft border border-hard">${request.status}</span></td>
+                      <td>
+                        <button class="btn btn-sm bg-soft border border-soft rounded-pill mb-1" data-adoption-status="${request.id}:en_proceso">En proceso</button>
+                        <button class="btn btn-sm bg-aqua-soft border border-aqua rounded-pill mb-1" data-adoption-status="${request.id}:aprobada">Aprobar</button>
+                        <button class="btn btn-sm bg-soft-pink border border-pink rounded-pill mb-1" data-adoption-status="${request.id}:rechazada">Rechazar</button>
+                      </td>
+                    </tr>
+                  `).join('') || '<tr><td colspan="5">No hay solicitudes todavia.</td></tr>'}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 mb-4">
+            <div class="card bg-card border-hard h-100">
+              <div class="card-body">
+                <h5 class="text-orange-color font-weight-bold mb-3"><i class="fas fa-users mr-2"></i>Usuarios</h5>
+                <div class="table-responsive">
+                  <table class="table table-borderless">
+                    <thead class="bg-orange-soft text-soft-brown-color"><tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Accion</th></tr></thead>
+                    <tbody>
+                      ${users.map((user) => `
+                        <tr class="border-top border-soft">
+                          <td><strong>${user.username}</strong><br><small>${user.email}</small></td>
+                          <td>
+                            <select class="custom-select custom-select-sm" data-user-role="${user.id}">
+                              ${['admin', 'soporte', 'usuario'].map((role) => `<option value="${role}" ${user.role === role ? 'selected' : ''}>${role}</option>`).join('')}
+                            </select>
+                          </td>
+                          <td><span class="badge bg-card border border-soft">${user.status}</span></td>
+                          <td>
+                            <button class="btn btn-sm bg-soft border border-soft rounded-pill" data-user-status="${user.id}:${user.status === 'activo' ? 'suspendido' : 'activo'}">
+                              ${user.status === 'activo' ? 'Suspender' : 'Activar'}
+                            </button>
+                          </td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 mb-4">
+            <div class="card bg-card border-hard h-100">
+              <div class="card-body">
+                <h5 class="text-orange-color font-weight-bold mb-3"><i class="fas fa-paw mr-2"></i>Mascotas</h5>
+                <div class="table-responsive">
+                  <table class="table table-borderless">
+                    <thead class="bg-orange-soft text-soft-brown-color"><tr><th>Mascota</th><th>Ciudad</th><th>Estado</th><th>Cambiar</th></tr></thead>
+                    <tbody>
+                      ${pets.map((pet) => `
+                        <tr class="border-top border-soft">
+                          <td><strong>${pet.name}</strong><br><small>${pet.species} - ${pet.breed || 'Sin raza'}</small></td>
+                          <td>${pet.city}</td>
+                          <td><span class="badge bg-orange-soft border border-hard">${pet.status}</span></td>
+                          <td>
+                            <select class="custom-select custom-select-sm" data-pet-status="${pet.id}">
+                              ${['disponible', 'en_proceso', 'adoptada', 'inactiva'].map((status) => `<option value="${status}" ${pet.status === status ? 'selected' : ''}>${status}</option>`).join('')}
+                            </select>
+                          </td>
+                        </tr>
+                      `).join('') || '<tr><td colspan="4">Sin mascotas.</td></tr>'}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-card border-hard">
+          <div class="card-body">
+            <h5 class="text-orange-color font-weight-bold mb-3"><i class="fas fa-exclamation-circle mr-2"></i>Incidencias</h5>
+            <div class="row">
+              ${incidents.map((incident) => `
+                <div class="col-md-6 col-xl-4 mb-3">
+                  <div class="border border-soft rounded p-3 h-100 bg-soft">
+                    <h6 class="text-hard-brown-color font-weight-bold">${incident.subject}</h6>
+                    <p class="small text-soft-brown-color">${incident.description}</p>
+                    <span class="badge bg-orange-soft border border-hard">${incident.type}</span>
+                    <span class="badge bg-card border border-soft">${incident.status}</span>
+                    ${incident.status !== 'resuelta' ? `<button class="btn btn-sm bg-aqua-soft border border-aqua rounded-pill float-right" data-incident-status="${incident.id}:resuelta">Resolver</button>` : ''}
+                  </div>
+                </div>
+              `).join('') || '<div class="col-12">No hay incidencias registradas.</div>'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    qs('#clear-session').addEventListener('click', () => {
+      localStorage.removeItem('matchcota_user_token');
+      localStorage.removeItem('matchcota_admin_token');
+      window.location.reload();
+    });
+
+    document.querySelectorAll('[data-adoption-status]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const [id, status] = button.dataset.adoptionStatus.split(':');
+        try {
+          await api(`/adoptions/${id}/status`, { method: 'PATCH', token: adminToken, body: { status } });
+          await draw(`Solicitud ${id} actualizada a ${status}.`);
+        } catch (error) {
+          qs('#admin-message').innerHTML = renderStatus(error.message, 'warning');
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-user-role]').forEach((select) => {
+      select.addEventListener('change', async () => {
+        await api(`/admin/users/${select.dataset.userRole}/role`, {
+          method: 'PATCH',
+          token: adminToken,
+          body: { role: select.value }
+        });
+        await draw('Rol de usuario actualizado.');
+      });
+    });
+
+    document.querySelectorAll('[data-user-status]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const [id, status] = button.dataset.userStatus.split(':');
+        await api(`/admin/users/${id}/status`, { method: 'PATCH', token: adminToken, body: { status } });
+        await draw(`Usuario ${id} actualizado a ${status}.`);
+      });
+    });
+
+    document.querySelectorAll('[data-pet-status]').forEach((select) => {
+      select.addEventListener('change', async () => {
+        await api(`/pets/${select.dataset.petStatus}`, {
+          method: 'PUT',
+          token: adminToken,
+          body: { status: select.value }
+        });
+        await draw('Estado de mascota actualizado.');
+      });
+    });
+
+    document.querySelectorAll('[data-incident-status]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const [id, status] = button.dataset.incidentStatus.split(':');
+        await api(`/support/incidents/${id}/status`, {
+          method: 'PATCH',
+          token: adminToken,
+          body: { status }
+        });
+        await draw('Incidencia resuelta.');
+      });
+    });
+  };
+
+  await draw();
+};
+
 const boot = async () => {
   setNavLinks();
   const main = qs('main');
@@ -506,6 +738,7 @@ const boot = async () => {
     if (page === 'profile.html') await renderProfile(main);
     if (page === 'statistics.html') await renderStatistics(main);
     if (page === 'incidents.html') await renderIncidents(main);
+    if (page === 'admin.html') await renderAdmin(main);
   } catch (error) {
     renderShellMessage(main, `${error.message}. Revisa que el servidor este corriendo y que ejecutaste npm run db:reset.`, 'danger');
   }

@@ -65,6 +65,7 @@ Frontend integrado:
 
 ```txt
 http://localhost:3000/frontend/home.html
+http://localhost:3000/frontend/admin.html
 ```
 
 Prueba rapida:
@@ -102,6 +103,7 @@ database/
   matchcota.sqlite
 frontend/
   paginas HTML conectadas a la API
+  admin.html para demo de usuarios, solicitudes, mascotas e incidencias
 postman/
   Matchcota Backend.postman_collection.json
 ```
