@@ -11,6 +11,7 @@ const alertRoutes = require('./routes/alerts.routes');
 const supportRoutes = require('./routes/support.routes');
 const adminRoutes = require('./routes/admin.routes');
 const catalogRoutes = require('./routes/catalogs.routes');
+const chatRoutes = require('./routes/chat.routes');
 const { notFound, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
@@ -40,6 +41,7 @@ app.use('/alerts', alertRoutes);
 app.use('/support', supportRoutes);
 app.use('/admin', adminRoutes);
 app.use('/catalogs', catalogRoutes);
+app.use('/chats', chatRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

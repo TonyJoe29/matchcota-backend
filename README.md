@@ -137,6 +137,12 @@ GET    /adoptions
 GET    /adoptions/:id
 PATCH  /adoptions/:id/status
 
+GET    /chats
+POST   /chats/support
+POST   /chats/adoptions/:requestId
+GET    /chats/:id/messages
+POST   /chats/:id/messages
+
 POST   /support/incidents
 GET    /support/incidents
 PATCH  /support/incidents/:id/status

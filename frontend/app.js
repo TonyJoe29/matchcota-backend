@@ -3,7 +3,6 @@
   const TOKEN_KEY = 'matchcota_token';
   const USER_KEY = 'matchcota_user';
   const OLD_KEYS = ['matchcota_user_token', 'matchcota_admin_token', 'matchcota_demo_user'];
-  const CHAT_KEY = 'matchcota_chats';
   const DEMO = {
     user: { email: 'adis06@gmail.com', password: 'Usuario123!' },
     admin: { email: 'admin@matchcota.test', password: 'Admin123!' }
@@ -143,6 +142,8 @@
   const badge = (status) => `<span class="badge badge-${statusClass(status)} px-3 py-2">${nice(status)}</span>`;
   const imgUrl = (pet) => pet?.photo_url || `https://api.dicebear.com/7.x/shapes/svg?seed=${encodeURIComponent(pet?.name || 'matchcota')}`;
   const petImg = (pet, cls = 'w-100 h-100') => `<img src="${esc(imgUrl(pet))}" alt="${esc(pet?.name || 'Mascota')}" class="${cls}" style="object-fit:cover" onerror="this.src='https://api.dicebear.com/7.x/shapes/svg?seed=matchcota'">`;
+  const avatarUrl = (name, photo) => photo || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(name || 'matchcota')}`;
+  const userAvatar = (name, photo, size = 46) => `<img src="${esc(avatarUrl(name, photo))}" alt="${esc(name || 'Usuario')}" style="width:${size}px;height:${size}px;object-fit:cover;border-radius:50%;background:#fdf8f2" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=matchcota'">`;
 
   function navLink(href, icon, text, active) {
     const on = active === href.toLowerCase();
@@ -312,7 +313,18 @@
   }
 
   const requestButtons = (request, adminAttr = '') => (REQUEST_TRANSITIONS[request.status] || []).map((status) => `<button class="btn btn-sm btn-outline-secondary rounded-pill px-3 mr-2 mb-2" data-request-id="${request.id}" data-request-status="${status}" ${adminAttr}>${nice(status)}</button>`).join('');
-  const requestCard = (request, admin = false) => `<div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body p-3"><div class="d-flex flex-wrap align-items-center justify-content-between"><div class="d-flex align-items-center mb-3 mb-md-0"><div class="mr-3" style="width:62px;height:62px;overflow:hidden;border-radius:18px;background:#fdf8f2"><img src="${esc(request.pet_photo_url || `https://api.dicebear.com/7.x/shapes/svg?seed=${encodeURIComponent(request.pet_name)}`)}" class="w-100 h-100" style="object-fit:cover" alt="${esc(request.pet_name)}"></div><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(request.pet_name)}</h5><small class="text-soft-brown-color">Solicitante: ${esc(request.requester_username || 'Yo')}</small><div class="mt-2">${badge(request.status)} ${badge(request.pet_status)}</div></div></div>${admin ? `<div>${requestButtons(request) || '<small class="text-soft-brown-color">Sin acciones</small>'}</div>` : ''}</div><div class="mt-3 p-3 bg-soft rounded border border-soft"><small class="text-soft-brown-color">${esc(request.motivation || request.message || 'Sin mensaje adicional.')}</small></div></div></div>`;
+  const chatButton = (request) => `<a href="chat.html?request=${request.id}" class="btn btn-sm bg-orange text-white rounded-pill px-3 mr-2 mb-2"><i class="fas fa-comments mr-1"></i>Abrir chat</a>`;
+  const requestCard = (request, admin = false, mode = 'sent') => {
+    const personLabel = mode === 'received' ? 'Solicitante' : 'Publicado por';
+    const personName = mode === 'received'
+      ? (request.requester_username || 'Usuario')
+      : (request.owner_username || 'Publicador');
+    const actions = admin
+      ? `<div>${requestButtons(request) || '<small class="text-soft-brown-color">Sin acciones</small>'}</div>`
+      : `<div>${chatButton(request)}</div>`;
+
+    return `<div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body p-3"><div class="d-flex flex-wrap align-items-center justify-content-between"><div class="d-flex align-items-center mb-3 mb-md-0"><div class="mr-3" style="width:62px;height:62px;overflow:hidden;border-radius:18px;background:#fdf8f2"><img src="${esc(request.pet_photo_url || `https://api.dicebear.com/7.x/shapes/svg?seed=${encodeURIComponent(request.pet_name)}`)}" class="w-100 h-100" style="object-fit:cover" alt="${esc(request.pet_name)}"></div><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(request.pet_name)}</h5><small class="text-soft-brown-color">${personLabel}: ${esc(personName)}</small><div class="mt-2">${badge(request.status)} ${badge(request.pet_status)}</div></div></div>${actions}</div><div class="mt-3 p-3 bg-soft rounded border border-soft"><small class="text-soft-brown-color">${esc(request.motivation || request.message || 'Sin mensaje adicional.')}</small></div></div></div>`;
+  };
 
   async function renderRequests() {
     const session = requireSession();
@@ -321,19 +333,38 @@
     setSidebar('match.html');
     loading('Cargando solicitudes');
     const load = async () => {
-      const response = await api(admin ? '/adoptions' : '/adoptions/my-requests');
-      const requests = response.data || [];
-      $('#requests-list').innerHTML = requests.length ? requests.map((request) => requestCard(request, admin)).join('') : empty('Sin solicitudes por ahora', admin ? 'Cuando un usuario solicite una mascota aparecerá aquí.' : 'Solicita una mascota desde el directorio para verla aquí.', '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4">Ir al directorio</a>');
+      if (admin) {
+        const response = await api('/adoptions');
+        const requests = response.data || [];
+        $('#requests-list').innerHTML = requests.length ? requests.map((request) => requestCard(request, true)).join('') : empty('Sin solicitudes por ahora', 'Cuando un usuario solicite una mascota aparecerá aquí.', '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4">Ir al directorio</a>');
+        return;
+      }
+
+      const [sentResponse, receivedResponse] = await Promise.all([
+        api('/adoptions/my-requests'),
+        api('/adoptions/received')
+      ]);
+      const sent = sentResponse.data || [];
+      const received = receivedResponse.data || [];
+      $('#requests-list').innerHTML = `
+        <div class="mb-4">
+          <h4 class="text-hard-brown-color font-weight-bold">Mis solicitudes enviadas</h4>
+          ${sent.length ? sent.map((request) => requestCard(request, false, 'sent')).join('') : empty('Sin solicitudes enviadas', 'Solicita una mascota desde el directorio para verla aquí.', '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4">Ir al directorio</a>')}
+        </div>
+        <div>
+          <h4 class="text-hard-brown-color font-weight-bold">Solicitudes para mis mascotas</h4>
+          ${received.length ? received.map((request) => requestCard(request, false, 'received')).join('') : empty('Sin solicitudes recibidas', 'Cuando alguien solicite adoptar una de tus mascotas aparecerá aquí.', '<a href="mis_mascotas.html" class="btn bg-orange text-white rounded-pill px-4">Mis mascotas</a>')}
+        </div>`;
     };
     try {
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Solicitudes de adopción</h2><small class="text-soft-brown-color">${admin ? 'Solicitudes recibidas.' : 'Panel de mis solicitudes.'}</small></div>${admin ? '<a href="admin.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Panel admin</a>' : '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Buscar mascota</a>'}</div><div id="requests-message"></div><div id="requests-list"></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Solicitudes de adopción</h2><small class="text-soft-brown-color">${admin ? 'Solicitudes recibidas.' : 'Panel de solicitudes enviadas y recibidas.'}</small></div>${admin ? '<a href="admin.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Panel admin</a>' : '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Buscar mascota</a>'}</div><div id="requests-message"></div><div id="requests-list"></div>`);
       await load();
       $('#requests-list').addEventListener('click', async (event) => {
         const button = event.target.closest('[data-request-status]');
         if (!button) return;
         try {
           await api(`/adoptions/${button.dataset.requestId}/status`, { method: 'PATCH', body: { status: button.dataset.requestStatus } });
-          message('#requests-message', 'Estatus de solicitud actualizado.', 'success');
+          message('#requests-message', 'Estado de solicitud actualizado.', 'success');
           await load();
         } catch (error) {
           message('#requests-message', error.message, 'danger');
@@ -699,17 +730,19 @@
     setSidebar('configurar_notis.html');
     loading('Cargando notificaciones');
     try {
-      const [alertResponse, cat, sentResponse, receivedResponse, petsResponse] = await Promise.all([
+      const [alertResponse, cat, sentResponse, receivedResponse, petsResponse, chatResponse] = await Promise.all([
         api('/users/alerts').catch(() => ({ alert: null })),
         catalogs(),
         api('/adoptions/my-requests').catch(() => ({ data: [] })),
         api('/adoptions/received').catch(() => ({ data: [] })),
-        api('/pets/my').catch(() => ({ data: [] }))
+        api('/pets/my').catch(() => ({ data: [] })),
+        api('/chats').catch(() => ({ data: [] }))
       ]);
       const alert = alertResponse.alert || {};
       const sent = sentResponse.data || [];
       const received = receivedResponse.data || [];
       const pets = petsResponse.data || [];
+      const chats = chatResponse.data || [];
       const important = sent.filter((request) => ['aprobada', 'rechazada', 'en_proceso'].includes(request.status)).length + received.filter((request) => ['pendiente', 'en_proceso'].includes(request.status)).length;
       const sentList = sent.length ? sent.slice(0, 5).map((request) => notificationItem(request.pet_name, statusTextForRequest(request), request.status, '<a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill">Ver solicitudes</a>')).join('') : empty('Sin solicitudes enviadas', 'Cuando solicites adoptar una mascota, aparecerá aquí.');
       const receivedList = received.length ? received.slice(0, 5).map((request) => notificationItem(request.pet_name, statusTextForRequest(request, true), request.status, `<a href="chat.html?request=${request.id}" class="btn btn-sm btn-outline-secondary rounded-pill mr-2">Abrir chat</a><a href="match.html" class="btn btn-sm bg-orange text-white rounded-pill">Revisar</a>`)).join('') : empty('Sin solicitudes recibidas', 'Las solicitudes para tus mascotas publicadas aparecerán aquí.');
@@ -724,7 +757,7 @@
           ${statCard('Pendientes', important, 'Solicitudes enviadas', sent.length, 'fa-bell')}
           ${statCard('Recibidas', received.length, 'Tus mascotas', pets.length, 'fa-paw')}
           ${statCard('Alertas', alert.active === 0 ? 0 : 1, 'Preferencias', alert.id ? 1 : 0, 'fa-heart')}
-          ${statCard('Chat', sent.length + received.length + 1, 'Conversaciones', sent.length + received.length + 1, 'fa-comments')}
+          ${statCard('Chat', chats.length, 'Conversaciones abiertas', chats.length, 'fa-comments')}
         </div>
         <div id="alert-message"></div>
         <div class="row">
@@ -794,87 +827,99 @@
     setSidebar('chat.html');
     loading('Cargando chat');
     try {
-      const [sentResponse, receivedResponse] = await Promise.all([
-        api('/adoptions/my-requests').catch(() => ({ data: [] })),
-        api('/adoptions/received').catch(() => ({ data: [] }))
-      ]);
-      const sent = sentResponse.data || [];
-      const received = receivedResponse.data || [];
-      const conversations = [
-        { id: 'support', title: 'Soporte Matchcota', subtitle: 'Dudas, reportes e incidencias', icon: 'fa-headset', initial: 'Hola, estamos aquí para ayudarte con tus dudas o reportes.' },
-        ...sent.map((request) => ({
-          id: `sent-${request.id}`,
-          title: `Adopción de ${request.pet_name}`,
-          subtitle: `Tu solicitud está ${nice(request.status).toLowerCase()}`,
-          icon: 'fa-heart',
-          initial: statusTextForRequest(request)
-        })),
-        ...received.map((request) => ({
-          id: `received-${request.id}`,
-          title: `${request.requester_username} y ${request.pet_name}`,
-          subtitle: `Solicitud ${nice(request.status).toLowerCase()}`,
-          icon: 'fa-paw',
-          initial: statusTextForRequest(request, true)
-        }))
-      ];
       const params = new URLSearchParams(window.location.search);
       const requestedId = params.get('request');
-      let active = conversations.find((conversation) => conversation.id.endsWith(`-${requestedId}`)) || conversations[0];
-      const readStore = () => {
-        try {
-          return JSON.parse(localStorage.getItem(CHAT_KEY) || '{}');
-        } catch (_error) {
-          return {};
-        }
+
+      let opened = null;
+      if (requestedId) {
+        opened = await api(`/chats/adoptions/${requestedId}`, { method: 'POST' });
+      } else if (!isAdmin(session.user) && !isSupport(session.user)) {
+        await api('/chats/support', { method: 'POST' });
+      }
+
+      let conversations = [];
+      let activeId = opened?.conversation?.id || Number(params.get('conversation')) || null;
+      let refreshTimer = null;
+
+      const conversationPhoto = (conversation) => conversation.type === 'support'
+        ? userAvatar(conversation.display_title, conversation.display_photo_url, 46)
+        : `<div style="width:46px;height:46px;overflow:hidden;border-radius:50%;background:#fdf8f2">${conversation.pet_photo_url ? `<img src="${esc(conversation.pet_photo_url)}" class="w-100 h-100" style="object-fit:cover" alt="${esc(conversation.pet_name || 'Mascota')}">` : userAvatar(conversation.display_title, conversation.display_photo_url, 46)}</div>`;
+      const conversationButton = (conversation) => `<button class="list-group-item list-group-item-action border-soft ${Number(conversation.id) === Number(activeId) ? 'active bg-orange border-0' : ''}" data-chat="${conversation.id}"><div class="d-flex align-items-center">${conversationPhoto(conversation)}<div class="text-left ml-3"><b>${esc(conversation.display_title)}</b><small class="d-block ${Number(conversation.id) === Number(activeId) ? 'text-white' : 'text-soft-brown-color'}">${esc(conversation.display_subtitle || '')}</small>${conversation.last_message ? `<small class="d-block ${Number(conversation.id) === Number(activeId) ? 'text-white' : 'text-muted'}">${esc(conversation.last_sender_username || 'Usuario')}: ${esc(conversation.last_message).slice(0, 48)}</small>` : ''}</div></div></button>`;
+      const renderEmptyChat = () => {
+        $('#chat-title').textContent = 'Selecciona una conversación';
+        $('#chat-subtitle').textContent = 'Abre soporte o una solicitud para comenzar.';
+        $('#chat-messages').innerHTML = empty('Sin conversación activa', 'Elige una conversación del panel izquierdo.');
       };
-      const writeStore = (store) => localStorage.setItem(CHAT_KEY, JSON.stringify(store));
-      const messagesFor = (conversation) => {
-        const store = readStore();
-        if (!store[conversation.id]) {
-          store[conversation.id] = [{ from: 'Matchcota', text: conversation.initial }];
-          writeStore(store);
+      const renderMessages = (messages) => {
+        const active = conversations.find((conversation) => Number(conversation.id) === Number(activeId));
+        if (!active) {
+          renderEmptyChat();
+          return;
         }
-        return store[conversation.id];
-      };
-      const conversationButton = (conversation) => `<button class="list-group-item list-group-item-action border-soft ${conversation.id === active.id ? 'active bg-orange border-0' : ''}" data-chat="${conversation.id}"><div class="d-flex align-items-center"><i class="fas ${conversation.icon} mr-3"></i><div class="text-left"><b>${esc(conversation.title)}</b><small class="d-block ${conversation.id === active.id ? 'text-white' : 'text-soft-brown-color'}">${conversation.subtitle}</small></div></div></button>`;
-      const draw = () => {
-        $('#chat-list').innerHTML = conversations.map(conversationButton).join('');
-        const messages = messagesFor(active);
-        $('#chat-title').textContent = active.title;
-        $('#chat-subtitle').textContent = active.subtitle;
-        $('#chat-messages').innerHTML = messages.map((msg) => {
-          const mine = msg.from === 'Yo';
-          return `<div class="d-flex ${mine ? 'justify-content-end' : 'justify-content-start'} mb-3"><div class="${mine ? 'bg-orange-soft text-hard-brown-color' : 'bg-soft text-soft-brown-color'} rounded px-3 py-2" style="max-width:78%"><b>${esc(msg.from)}:</b> ${esc(msg.text)}</div></div>`;
+        $('#chat-title').textContent = active.display_title;
+        $('#chat-subtitle').textContent = active.display_subtitle || '';
+        const initial = messages.length ? '' : `<div class="d-flex justify-content-start mb-3"><div class="bg-soft text-soft-brown-color rounded px-3 py-2" style="max-width:78%"><b>Matchcota:</b> ${active.type === 'support' ? 'Hola, estamos aquí para ayudarte con tus dudas o reportes.' : 'Este chat se abrió desde una solicitud de adopción.'}</div></div>`;
+        $('#chat-messages').innerHTML = initial + messages.map((msg) => {
+          const mine = Number(msg.sender_id) === Number(session.user.id);
+          const name = mine ? 'Yo' : (msg.sender_name || msg.sender_username || 'Usuario');
+          return `<div class="d-flex ${mine ? 'justify-content-end' : 'justify-content-start'} mb-3"><div class="d-flex ${mine ? 'flex-row-reverse' : ''} align-items-end" style="max-width:86%">${userAvatar(name, msg.sender_photo_url, 34)}<div class="${mine ? 'bg-orange-soft text-hard-brown-color mr-2' : 'bg-soft text-soft-brown-color ml-2'} rounded px-3 py-2"><b>${esc(name)}:</b> ${esc(msg.message)}<small class="d-block text-muted mt-1">${esc(new Date(msg.created_at).toLocaleString())}</small></div></div></div>`;
         }).join('');
+        const box = $('#chat-messages');
+        box.scrollTop = box.scrollHeight;
+      };
+      const loadMessages = async () => {
+        if (!activeId) {
+          renderEmptyChat();
+          return;
+        }
+        const response = await api(`/chats/${activeId}/messages`);
+        renderMessages(response.data || []);
+      };
+      const loadConversations = async () => {
+        const response = await api('/chats');
+        conversations = response.data || [];
+        if (!activeId && conversations.length) activeId = conversations[0].id;
+        $('#chat-list').innerHTML = conversations.length ? conversations.map(conversationButton).join('') : empty('Sin conversaciones', 'Abre soporte o inicia un chat desde una solicitud.');
+        await loadMessages();
       };
 
       setMain(`
         <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
-          <div><h2 class="m-0 titulo-principal text-hard-brown-color">Chat</h2><small class="text-soft-brown-color">Comunicación con soporte y seguimiento de adopciones.</small></div>
-          <a href="incidents.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Reportar incidencia</a>
+          <div><h2 class="m-0 titulo-principal text-hard-brown-color">Chat</h2><small class="text-soft-brown-color">Mensajes guardados entre usuarios, adoptantes y soporte.</small></div>
+          <div class="mt-3 mt-md-0">
+            ${isAdmin(session.user) || isSupport(session.user) ? '' : '<button class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2" id="open-support-chat" type="button">Chat con soporte</button>'}
+            <a href="incidents.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Reportar incidencia</a>
+          </div>
         </div>
         <div class="row">
           <div class="col-12 col-lg-4 mb-4"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-3"><h5 class="text-hard-brown-color font-weight-bold px-2">Conversaciones</h5><div id="chat-list" class="list-group list-group-flush"></div></div></div></div>
           <div class="col-12 col-lg-8 mb-4"><div class="card bg-card border-soft shadow-sm h-100" style="border-radius:20px"><div class="card-body p-4 d-flex flex-column" style="min-height:520px"><div class="border-bottom border-soft pb-3 mb-3"><h4 id="chat-title" class="text-hard-brown-color font-weight-bold mb-1"></h4><small id="chat-subtitle" class="text-soft-brown-color"></small></div><div id="chat-messages" class="flex-grow-1 mb-3" style="overflow:auto"></div><form id="chat-form" class="input-group"><input id="chat-input" class="form-control" placeholder="Escribe un mensaje" required><div class="input-group-append"><button class="btn bg-orange text-white" type="submit">Enviar</button></div></form></div></div></div>
         </div>`);
-      draw();
+
+      await loadConversations();
+
+      $('#open-support-chat')?.addEventListener('click', async () => {
+        const response = await api('/chats/support', { method: 'POST' });
+        activeId = response.conversation.id;
+        await loadConversations();
+      });
       $('#chat-list').addEventListener('click', (event) => {
         const button = event.target.closest('[data-chat]');
         if (!button) return;
-        active = conversations.find((conversation) => conversation.id === button.dataset.chat) || active;
-        draw();
+        activeId = Number(button.dataset.chat);
+        loadConversations();
       });
-      $('#chat-form').addEventListener('submit', (event) => {
+      $('#chat-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const input = $('#chat-input');
         const text = input.value.trim();
-        if (!text) return;
-        const store = readStore();
-        store[active.id] = [...messagesFor(active), { from: 'Yo', text }];
-        writeStore(store);
+        if (!text || !activeId) return;
+        await api(`/chats/${activeId}/messages`, { method: 'POST', body: { message: text } });
         input.value = '';
-        draw();
+        await loadConversations();
       });
+      refreshTimer = window.setInterval(() => loadConversations().catch(() => {}), 5000);
+      window.addEventListener('beforeunload', () => refreshTimer && window.clearInterval(refreshTimer), { once: true });
     } catch (error) {
       errorView('No se pudo cargar el chat', error);
     }
