@@ -14,7 +14,7 @@ const createAdoption = async (req, res, next) => {
     });
 
     res.status(201).json({
-      message: 'Solicitud de adopcion creada exitosamente.',
+      message: 'Solicitud de adopción creada exitosamente.',
       request
     });
   } catch (error) {
@@ -34,6 +34,15 @@ const myRequests = async (req, res, next) => {
 const listRequests = async (_req, res, next) => {
   try {
     const requests = await adoptionModel.listAll();
+    res.json({ data: requests });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const receivedRequests = async (req, res, next) => {
+  try {
+    const requests = await adoptionModel.listByPetOwner(req.user.id);
     res.json({ data: requests });
   } catch (error) {
     next(error);
@@ -76,6 +85,7 @@ module.exports = {
   createAdoption,
   myRequests,
   listRequests,
+  receivedRequests,
   getRequest,
   updateStatus
 };

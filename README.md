@@ -132,6 +132,7 @@ DELETE /pets/:id
 
 POST   /adoptions
 GET    /adoptions/my-requests
+GET    /adoptions/received
 GET    /adoptions
 GET    /adoptions/:id
 PATCH  /adoptions/:id/status

@@ -3,6 +3,7 @@ const { query } = require('../config/db');
 const petSelect = `
   SELECT
     p.id, p.owner_id, p.name, p.age, p.gender, p.status, p.photo_url,
+    p.species_id, p.breed_id, p.size_id, p.city_id,
     p.health_status, p.special_needs, p.is_sterilized, p.is_vaccinated,
     p.compatible_dogs, p.compatible_cats, p.compatible_children,
     p.description, p.created_at, p.updated_at,

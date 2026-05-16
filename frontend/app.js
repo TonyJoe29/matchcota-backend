@@ -3,6 +3,7 @@
   const TOKEN_KEY = 'matchcota_token';
   const USER_KEY = 'matchcota_user';
   const OLD_KEYS = ['matchcota_user_token', 'matchcota_admin_token', 'matchcota_demo_user'];
+  const CHAT_KEY = 'matchcota_chats';
   const DEMO = {
     user: { email: 'adis06@gmail.com', password: 'Usuario123!' },
     admin: { email: 'admin@matchcota.test', password: 'Admin123!' }
@@ -15,11 +16,31 @@
     rechazada: [],
     cancelada: []
   };
+  const LABELS = {
+    disponible: 'Disponible',
+    en_proceso: 'En proceso',
+    adoptada: 'Adoptada',
+    inactiva: 'Inactiva',
+    pendiente: 'Pendiente',
+    aprobada: 'Aprobada',
+    rechazada: 'Rechazada',
+    cancelada: 'Cancelada',
+    abierta: 'Abierta',
+    en_revision: 'En revisión',
+    resuelta: 'Resuelta',
+    cerrada: 'Cerrada',
+    activo: 'Activo',
+    suspendido: 'Suspendido',
+    eliminado: 'Eliminado',
+    admin: 'Administrador',
+    soporte: 'Soporte',
+    usuario: 'Usuario'
+  };
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const page = () => (window.location.pathname.split('/').pop() || 'home.html').toLowerCase();
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
-  const nice = (value) => esc(String(value ?? '').replace(/_/g, ' '));
+  const nice = (value) => esc(LABELS[value] || String(value ?? '').replace(/_/g, ' '));
   const clean = (object) => Object.fromEntries(Object.entries(object).filter(([, value]) => value !== undefined && value !== null && value !== ''));
   const formData = (form) => Object.fromEntries(new FormData(form).entries());
 
@@ -140,20 +161,42 @@
         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">PRINCIPAL</small>
         ${navLink('home.html', 'fa-home', 'Inicio', active)}${navLink('directory.html', 'fa-search', 'Directorio', active)}
         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">MI CUENTA</small>
-        ${session ? navLink('profile.html', 'fa-user', 'Mi Perfil', active) : navLink('login.html', 'fa-sign-in-alt', 'Iniciar sesion', active)}
+        ${session ? navLink('profile.html', 'fa-user', 'Mi Perfil', active) : navLink('login.html', 'fa-sign-in-alt', 'Iniciar sesión', active)}
         ${session ? navLink('configurar_notis.html', 'fa-bell', 'Notificaciones', active) : ''}
         ${session ? navLink('publicar_mascotas.html', 'fa-plus-circle', 'Publicar mascota', active) : ''}
         ${session ? navLink('mis_mascotas.html', 'fa-paw', 'Mis Mascotas', active) : ''}
         ${session ? navLink('match.html', 'fa-envelope', 'Solicitudes', active) : ''}
+        ${session ? navLink('chat.html', 'fa-comments', 'Chat', active) : ''}
         ${session ? navLink('incidents.html', 'fa-exclamation-circle', 'Incidencias', active) : ''}
-        ${isAdmin(user) || isSupport(user) ? `<small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">ADMIN</small>${isAdmin(user) ? navLink('admin.html', 'fa-tools', 'Panel Admin', active) + navLink('Gestionar_mascotas.html', 'fa-dog', 'Gestion mascotas', active) + navLink('statistics.html', 'fa-chart-bar', 'Estadisticas', active) : ''}` : ''}
-        <div class="px-3 mt-4">${session ? `<small class="text-soft-brown-color d-block mb-2">Sesion: <b>${esc(user.username)}</b></small><div class="mb-2">${badge(user.role)}</div><button class="btn btn-sm btn-outline-secondary rounded-pill btn-block" data-logout>Cerrar sesion</button>` : '<a href="login.html" class="btn btn-sm bg-orange text-white rounded-pill btn-block">Entrar</a>'}</div>
+        ${isAdmin(user) || isSupport(user) ? `<small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">ADMIN</small>${isAdmin(user) ? navLink('admin.html', 'fa-tools', 'Panel Admin', active) + navLink('Gestionar_mascotas.html', 'fa-dog', 'Gestión mascotas', active) + navLink('statistics.html', 'fa-chart-bar', 'Estadísticas', active) : ''}` : ''}
+        <div class="px-3 mt-4">${session ? `<small class="text-soft-brown-color d-block mb-2">Sesión: <b>${esc(user.username)}</b></small><div class="mb-2">${badge(user.role)}</div><button class="btn btn-sm btn-outline-secondary rounded-pill btn-block" data-logout>Cerrar sesión</button>` : '<a href="login.html" class="btn btn-sm bg-orange text-white rounded-pill btn-block">Entrar</a>'}</div>
       </div></div>`;
   }
 
   const options = (items, selected = '', label = (item) => item.name) => items.map((item) => `<option value="${esc(item.id)}" ${String(selected) === String(item.id) ? 'selected' : ''}>${esc(label(item))}</option>`).join('');
+  const breedOptions = (breeds, selected = '', speciesId = '', emptyLabel = 'Sin raza específica', showAllWithoutSpecies = false) => {
+    const filtered = speciesId ? breeds.filter((breed) => String(breed.species_id) === String(speciesId)) : (showAllWithoutSpecies ? breeds : []);
+    const label = showAllWithoutSpecies && !speciesId ? (item) => `${item.name} (${item.species})` : (item) => item.name;
+    return `<option value="">${esc(speciesId || showAllWithoutSpecies ? emptyLabel : 'Selecciona una especie primero')}</option>${options(filtered, selected, label)}`;
+  };
+  function bindBreedFilter(cat, config = {}) {
+    const species = $(config.speciesSelector || '[name="species_id"]');
+    const breed = $(config.breedSelector || '[name="breed_id"]');
+    if (!species || !breed) return;
+    const showAll = Boolean(config.showAllWithoutSpecies);
+    const emptyLabel = config.emptyLabel || 'Sin raza específica';
+    const render = (selected = breed.value) => {
+      breed.innerHTML = breedOptions(cat.breeds, selected, species.value, emptyLabel, showAll);
+      if (![...breed.options].some((option) => option.value === selected)) {
+        breed.value = '';
+      }
+      breed.disabled = !species.value && !showAll;
+    };
+    render(config.selectedBreedId || breed.value);
+    species.addEventListener('change', () => render(''));
+  }
   const empty = (title, text, action = '') => `<div class="card bg-card border-soft shadow-sm"><div class="card-body p-4 text-center"><i class="fas fa-paw text-orange-color mb-3" style="font-size:42px"></i><h5 class="text-hard-brown-color font-weight-bold">${esc(title)}</h5><p class="text-soft-brown-color">${esc(text)}</p>${action}</div></div>`;
-  const cardPet = (pet) => `<div class="col-12 col-md-6 col-xl-4 mb-3"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body d-flex flex-column"><div class="d-flex align-items-center mb-3"><div class="mr-3" style="width:92px;height:92px;overflow:hidden;border-radius:22px;background:#fdf8f2">${petImg(pet)}</div><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(pet.name)}</h5><small class="text-soft-brown-color d-block">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''}</small><small class="text-soft-brown-color d-block">${esc(pet.city)} - ${pet.age} anios</small></div></div><p class="text-soft-brown-color flex-grow-1">${esc(pet.description || 'Mascota esperando un hogar responsable.')}</p><div class="d-flex align-items-center justify-content-between">${badge(pet.status)}<a href="pet_detail.html?id=${pet.id}" class="btn btn-sm bg-orange text-white rounded-pill px-3">Ver detalle</a></div></div></div></div>`;
+  const cardPet = (pet) => `<div class="col-12 col-md-6 col-xl-4 mb-3"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body d-flex flex-column"><div class="d-flex align-items-center mb-3"><div class="mr-3" style="width:92px;height:92px;overflow:hidden;border-radius:22px;background:#fdf8f2">${petImg(pet)}</div><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(pet.name)}</h5><small class="text-soft-brown-color d-block">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''}</small><small class="text-soft-brown-color d-block">${esc(pet.city)} - ${pet.age} años</small></div></div><p class="text-soft-brown-color flex-grow-1">${esc(pet.description || 'Mascota esperando un hogar responsable.')}</p><div class="d-flex align-items-center justify-content-between">${badge(pet.status)}<a href="pet_detail.html?id=${pet.id}" class="btn btn-sm bg-orange text-white rounded-pill px-3">Ver detalle</a></div></div></div></div>`;
 
   async function catalogs() {
     const [species, breeds, sizes, cities] = await Promise.all([api('/catalogs/species'), api('/catalogs/breeds'), api('/catalogs/sizes'), api('/catalogs/cities')]);
@@ -173,7 +216,7 @@
     const register = $('#register-form');
     const box = $('#auth-message');
     const session = getSession();
-    if (session) message(box, `Ya tienes sesion activa como ${session.user.username}.`, 'info');
+    if (session) message(box, `Ya tienes sesión activa como ${session.user.username}.`, 'info');
 
     tabs.forEach((tab) => tab.addEventListener('click', (event) => {
       event.preventDefault();
@@ -235,8 +278,8 @@
       const adopted = stats?.pets?.adoptadas ?? 0;
       const requests = stats?.adoptions?.total_solicitudes ?? 0;
       setMain(`
-        <section class="card bg-card border-soft shadow-sm mb-4" style="border-radius:28px;overflow:hidden"><div class="row no-gutters align-items-center"><div class="col-12 col-lg-7 p-4 p-lg-5"><span class="badge bg-soft-pink text-hard-pink px-3 py-2 mb-3">Adopta con amor</span><h1 class="text-hard-brown-color font-weight-bold mb-3">Encuentra a tu companero ideal</h1><p class="text-soft-brown-color mb-4">Explora mascotas disponibles, guarda tus preferencias y da seguimiento a tus solicitudes.</p><a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Buscar mascotas</a>${session ? '<a href="profile.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Mi perfil</a>' : '<a href="login.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Iniciar sesion</a>'}</div><div class="col-12 col-lg-5 p-4" style="background:linear-gradient(135deg,#fde5ee,#ffe8c7,#dff2ec)"><div class="row text-center"><div class="col-6 mb-3"><div class="bg-card rounded p-3 border border-soft"><h3>${total}</h3><small>Mascotas</small></div></div><div class="col-6 mb-3"><div class="bg-card rounded p-3 border border-soft"><h3>${available}</h3><small>Disponibles</small></div></div><div class="col-6"><div class="bg-card rounded p-3 border border-soft"><h3>${adopted}</h3><small>Adoptadas</small></div></div><div class="col-6"><div class="bg-card rounded p-3 border border-soft"><h3>${requests}</h3><small>Solicitudes</small></div></div></div></div></div></section>
-        <div class="d-flex justify-content-between align-items-center mb-3"><div><h3 class="text-hard-brown-color font-weight-bold mb-0">Mascotas disponibles</h3><small class="text-soft-brown-color">Historias esperando un hogar.</small></div><a href="directory.html" class="btn btn-sm btn-outline-secondary rounded-pill">Ver todas</a></div><div class="row">${pets.slice(0, 3).map(cardPet).join('') || '<div class="col-12">' + empty('Sin mascotas disponibles', 'Publica una mascota para verla aqui.', '<a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4">Publicar</a>') + '</div>'}</div>`);
+        <section class="card bg-card border-soft shadow-sm mb-4" style="border-radius:28px;overflow:hidden"><div class="row no-gutters align-items-center"><div class="col-12 col-lg-7 p-4 p-lg-5"><span class="badge bg-soft-pink text-hard-pink px-3 py-2 mb-3">Adopta con amor</span><h1 class="text-hard-brown-color font-weight-bold mb-3">Encuentra a tu compañero ideal</h1><p class="text-soft-brown-color mb-4">Explora mascotas disponibles, guarda tus preferencias y da seguimiento a tus solicitudes.</p><a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Buscar mascotas</a>${session ? '<a href="profile.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Mi perfil</a>' : '<a href="login.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Iniciar sesión</a>'}</div><div class="col-12 col-lg-5 p-4" style="background:linear-gradient(135deg,#fde5ee,#ffe8c7,#dff2ec)"><div class="row text-center"><div class="col-6 mb-3"><div class="bg-card rounded p-3 border border-soft"><h3>${total}</h3><small>Mascotas</small></div></div><div class="col-6 mb-3"><div class="bg-card rounded p-3 border border-soft"><h3>${available}</h3><small>Disponibles</small></div></div><div class="col-6"><div class="bg-card rounded p-3 border border-soft"><h3>${adopted}</h3><small>Adoptadas</small></div></div><div class="col-6"><div class="bg-card rounded p-3 border border-soft"><h3>${requests}</h3><small>Solicitudes</small></div></div></div></div></div></section>
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><h3 class="text-hard-brown-color font-weight-bold mb-0">Mascotas disponibles</h3><small class="text-soft-brown-color">Historias esperando un hogar.</small></div><a href="directory.html" class="btn btn-sm btn-outline-secondary rounded-pill">Ver todas</a></div><div class="row">${pets.slice(0, 3).map(cardPet).join('') || '<div class="col-12">' + empty('Sin mascotas disponibles', 'Publica una mascota para verla aquí.', '<a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4">Publicar</a>') + '</div>'}</div>`);
     } catch (error) {
       errorView('No se pudo cargar el inicio', error);
     }
@@ -248,7 +291,8 @@
     try {
       const [cat, response] = await Promise.all([catalogs(), api('/pets')]);
       const list = (pets) => $('#pets-list').innerHTML = pets.length ? pets.map(cardPet).join('') : `<div class="col-12">${empty('No encontramos mascotas', 'Prueba con otros filtros o publica una nueva mascota.')}</div>`;
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Directorio de mascotas</h2><small class="text-soft-brown-color">Encuentra mascotas por especie, raza, ciudad y edad.</small></div><a href="publicar_mascotas.html" class="btn bg-hard-pink text-white rounded-pill px-4 mt-3 mt-md-0">Publicar mascota</a></div><form id="filter-form" class="card bg-card border-soft shadow-sm mb-4"><div class="card-body"><div class="form-row"><div class="form-group col-12 col-md-2"><label>Especie</label><select class="form-control" name="species_id"><option value="">Todas</option>${options(cat.species)}</select></div><div class="form-group col-12 col-md-2"><label>Raza</label><select class="form-control" name="breed_id"><option value="">Todas</option>${options(cat.breeds, '', (item) => `${item.name} (${item.species})`)}</select></div><div class="form-group col-12 col-md-2"><label>Ciudad</label><select class="form-control" name="city_id"><option value="">Todas</option>${options(cat.cities)}</select></div><div class="form-group col-12 col-md-2"><label>Tamanio</label><select class="form-control" name="size_id"><option value="">Todos</option>${options(cat.sizes)}</select></div><div class="form-group col-12 col-md-2"><label>Edad max.</label><input class="form-control" name="max_age" type="number" min="0"></div><div class="form-group col-12 col-md-2 d-flex align-items-end"><button class="btn bg-orange text-white btn-block rounded-pill" type="submit">Filtrar</button></div></div></div></form><div id="directory-message"></div><div id="pets-list" class="row"></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Directorio de mascotas</h2><small class="text-soft-brown-color">Encuentra mascotas por especie, raza, ciudad y edad.</small></div><a href="publicar_mascotas.html" class="btn bg-hard-pink text-white rounded-pill px-4 mt-3 mt-md-0">Publicar mascota</a></div><form id="filter-form" class="card bg-card border-soft shadow-sm mb-4"><div class="card-body"><div class="form-row"><div class="form-group col-12 col-md-2"><label>Especie</label><select class="form-control" name="species_id"><option value="">Todas</option>${options(cat.species)}</select></div><div class="form-group col-12 col-md-2"><label>Raza</label><select class="form-control" name="breed_id">${breedOptions(cat.breeds, '', '', 'Todas', true)}</select></div><div class="form-group col-12 col-md-2"><label>Ciudad</label><select class="form-control" name="city_id"><option value="">Todas</option>${options(cat.cities)}</select></div><div class="form-group col-12 col-md-2"><label>Tamaño</label><select class="form-control" name="size_id"><option value="">Todos</option>${options(cat.sizes)}</select></div><div class="form-group col-12 col-md-2"><label>Edad máx.</label><input class="form-control" name="max_age" type="number" min="0"></div><div class="form-group col-12 col-md-2 d-flex align-items-end"><button class="btn bg-orange text-white btn-block rounded-pill" type="submit">Filtrar</button></div></div></div></form><div id="directory-message"></div><div id="pets-list" class="row"></div>`);
+      bindBreedFilter(cat, { emptyLabel: 'Todas', showAllWithoutSpecies: true });
       list(response.data || []);
       $('#filter-form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -279,10 +323,10 @@
     const load = async () => {
       const response = await api(admin ? '/adoptions' : '/adoptions/my-requests');
       const requests = response.data || [];
-      $('#requests-list').innerHTML = requests.length ? requests.map((request) => requestCard(request, admin)).join('') : empty('Sin solicitudes por ahora', admin ? 'Cuando un usuario solicite una mascota aparecera aqui.' : 'Solicita una mascota desde el directorio para verla aqui.', '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4">Ir al directorio</a>');
+      $('#requests-list').innerHTML = requests.length ? requests.map((request) => requestCard(request, admin)).join('') : empty('Sin solicitudes por ahora', admin ? 'Cuando un usuario solicite una mascota aparecerá aquí.' : 'Solicita una mascota desde el directorio para verla aquí.', '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4">Ir al directorio</a>');
     };
     try {
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Solicitudes de adopcion</h2><small class="text-soft-brown-color">${admin ? 'Solicitudes recibidas.' : 'Panel de mis solicitudes.'}</small></div>${admin ? '<a href="admin.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Panel admin</a>' : '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Buscar mascota</a>'}</div><div id="requests-message"></div><div id="requests-list"></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Solicitudes de adopción</h2><small class="text-soft-brown-color">${admin ? 'Solicitudes recibidas.' : 'Panel de mis solicitudes.'}</small></div>${admin ? '<a href="admin.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Panel admin</a>' : '<a href="directory.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Buscar mascota</a>'}</div><div id="requests-message"></div><div id="requests-list"></div>`);
       await load();
       $('#requests-list').addEventListener('click', async (event) => {
         const button = event.target.closest('[data-request-status]');
@@ -307,12 +351,12 @@
     const session = requireSession(['admin']);
     if (!session) return;
     setSidebar('statistics.html');
-    loading('Cargando estadisticas');
+    loading('Cargando estadísticas');
     try {
       const stats = await api('/admin/stats');
-      setMain(`<div class="mb-4"><h2 class="text-hard-brown-color font-weight-bold mb-0">Estadisticas admin</h2><small class="text-soft-brown-color">Resumen general de Matchcota.</small></div><div class="row">${statCard('Usuarios', stats.users.total, 'Activos', stats.users.activos, 'fa-users')}${statCard('Mascotas', stats.pets.total_registradas, 'Disponibles', stats.pets.disponibles, 'fa-paw')}${statCard('Solicitudes', stats.adoptions.total_solicitudes, 'Pendientes', stats.adoptions.pendientes, 'fa-envelope')}${statCard('Soporte', Number(stats.support.incidencias_abiertas || 0) + Number(stats.support.incidencias_resueltas || 0), 'Abiertas', stats.support.incidencias_abiertas || 0, 'fa-life-ring')}</div><div class="row mt-2"><div class="col-12 col-lg-6 mb-3">${progressCard('Mascotas adoptadas', stats.pets.adoptadas || 0, stats.pets.total_registradas || 1)}</div><div class="col-12 col-lg-6 mb-3">${progressCard('Solicitudes aprobadas', stats.adoptions.aprobadas || 0, stats.adoptions.total_solicitudes || 1)}</div></div>`);
+      setMain(`<div class="mb-4"><h2 class="text-hard-brown-color font-weight-bold mb-0">Estadísticas admin</h2><small class="text-soft-brown-color">Resumen general de Matchcota.</small></div><div class="row">${statCard('Usuarios', stats.users.total, 'Activos', stats.users.activos, 'fa-users')}${statCard('Mascotas', stats.pets.total_registradas, 'Disponibles', stats.pets.disponibles, 'fa-paw')}${statCard('Solicitudes', stats.adoptions.total_solicitudes, 'Pendientes', stats.adoptions.pendientes, 'fa-envelope')}${statCard('Soporte', Number(stats.support.incidencias_abiertas || 0) + Number(stats.support.incidencias_resueltas || 0), 'Abiertas', stats.support.incidencias_abiertas || 0, 'fa-life-ring')}</div><div class="row mt-2"><div class="col-12 col-lg-6 mb-3">${progressCard('Mascotas adoptadas', stats.pets.adoptadas || 0, stats.pets.total_registradas || 1)}</div><div class="col-12 col-lg-6 mb-3">${progressCard('Solicitudes aprobadas', stats.adoptions.aprobadas || 0, stats.adoptions.total_solicitudes || 1)}</div></div>`);
     } catch (error) {
-      errorView('No se pudieron cargar las estadisticas', error);
+      errorView('No se pudieron cargar las estadísticas', error);
     }
   }
 
@@ -324,22 +368,23 @@
     loading('Cargando incidencias');
     const load = async () => {
       if (!canManage) {
-        $('#incidents-list').innerHTML = empty('Reporte enviado al equipo de soporte', 'Como usuario puedes crear incidencias. El listado completo es para admin o soporte.');
+        $('#incidents-list').innerHTML = empty('Reporte enviado al equipo de soporte', 'Como usuario puedes crear incidencias y el equipo revisará tu caso.');
         return;
       }
       const response = await api('/support/incidents');
       const incidents = response.data || [];
-      $('#incidents-list').innerHTML = incidents.length ? incidents.map((incident) => `<div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body"><div class="d-flex flex-wrap justify-content-between align-items-start"><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(incident.subject)}</h5><small class="text-soft-brown-color">${esc(incident.username)} - ${esc(incident.type)}</small><p class="text-soft-brown-color mt-2 mb-0">${esc(incident.description)}</p></div><div class="text-right mt-3 mt-md-0">${badge(incident.status)}<select class="form-control form-control-sm mt-2" data-incident-id="${incident.id}">${['abierta', 'en_revision', 'resuelta', 'cerrada'].map((status) => `<option value="${status}" ${incident.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div></div></div></div>`).join('') : empty('Sin incidencias', 'Todavia no hay reportes de soporte.');
+      $('#incidents-list').innerHTML = incidents.length ? incidents.map((incident) => `<div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body"><div class="d-flex flex-wrap justify-content-between align-items-start"><div><h5 class="text-hard-brown-color font-weight-bold mb-1">${esc(incident.subject)}</h5><small class="text-soft-brown-color">${esc(incident.username)} - ${esc(incident.type)}</small><p class="text-soft-brown-color mt-2 mb-0">${esc(incident.description)}</p></div><div class="text-right mt-3 mt-md-0">${badge(incident.status)}<select class="form-control form-control-sm mt-2" data-incident-id="${incident.id}">${['abierta', 'en_revision', 'resuelta', 'cerrada'].map((status) => `<option value="${status}" ${incident.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div></div></div></div>`).join('') : empty('Sin incidencias', 'Todavía no hay reportes de soporte.');
     };
     try {
-      setMain(`<div class="mb-4"><h2 class="text-hard-brown-color font-weight-bold mb-0">Soporte e incidencias</h2><small class="text-soft-brown-color">Usuarios reportan; admin y soporte gestionan.</small></div><div id="incident-message"></div><div class="row"><div class="col-12 col-lg-5 mb-4"><form id="incident-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Reportar incidencia</h4><div class="form-group"><label>Tipo</label><select class="form-control" name="type"><option value="error">Error</option><option value="queja">Queja</option><option value="sugerencia">Sugerencia</option></select></div><div class="form-group"><label>Asunto</label><input class="form-control" name="subject" minlength="5" required></div><div class="form-group"><label>Descripcion</label><textarea class="form-control" name="description" rows="5" minlength="10" required></textarea></div><button class="btn bg-orange text-white rounded-pill px-4" type="submit">Enviar reporte</button></div></form></div><div class="col-12 col-lg-7 mb-4"><div id="incidents-list"></div></div></div>`);
+      setMain(`<div class="mb-4"><h2 class="text-hard-brown-color font-weight-bold mb-0">Soporte e incidencias</h2><small class="text-soft-brown-color">${canManage ? 'Gestiona los reportes recibidos.' : 'Reporta un problema o duda para que soporte pueda revisarlo.'}</small></div><div id="incident-message"></div><div class="row"><div class="col-12 col-lg-5 mb-4"><form id="incident-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Reportar incidencia</h4><div class="form-group"><label>Tipo</label><select class="form-control" name="type"><option value="error">Error</option><option value="queja">Queja</option><option value="sugerencia">Sugerencia</option></select></div><div class="form-group"><label>Asunto</label><input class="form-control" name="subject" minlength="5" required></div><div class="form-group"><label>Descripción</label><textarea class="form-control" name="description" rows="5" minlength="10" required></textarea></div><button class="btn bg-orange text-white rounded-pill px-4" type="submit">Enviar reporte</button></div></form></div><div class="col-12 col-lg-7 mb-4"><div id="incidents-list"></div></div></div>`);
       await load();
       $('#incident-form').addEventListener('submit', async (event) => {
         event.preventDefault();
+        const form = event.currentTarget;
         try {
-          await api('/support/incidents', { method: 'POST', body: clean(formData(event.currentTarget)) });
+          await api('/support/incidents', { method: 'POST', body: clean(formData(form)) });
           message('#incident-message', 'Incidencia reportada correctamente.', 'success');
-          event.currentTarget.reset();
+          form.reset();
           await load();
         } catch (error) {
           message('#incident-message', error.message, 'danger');
@@ -365,34 +410,34 @@
     const session = requireSession(['admin']);
     if (!session) return;
     setSidebar('gestionar_mascotas.html');
-    loading('Cargando gestion de mascotas');
+    loading('Cargando gestión de mascotas');
     const load = async () => {
       const pets = await allPets();
-      $('#admin-pets-table').innerHTML = pets.length ? `<div class="table-responsive"><table class="table table-hover bg-card"><thead><tr><th>ID</th><th>Mascota</th><th>Catalogos</th><th>Owner</th><th>Estatus</th><th>Acciones</th></tr></thead><tbody>${pets.map((pet) => `<tr><td>${pet.id}</td><td><b>${esc(pet.name)}</b><br><small>${esc(pet.city)}</small></td><td>${esc(pet.species)} / ${esc(pet.breed || 'Sin raza')} / ${esc(pet.size)}</td><td>${esc(pet.owner_username)}</td><td><select class="form-control form-control-sm" data-pet-status="${pet.id}">${PET_STATUSES.map((status) => `<option value="${status}" ${pet.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></td><td><a class="btn btn-sm btn-outline-secondary rounded-pill" href="pet_detail.html?id=${pet.id}">Ver</a></td></tr>`).join('')}</tbody></table></div>` : empty('No hay mascotas', 'Publica mascotas para gestionarlas.');
+      $('#admin-pets-table').innerHTML = pets.length ? `<div class="table-responsive"><table class="table table-hover bg-card"><thead><tr><th>ID</th><th>Mascota</th><th>Catálogos</th><th>Dueño</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>${pets.map((pet) => `<tr><td>${pet.id}</td><td><b>${esc(pet.name)}</b><br><small>${esc(pet.city)}</small></td><td>${esc(pet.species)} / ${esc(pet.breed || 'Sin raza')} / ${esc(pet.size)}</td><td>${esc(pet.owner_username)}</td><td><select class="form-control form-control-sm" data-pet-status="${pet.id}">${PET_STATUSES.map((status) => `<option value="${status}" ${pet.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></td><td><a class="btn btn-sm btn-outline-secondary rounded-pill" href="pet_detail.html?id=${pet.id}">Ver</a></td></tr>`).join('')}</tbody></table></div>` : empty('No hay mascotas', 'Publica mascotas para gestionarlas.');
     };
     try {
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Gestion de mascotas</h2><small class="text-soft-brown-color">Admin puede cambiar estatus de mascotas.</small></div><a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Publicar mascota</a></div><div id="pet-management-message"></div><div id="admin-pets-table"></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Gestión de mascotas</h2><small class="text-soft-brown-color">Admin puede cambiar el estado de las mascotas.</small></div><a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Publicar mascota</a></div><div id="pet-management-message"></div><div id="admin-pets-table"></div>`);
       await load();
       $('#admin-pets-table').addEventListener('change', async (event) => {
         const select = event.target.closest('[data-pet-status]');
         if (!select) return;
         try {
           await api(`/pets/${select.dataset.petStatus}`, { method: 'PUT', body: { status: select.value } });
-          message('#pet-management-message', 'Estatus de mascota actualizado.', 'success');
+          message('#pet-management-message', 'Estado de mascota actualizado.', 'success');
           await load();
         } catch (error) {
           message('#pet-management-message', error.message, 'danger');
         }
       });
     } catch (error) {
-      errorView('No se pudo cargar la gestion de mascotas', error);
+      errorView('No se pudo cargar la gestión de mascotas', error);
     }
   }
 
-  const adminUsersTable = (users, currentUserId) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Usuarios</h4><div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Usuario</th><th>Rol</th><th>Estatus</th></tr></thead><tbody>${users.map((user) => { const disabled = user.id === currentUserId ? 'disabled' : ''; return `<tr><td><b>${esc(user.username)}</b><br><small>${esc(user.email)}</small></td><td><select class="form-control form-control-sm" data-user-role="${user.id}" ${disabled}>${['admin', 'soporte', 'usuario'].map((role) => `<option value="${role}" ${user.role === role ? 'selected' : ''}>${role}</option>`).join('')}</select></td><td><select class="form-control form-control-sm" data-user-status="${user.id}" ${disabled}>${['activo', 'suspendido', 'eliminado'].map((status) => `<option value="${status}" ${user.status === status ? 'selected' : ''}>${status}</option>`).join('')}</select></td></tr>`; }).join('')}</tbody></table></div><small class="text-soft-brown-color">Tu usuario admin se bloquea para evitar suspenderte por accidente.</small></div></div>`;
-  const adminRequestsPanel = (requests) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Solicitudes</h4>${requests.length ? requests.slice(0, 5).map((request) => `<div class="border-bottom border-soft py-2"><div class="d-flex justify-content-between"><b>${esc(request.pet_name)}</b>${badge(request.status)}</div><small class="text-soft-brown-color">${esc(request.requester_username)}</small><div class="mt-2">${(REQUEST_TRANSITIONS[request.status] || []).map((status) => `<button class="btn btn-sm btn-outline-secondary rounded-pill mr-1 mb-1" data-admin-request-id="${request.id}" data-admin-request-status="${status}">${nice(status)}</button>`).join('') || '<small class="text-soft-brown-color">Cerrada</small>'}</div></div>`).join('') : empty('Sin solicitudes', 'Aun no hay solicitudes de adopcion.')}<a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Ver todas</a></div></div>`;
-  const adminPetsPanel = (pets) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Mascotas</h4>${pets.length ? pets.slice(0, 6).map((pet) => `<div class="d-flex align-items-center justify-content-between border-bottom border-soft py-2"><div><b>${esc(pet.name)}</b><br><small>${esc(pet.owner_username)} - ${esc(pet.city)}</small></div><select class="form-control form-control-sm w-auto" data-admin-pet-status="${pet.id}">${PET_STATUSES.map((status) => `<option value="${status}" ${pet.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>`).join('') : empty('Sin mascotas', 'Aun no hay mascotas publicadas.')}<a href="Gestionar_mascotas.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Gestion completa</a></div></div>`;
-  const adminIncidentsPanel = (incidents) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Incidencias</h4>${incidents.length ? incidents.slice(0, 5).map((incident) => `<div class="d-flex align-items-center justify-content-between border-bottom border-soft py-2"><div><b>${esc(incident.subject)}</b><br><small>${esc(incident.username)} - ${esc(incident.type)}</small></div><select class="form-control form-control-sm w-auto" data-admin-incident-status="${incident.id}">${['abierta', 'en_revision', 'resuelta', 'cerrada'].map((status) => `<option value="${status}" ${incident.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>`).join('') : empty('Sin incidencias', 'Todavia no hay reportes.')}<a href="incidents.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Ver soporte</a></div></div>`;
+  const adminUsersTable = (users, currentUserId) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Usuarios</h4><div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th></tr></thead><tbody>${users.map((user) => { const disabled = user.id === currentUserId ? 'disabled' : ''; return `<tr><td><b>${esc(user.username)}</b><br><small>${esc(user.email)}</small></td><td><select class="form-control form-control-sm" data-user-role="${user.id}" ${disabled}>${['admin', 'soporte', 'usuario'].map((role) => `<option value="${role}" ${user.role === role ? 'selected' : ''}>${nice(role)}</option>`).join('')}</select></td><td><select class="form-control form-control-sm" data-user-status="${user.id}" ${disabled}>${['activo', 'suspendido', 'eliminado'].map((status) => `<option value="${status}" ${user.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></td></tr>`; }).join('')}</tbody></table></div><small class="text-soft-brown-color">Tu usuario admin se bloquea para evitar suspenderte por accidente.</small></div></div>`;
+  const adminRequestsPanel = (requests) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Solicitudes</h4>${requests.length ? requests.slice(0, 5).map((request) => `<div class="border-bottom border-soft py-2"><div class="d-flex justify-content-between"><b>${esc(request.pet_name)}</b>${badge(request.status)}</div><small class="text-soft-brown-color">${esc(request.requester_username)}</small><div class="mt-2">${(REQUEST_TRANSITIONS[request.status] || []).map((status) => `<button class="btn btn-sm btn-outline-secondary rounded-pill mr-1 mb-1" data-admin-request-id="${request.id}" data-admin-request-status="${status}">${nice(status)}</button>`).join('') || '<small class="text-soft-brown-color">Cerrada</small>'}</div></div>`).join('') : empty('Sin solicitudes', 'Aún no hay solicitudes de adopción.')}<a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Ver todas</a></div></div>`;
+  const adminPetsPanel = (pets) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Mascotas</h4>${pets.length ? pets.slice(0, 6).map((pet) => `<div class="d-flex align-items-center justify-content-between border-bottom border-soft py-2"><div><b>${esc(pet.name)}</b><br><small>${esc(pet.owner_username)} - ${esc(pet.city)}</small></div><select class="form-control form-control-sm w-auto" data-admin-pet-status="${pet.id}">${PET_STATUSES.map((status) => `<option value="${status}" ${pet.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>`).join('') : empty('Sin mascotas', 'Aún no hay mascotas publicadas.')}<a href="Gestionar_mascotas.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Gestión completa</a></div></div>`;
+  const adminIncidentsPanel = (incidents) => `<div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Incidencias</h4>${incidents.length ? incidents.slice(0, 5).map((incident) => `<div class="d-flex align-items-center justify-content-between border-bottom border-soft py-2"><div><b>${esc(incident.subject)}</b><br><small>${esc(incident.username)} - ${esc(incident.type)}</small></div><select class="form-control form-control-sm w-auto" data-admin-incident-status="${incident.id}">${['abierta', 'en_revision', 'resuelta', 'cerrada'].map((status) => `<option value="${status}" ${incident.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>`).join('') : empty('Sin incidencias', 'Todavía no hay reportes.')}<a href="incidents.html" class="btn btn-sm btn-outline-secondary rounded-pill mt-3">Ver soporte</a></div></div>`;
 
   async function renderAdmin() {
     const session = requireSession(['admin']);
@@ -404,7 +449,7 @@
       $('#admin-content').innerHTML = `<div class="row">${statCard('Usuarios', stats.users.total, 'Activos', stats.users.activos, 'fa-users')}${statCard('Mascotas', stats.pets.total_registradas, 'Disponibles', stats.pets.disponibles, 'fa-paw')}${statCard('Solicitudes', stats.adoptions.total_solicitudes, 'Pendientes', stats.adoptions.pendientes, 'fa-envelope')}${statCard('Incidencias', Number(stats.support.incidencias_abiertas || 0) + Number(stats.support.incidencias_resueltas || 0), 'Abiertas', stats.support.incidencias_abiertas || 0, 'fa-life-ring')}</div><div class="row"><div class="col-12 col-xl-6 mb-4">${adminUsersTable(users.data || [], session.user.id)}</div><div class="col-12 col-xl-6 mb-4">${adminRequestsPanel(requests.data || [])}</div><div class="col-12 col-xl-6 mb-4">${adminPetsPanel(pets)}</div><div class="col-12 col-xl-6 mb-4">${adminIncidentsPanel(incidents.data || [])}</div></div>`;
     };
     try {
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Panel de administracion</h2><small class="text-soft-brown-color">Gestion principal de Matchcota.</small></div><a href="statistics.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Ver estadisticas</a></div><div id="admin-message"></div><div id="admin-content"></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Panel de administración</h2><small class="text-soft-brown-color">Gestión principal de Matchcota.</small></div><a href="statistics.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0">Ver estadísticas</a></div><div id="admin-message"></div><div id="admin-content"></div>`);
       await load();
       $('#admin-content').addEventListener('change', async (event) => {
         const role = event.target.closest('[data-user-role]');
@@ -482,7 +527,7 @@
           <i class="fas fa-arrow-left mr-1"></i> Volver
         </button>
         <h2 class="m-0 titulo-principal d-flex align-items-center text-hard-brown-color">
-          <i class="far fa-file-alt mr-2"></i> ${isEdit ? 'Editar Mascota' : 'Publicar Mascota'}
+          <i class="far fa-file-alt mr-2"></i> ${isEdit ? 'Editar mascota' : 'Publicar mascota'}
         </h2>
       </div>
       <div id="pet-form-message"></div>
@@ -497,32 +542,32 @@
 
           <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
             <div class="card-body p-4">
-              <h6 class="text-orange-color font-weight-bold mb-4 etiqueta-pequena text-uppercase"><i class="fas fa-paw mr-2"></i> Datos basicos</h6>
+              <h6 class="text-orange-color font-weight-bold mb-4 etiqueta-pequena text-uppercase"><i class="fas fa-paw mr-2"></i> Datos básicos</h6>
               <div class="row">
                 <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Nombre</label><input class="form-control input-custom bg-card border-soft text-soft-brown-color" name="name" required value="${fieldValue(pet?.name)}"></div>
                 <div class="col-12 col-md-3 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Edad</label><input class="form-control input-custom bg-card border-soft text-soft-brown-color" name="age" type="number" min="0" required value="${fieldValue(pet?.age)}"></div>
-                <div class="col-12 col-md-3 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Genero</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="gender" required><option value="hembra" ${pet?.gender === 'hembra' ? 'selected' : ''}>Hembra</option><option value="macho" ${pet?.gender === 'macho' ? 'selected' : ''}>Macho</option></select></div>
+                <div class="col-12 col-md-3 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Género</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="gender" required><option value="hembra" ${pet?.gender === 'hembra' ? 'selected' : ''}>Hembra</option><option value="macho" ${pet?.gender === 'macho' ? 'selected' : ''}>Macho</option></select></div>
                 <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Especie</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="species_id" required><option value="">Selecciona</option>${options(cat.species, speciesId)}</select></div>
-                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Raza</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="breed_id"><option value="">Sin raza especifica</option>${options(cat.breeds, breedId, (item) => `${item.name} (${item.species})`)}</select></div>
-                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Tamano</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="size_id" required><option value="">Selecciona</option>${options(cat.sizes, sizeId)}</select></div>
-                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Ubicacion</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="city_id" required><option value="">Selecciona</option>${options(cat.cities, cityId, (item) => `${item.name}${item.state ? ', ' + item.state : ''}`)}</select></div>
-                ${isAdmin(session?.user) ? `<div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Estatus</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="status">${PET_STATUSES.map((status) => `<option value="${status}" ${pet?.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>` : ''}
+                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Raza</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="breed_id">${breedOptions(cat.breeds, breedId, speciesId)}</select></div>
+                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Tamaño</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="size_id" required><option value="">Selecciona</option>${options(cat.sizes, sizeId)}</select></div>
+                <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Ubicación</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="city_id" required><option value="">Selecciona</option>${options(cat.cities, cityId, (item) => `${item.name}${item.state ? ', ' + item.state : ''}`)}</select></div>
+                ${isEdit && isAdmin(session?.user) ? `<div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Estado</label><select class="form-control input-custom bg-card border-soft text-soft-brown-color" name="status">${PET_STATUSES.map((status) => `<option value="${status}" ${pet?.status === status ? 'selected' : ''}>${nice(status)}</option>`).join('')}</select></div>` : ''}
               </div>
             </div>
           </div>
 
           <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
             <div class="card-body p-4">
-              <h6 class="text-pink font-weight-bold mb-4 etiqueta-pequena text-uppercase"><i class="fas fa-heart mr-2"></i> Salud y descripcion</h6>
+              <h6 class="text-pink font-weight-bold mb-4 etiqueta-pequena text-uppercase"><i class="fas fa-heart mr-2"></i> Salud y descripción</h6>
               <div class="row">
                 <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Estado de salud</label><input class="form-control input-custom bg-card border-soft text-soft-brown-color" name="health_status" value="${fieldValue(pet?.health_status)}"></div>
                 <div class="col-12 col-md-6 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Necesidades especiales</label><input class="form-control input-custom bg-card border-soft text-soft-brown-color" name="special_needs" value="${fieldValue(pet?.special_needs)}"></div>
-                <div class="col-12 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Descripcion</label><textarea class="form-control input-custom bg-card border-soft text-soft-brown-color" name="description" rows="3">${fieldValue(pet?.description)}</textarea></div>
+                <div class="col-12 mb-3"><label class="text-orange-color etiqueta-pequena text-uppercase">Descripción</label><textarea class="form-control input-custom bg-card border-soft text-soft-brown-color" name="description" rows="3">${fieldValue(pet?.description)}</textarea></div>
               </div>
               <div class="row">
                 <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="is_sterilized" type="checkbox" ${pet?.is_sterilized ? 'checked' : ''}><label class="custom-control-label" for="is_sterilized">Esterilizada</label></div></div>
                 <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="is_vaccinated" type="checkbox" ${pet?.is_vaccinated || !pet ? 'checked' : ''}><label class="custom-control-label" for="is_vaccinated">Vacunada</label></div></div>
-                <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="compatible_children" type="checkbox" ${pet?.compatible_children === 0 ? '' : 'checked'}><label class="custom-control-label" for="compatible_children">Convive con ninos</label></div></div>
+                <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="compatible_children" type="checkbox" ${pet?.compatible_children === 0 ? '' : 'checked'}><label class="custom-control-label" for="compatible_children">Convive con niños</label></div></div>
                 <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="compatible_dogs" type="checkbox" ${pet?.compatible_dogs === 0 ? '' : 'checked'}><label class="custom-control-label" for="compatible_dogs">Convive con perros</label></div></div>
                 <div class="col-12 col-md-4 mb-2"><div class="custom-control custom-checkbox"><input class="custom-control-input" id="compatible_cats" type="checkbox" ${pet?.compatible_cats === 0 ? '' : 'checked'}><label class="custom-control-label" for="compatible_cats">Convive con gatos</label></div></div>
               </div>
@@ -547,10 +592,11 @@
     const session = requireSession();
     if (!session) return;
     setSidebar('publicar_mascotas.html');
-    loading('Preparando publicacion');
+    loading('Preparando publicación');
     try {
       const cat = await catalogs();
       setMain(petFormTemplate(cat));
+      bindBreedFilter(cat);
       $('#pet-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         try {
@@ -574,6 +620,7 @@
       const id = new URLSearchParams(window.location.search).get('id') || '1';
       const [{ pet }, cat] = await Promise.all([api(`/pets/${id}`), catalogs()]);
       setMain(petFormTemplate(cat, pet, 'edit'));
+      bindBreedFilter(cat, { selectedBreedId: idByName(cat.breeds, pet.breed) });
       $('#pet-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         try {
@@ -597,7 +644,7 @@
       const params = new URLSearchParams(window.location.search);
       const petId = params.get('pet_id') || params.get('id') || '1';
       const { pet } = await api(`/pets/${petId}`);
-      setMain(`<div class="d-flex flex-wrap align-items-center mb-4"><a href="pet_detail.html?id=${pet.id}" class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Volver</a><h2 class="m-0 titulo-principal text-hard-brown-color">Solicitud de Adopcion</h2></div><div class="row"><div class="col-12 col-lg-5 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div style="height:220px;overflow:hidden;border-radius:20px" class="mb-3">${petImg(pet)}</div><h4 class="text-hard-brown-color font-weight-bold">${esc(pet.name)}</h4><p class="text-soft-brown-color mb-0">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''}</p></div></div></div><div class="col-12 col-lg-7 mb-4"><div id="adoption-message"></div><form id="adoption-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div class="form-group"><label>Por que quieres adoptar a ${esc(pet.name)}?</label><textarea class="form-control" name="motivation" rows="5" minlength="10" required></textarea></div><div class="custom-control custom-checkbox mb-2"><input type="checkbox" class="custom-control-input" id="home_suitable" checked><label class="custom-control-label" for="home_suitable">Tengo un hogar adecuado</label></div><div class="custom-control custom-checkbox mb-4"><input type="checkbox" class="custom-control-input" id="special_care_experience"><label class="custom-control-label" for="special_care_experience">Tengo experiencia con cuidados especiales</label></div><button class="btn bg-hard-pink text-white rounded-pill px-4" type="submit">Enviar solicitud</button></div></form></div></div>`);
+      setMain(`<div class="d-flex flex-wrap align-items-center mb-4"><a href="pet_detail.html?id=${pet.id}" class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Volver</a><h2 class="m-0 titulo-principal text-hard-brown-color">Solicitud de adopción</h2></div><div class="row"><div class="col-12 col-lg-5 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div style="height:220px;overflow:hidden;border-radius:20px" class="mb-3">${petImg(pet)}</div><h4 class="text-hard-brown-color font-weight-bold">${esc(pet.name)}</h4><p class="text-soft-brown-color mb-0">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''}</p></div></div></div><div class="col-12 col-lg-7 mb-4"><div id="adoption-message"></div><form id="adoption-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div class="form-group"><label>¿Por qué quieres adoptar a ${esc(pet.name)}?</label><textarea class="form-control" name="motivation" rows="5" minlength="10" required></textarea></div><div class="custom-control custom-checkbox mb-2"><input type="checkbox" class="custom-control-input" id="home_suitable" checked><label class="custom-control-label" for="home_suitable">Tengo un hogar adecuado</label></div><div class="custom-control custom-checkbox mb-4"><input type="checkbox" class="custom-control-input" id="special_care_experience"><label class="custom-control-label" for="special_care_experience">Tengo experiencia con cuidados especiales</label></div><button class="btn bg-hard-pink text-white rounded-pill px-4" type="submit">Enviar solicitud</button></div></form></div></div>`);
       $('#adoption-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         try {
@@ -622,8 +669,29 @@
 
   async function renderAdoptionSent() {
     setSidebar('solicitud_env.html');
-    setMain(`<div class="card bg-card border-soft shadow-sm text-center" style="border-radius:24px"><div class="card-body p-5"><i class="fas fa-heart text-hard-pink mb-3" style="font-size:58px"></i><h2 class="text-hard-brown-color font-weight-bold">Solicitud enviada</h2><p class="text-soft-brown-color">Tu solicitud quedo registrada correctamente.</p><a href="match.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Ver solicitudes</a><a href="directory.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Seguir buscando</a></div></div>`);
+    setMain(`<div class="card bg-card border-soft shadow-sm text-center" style="border-radius:24px"><div class="card-body p-5"><i class="fas fa-heart text-hard-pink mb-3" style="font-size:58px"></i><h2 class="text-hard-brown-color font-weight-bold">Solicitud enviada</h2><p class="text-soft-brown-color">Tu solicitud quedó registrada correctamente.</p><a href="match.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Ver solicitudes</a><a href="directory.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Seguir buscando</a></div></div>`);
   }
+
+  const statusTextForRequest = (request, owner = false) => {
+    if (owner) {
+      return {
+        pendiente: `${request.requester_username} quiere adoptar a ${request.pet_name}.`,
+        en_proceso: `La solicitud por ${request.pet_name} está en revisión.`,
+        aprobada: `Aprobaste la adopción de ${request.pet_name}.`,
+        rechazada: `La solicitud por ${request.pet_name} fue rechazada.`,
+        cancelada: `La solicitud por ${request.pet_name} fue cancelada.`
+      }[request.status] || `Solicitud de ${request.pet_name}.`;
+    }
+    return {
+      pendiente: `Tu solicitud para ${request.pet_name} está pendiente.`,
+      en_proceso: `Tu solicitud para ${request.pet_name} está en proceso.`,
+      aprobada: `Tu solicitud para ${request.pet_name} fue aprobada.`,
+      rechazada: `Tu solicitud para ${request.pet_name} fue rechazada.`,
+      cancelada: `Tu solicitud para ${request.pet_name} fue cancelada.`
+    }[request.status] || `Solicitud para ${request.pet_name}.`;
+  };
+
+  const notificationItem = (title, text, status, action = '') => `<div class="border-bottom border-soft py-3"><div class="d-flex justify-content-between align-items-start"><div><b class="text-hard-brown-color">${esc(title)}</b><p class="text-soft-brown-color mb-0">${esc(text)}</p></div>${badge(status)}</div>${action ? `<div class="mt-2">${action}</div>` : ''}</div>`;
 
   async function renderAlerts() {
     const session = requireSession();
@@ -631,15 +699,63 @@
     setSidebar('configurar_notis.html');
     loading('Cargando notificaciones');
     try {
-      const [alertResponse, cat] = await Promise.all([api('/users/alerts').catch(() => ({ alert: null })), catalogs()]);
+      const [alertResponse, cat, sentResponse, receivedResponse, petsResponse] = await Promise.all([
+        api('/users/alerts').catch(() => ({ alert: null })),
+        catalogs(),
+        api('/adoptions/my-requests').catch(() => ({ data: [] })),
+        api('/adoptions/received').catch(() => ({ data: [] })),
+        api('/pets/my').catch(() => ({ data: [] }))
+      ]);
       const alert = alertResponse.alert || {};
-      setMain(`<div class="d-flex flex-wrap align-items-center mb-4"><a href="profile.html" class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Volver</a><h2 class="m-0 titulo-principal text-hard-brown-color">Configurar Notificaciones</h2></div><div id="alert-message"></div><form id="alert-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div class="custom-control custom-switch mb-4"><input type="checkbox" class="custom-control-input" id="alert-active" ${alert.active === 0 ? '' : 'checked'}><label class="custom-control-label" for="alert-active">Recibir alertas</label></div><div class="form-row"><div class="form-group col-12 col-md-4"><label>Especie</label><select class="form-control" name="species"><option value="">Cualquiera</option>${options(cat.species, alert.species_ids?.[0])}</select></div><div class="form-group col-12 col-md-4"><label>Raza</label><select class="form-control" name="breed"><option value="">Cualquiera</option>${options(cat.breeds, alert.breed_ids?.[0], (item) => `${item.name} (${item.species})`)}</select></div><div class="form-group col-12 col-md-4"><label>Ciudad</label><select class="form-control" name="city"><option value="">Cualquiera</option>${options(cat.cities, alert.city_ids?.[0])}</select></div><div class="form-group col-6"><label>Edad minima</label><input class="form-control" name="min_age" type="number" min="0" value="${fieldValue(alert.min_age)}"></div><div class="form-group col-6"><label>Edad maxima</label><input class="form-control" name="max_age" type="number" min="0" value="${fieldValue(alert.max_age)}"></div></div><button class="btn bg-orange text-white rounded-pill px-4" type="submit">Guardar</button></div></form>`);
+      const sent = sentResponse.data || [];
+      const received = receivedResponse.data || [];
+      const pets = petsResponse.data || [];
+      const important = sent.filter((request) => ['aprobada', 'rechazada', 'en_proceso'].includes(request.status)).length + received.filter((request) => ['pendiente', 'en_proceso'].includes(request.status)).length;
+      const sentList = sent.length ? sent.slice(0, 5).map((request) => notificationItem(request.pet_name, statusTextForRequest(request), request.status, '<a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill">Ver solicitudes</a>')).join('') : empty('Sin solicitudes enviadas', 'Cuando solicites adoptar una mascota, aparecerá aquí.');
+      const receivedList = received.length ? received.slice(0, 5).map((request) => notificationItem(request.pet_name, statusTextForRequest(request, true), request.status, `<a href="chat.html?request=${request.id}" class="btn btn-sm btn-outline-secondary rounded-pill mr-2">Abrir chat</a><a href="match.html" class="btn btn-sm bg-orange text-white rounded-pill">Revisar</a>`)).join('') : empty('Sin solicitudes recibidas', 'Las solicitudes para tus mascotas publicadas aparecerán aquí.');
+      const petList = pets.length ? pets.slice(0, 5).map((pet) => notificationItem(pet.name, `Tu mascota está marcada como ${nice(pet.status).toLowerCase()}.`, pet.status, `<a href="pet_detail.html?id=${pet.id}" class="btn btn-sm btn-outline-secondary rounded-pill">Ver mascota</a>`)).join('') : empty('Sin mascotas publicadas', 'Publica una mascota para recibir seguimiento.');
+
+      setMain(`
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+          <div><h2 class="m-0 titulo-principal text-hard-brown-color">Notificaciones</h2><small class="text-soft-brown-color">Seguimiento de solicitudes, mascotas publicadas y alertas personalizadas.</small></div>
+          <a href="chat.html" class="btn bg-orange text-white rounded-pill px-4 mt-3 mt-md-0"><i class="fas fa-comments mr-1"></i> Ir al chat</a>
+        </div>
+        <div class="row mb-3">
+          ${statCard('Pendientes', important, 'Solicitudes enviadas', sent.length, 'fa-bell')}
+          ${statCard('Recibidas', received.length, 'Tus mascotas', pets.length, 'fa-paw')}
+          ${statCard('Alertas', alert.active === 0 ? 0 : 1, 'Preferencias', alert.id ? 1 : 0, 'fa-heart')}
+          ${statCard('Chat', sent.length + received.length + 1, 'Conversaciones', sent.length + received.length + 1, 'fa-comments')}
+        </div>
+        <div id="alert-message"></div>
+        <div class="row">
+          <div class="col-12 col-xl-7 mb-4">
+            <div class="card bg-card border-soft shadow-sm mb-4"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Mis solicitudes de adopción</h4>${sentList}</div></div>
+            <div class="card bg-card border-soft shadow-sm mb-4"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Solicitudes para mis mascotas</h4>${receivedList}</div></div>
+            <div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">Mascotas publicadas</h4>${petList}</div></div>
+          </div>
+          <div class="col-12 col-xl-5 mb-4">
+            <form id="alert-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4">
+              <h4 class="text-hard-brown-color font-weight-bold mb-3">Alertas personalizadas</h4>
+              <div class="custom-control custom-switch mb-4"><input type="checkbox" class="custom-control-input" id="alert-active" ${alert.active === 0 ? '' : 'checked'}><label class="custom-control-label" for="alert-active">Recibir alertas de nuevas mascotas</label></div>
+              <div class="form-row">
+                <div class="form-group col-12"><label>Especie</label><select class="form-control" name="species"><option value="">Cualquiera</option>${options(cat.species, alert.species_ids?.[0])}</select></div>
+                <div class="form-group col-12"><label>Raza</label><select class="form-control" name="breed">${breedOptions(cat.breeds, alert.breed_ids?.[0], alert.species_ids?.[0], 'Cualquiera', true)}</select></div>
+                <div class="form-group col-12"><label>Ciudad</label><select class="form-control" name="city"><option value="">Cualquiera</option>${options(cat.cities, alert.city_ids?.[0], (item) => `${item.name}${item.state ? ', ' + item.state : ''}`)}</select></div>
+                <div class="form-group col-6"><label>Edad mínima</label><input class="form-control" name="min_age" type="number" min="0" value="${fieldValue(alert.min_age)}"></div>
+                <div class="form-group col-6"><label>Edad máxima</label><input class="form-control" name="max_age" type="number" min="0" value="${fieldValue(alert.max_age)}"></div>
+              </div>
+              <button class="btn bg-orange text-white rounded-pill px-4" type="submit">Guardar preferencias</button>
+            </div></form>
+          </div>
+        </div>`);
+      bindBreedFilter(cat, { speciesSelector: '[name="species"]', breedSelector: '[name="breed"]', selectedBreedId: alert.breed_ids?.[0], emptyLabel: 'Cualquiera', showAllWithoutSpecies: true });
       $('#alert-form').addEventListener('submit', async (event) => {
         event.preventDefault();
-        const data = clean(formData(event.currentTarget));
+        const form = event.currentTarget;
+        const data = clean(formData(form));
         try {
           await api('/users/alerts', { method: 'PUT', body: { active: $('#alert-active').checked, preferences: { species: data.species ? [data.species] : [], breeds: data.breed ? [data.breed] : [], cities: data.city ? [data.city] : [] }, min_age: data.min_age, max_age: data.max_age } });
-          message('#alert-message', 'Preferencias guardadas.', 'success');
+          message('#alert-message', 'Preferencias guardadas correctamente.', 'success');
         } catch (error) {
           message('#alert-message', errorText(error), 'danger');
         }
@@ -656,7 +772,7 @@
     loading('Cargando perfil');
     try {
       const { user } = await api('/users/profile');
-      setMain(`<div class="d-flex flex-wrap align-items-center mb-4"><a href="profile.html" class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Volver</a><h2 class="m-0 titulo-principal text-hard-brown-color">Editar Perfil</h2></div><div id="profile-message"></div><form id="profile-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div class="form-row"><div class="form-group col-12 col-md-6"><label>Nombre</label><input class="form-control" name="name" value="${fieldValue(user.name)}" required></div><div class="form-group col-12 col-md-6"><label>Ubicacion</label><input class="form-control" name="location" value="${fieldValue(user.location)}"></div><div class="form-group col-12 col-md-6"><label>Ocupacion</label><input class="form-control" name="occupation" value="${fieldValue(user.occupation)}"></div><div class="form-group col-12 col-md-6"><label>Tipo de vivienda</label><input class="form-control" name="housing_type" value="${fieldValue(user.housing_type)}"></div><div class="form-group col-12 col-md-6"><label>Horas disponibles al dia</label><input class="form-control" name="daily_available_hours" type="number" min="0" value="${fieldValue(user.daily_available_hours)}"></div><div class="form-group col-12 col-md-6"><label>Experiencia con mascotas</label><input class="form-control" name="pet_experience" value="${fieldValue(user.pet_experience)}"></div></div><button class="btn bg-orange text-white rounded-pill px-4" type="submit">Guardar cambios</button></div></form>`);
+      setMain(`<div class="d-flex flex-wrap align-items-center mb-4"><a href="profile.html" class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold"><i class="fas fa-arrow-left mr-1"></i> Volver</a><h2 class="m-0 titulo-principal text-hard-brown-color">Editar perfil</h2></div><div id="profile-message"></div><form id="profile-form" class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><div class="form-row"><div class="form-group col-12 col-md-6"><label>Nombre</label><input class="form-control" name="name" value="${fieldValue(user.name)}" required></div><div class="form-group col-12 col-md-6"><label>Ubicación</label><input class="form-control" name="location" value="${fieldValue(user.location)}"></div><div class="form-group col-12 col-md-6"><label>Ocupación</label><input class="form-control" name="occupation" value="${fieldValue(user.occupation)}"></div><div class="form-group col-12 col-md-6"><label>Tipo de vivienda</label><input class="form-control" name="housing_type" value="${fieldValue(user.housing_type)}"></div><div class="form-group col-12 col-md-6"><label>Horas disponibles al día</label><input class="form-control" name="daily_available_hours" type="number" min="0" value="${fieldValue(user.daily_available_hours)}"></div><div class="form-group col-12 col-md-6"><label>Experiencia con mascotas</label><input class="form-control" name="pet_experience" value="${fieldValue(user.pet_experience)}"></div></div><button class="btn bg-orange text-white rounded-pill px-4" type="submit">Guardar cambios</button></div></form>`);
       $('#profile-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         try {
@@ -676,7 +792,92 @@
     const session = requireSession();
     if (!session) return;
     setSidebar('chat.html');
-    setMain(`<div class="row"><div class="col-12 col-lg-8 mx-auto"><div class="card bg-card border-soft shadow-sm" style="border-radius:20px"><div class="card-body p-4"><h2 class="titulo-principal text-hard-brown-color mb-3">Chat</h2><div class="bg-soft rounded p-3 mb-3"><p class="mb-1 text-soft-brown-color"><b>Matchcota:</b> Hola, estamos revisando la solicitud.</p></div><div class="bg-orange-soft rounded p-3 mb-3 text-right"><p class="mb-1 text-hard-brown-color"><b>Tu:</b> Gracias, quedo pendiente.</p></div><div class="input-group"><input class="form-control" placeholder="Escribe un mensaje"><div class="input-group-append"><button class="btn bg-orange text-white" type="button">Enviar</button></div></div></div></div></div></div>`);
+    loading('Cargando chat');
+    try {
+      const [sentResponse, receivedResponse] = await Promise.all([
+        api('/adoptions/my-requests').catch(() => ({ data: [] })),
+        api('/adoptions/received').catch(() => ({ data: [] }))
+      ]);
+      const sent = sentResponse.data || [];
+      const received = receivedResponse.data || [];
+      const conversations = [
+        { id: 'support', title: 'Soporte Matchcota', subtitle: 'Dudas, reportes e incidencias', icon: 'fa-headset', initial: 'Hola, estamos aquí para ayudarte con tus dudas o reportes.' },
+        ...sent.map((request) => ({
+          id: `sent-${request.id}`,
+          title: `Adopción de ${request.pet_name}`,
+          subtitle: `Tu solicitud está ${nice(request.status).toLowerCase()}`,
+          icon: 'fa-heart',
+          initial: statusTextForRequest(request)
+        })),
+        ...received.map((request) => ({
+          id: `received-${request.id}`,
+          title: `${request.requester_username} y ${request.pet_name}`,
+          subtitle: `Solicitud ${nice(request.status).toLowerCase()}`,
+          icon: 'fa-paw',
+          initial: statusTextForRequest(request, true)
+        }))
+      ];
+      const params = new URLSearchParams(window.location.search);
+      const requestedId = params.get('request');
+      let active = conversations.find((conversation) => conversation.id.endsWith(`-${requestedId}`)) || conversations[0];
+      const readStore = () => {
+        try {
+          return JSON.parse(localStorage.getItem(CHAT_KEY) || '{}');
+        } catch (_error) {
+          return {};
+        }
+      };
+      const writeStore = (store) => localStorage.setItem(CHAT_KEY, JSON.stringify(store));
+      const messagesFor = (conversation) => {
+        const store = readStore();
+        if (!store[conversation.id]) {
+          store[conversation.id] = [{ from: 'Matchcota', text: conversation.initial }];
+          writeStore(store);
+        }
+        return store[conversation.id];
+      };
+      const conversationButton = (conversation) => `<button class="list-group-item list-group-item-action border-soft ${conversation.id === active.id ? 'active bg-orange border-0' : ''}" data-chat="${conversation.id}"><div class="d-flex align-items-center"><i class="fas ${conversation.icon} mr-3"></i><div class="text-left"><b>${esc(conversation.title)}</b><small class="d-block ${conversation.id === active.id ? 'text-white' : 'text-soft-brown-color'}">${conversation.subtitle}</small></div></div></button>`;
+      const draw = () => {
+        $('#chat-list').innerHTML = conversations.map(conversationButton).join('');
+        const messages = messagesFor(active);
+        $('#chat-title').textContent = active.title;
+        $('#chat-subtitle').textContent = active.subtitle;
+        $('#chat-messages').innerHTML = messages.map((msg) => {
+          const mine = msg.from === 'Yo';
+          return `<div class="d-flex ${mine ? 'justify-content-end' : 'justify-content-start'} mb-3"><div class="${mine ? 'bg-orange-soft text-hard-brown-color' : 'bg-soft text-soft-brown-color'} rounded px-3 py-2" style="max-width:78%"><b>${esc(msg.from)}:</b> ${esc(msg.text)}</div></div>`;
+        }).join('');
+      };
+
+      setMain(`
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+          <div><h2 class="m-0 titulo-principal text-hard-brown-color">Chat</h2><small class="text-soft-brown-color">Comunicación con soporte y seguimiento de adopciones.</small></div>
+          <a href="incidents.html" class="btn btn-outline-secondary rounded-pill px-4 mt-3 mt-md-0">Reportar incidencia</a>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-4 mb-4"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-3"><h5 class="text-hard-brown-color font-weight-bold px-2">Conversaciones</h5><div id="chat-list" class="list-group list-group-flush"></div></div></div></div>
+          <div class="col-12 col-lg-8 mb-4"><div class="card bg-card border-soft shadow-sm h-100" style="border-radius:20px"><div class="card-body p-4 d-flex flex-column" style="min-height:520px"><div class="border-bottom border-soft pb-3 mb-3"><h4 id="chat-title" class="text-hard-brown-color font-weight-bold mb-1"></h4><small id="chat-subtitle" class="text-soft-brown-color"></small></div><div id="chat-messages" class="flex-grow-1 mb-3" style="overflow:auto"></div><form id="chat-form" class="input-group"><input id="chat-input" class="form-control" placeholder="Escribe un mensaje" required><div class="input-group-append"><button class="btn bg-orange text-white" type="submit">Enviar</button></div></form></div></div></div>
+        </div>`);
+      draw();
+      $('#chat-list').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-chat]');
+        if (!button) return;
+        active = conversations.find((conversation) => conversation.id === button.dataset.chat) || active;
+        draw();
+      });
+      $('#chat-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = $('#chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+        const store = readStore();
+        store[active.id] = [...messagesFor(active), { from: 'Yo', text }];
+        writeStore(store);
+        input.value = '';
+        draw();
+      });
+    } catch (error) {
+      errorView('No se pudo cargar el chat', error);
+    }
   }
 
   async function renderPetDetail() {
@@ -688,14 +889,14 @@
       const session = getSession();
       const ownPet = session?.user?.id === pet.owner_id;
       const action = !session
-        ? `<a href="login.html?next=${encodeURIComponent(`pet_detail.html?id=${pet.id}`)}" class="btn bg-orange text-white rounded-pill px-4">Iniciar sesion</a>`
+        ? `<a href="login.html?next=${encodeURIComponent(`pet_detail.html?id=${pet.id}`)}" class="btn bg-orange text-white rounded-pill px-4">Iniciar sesión</a>`
         : ownPet || isAdmin(session.user)
           ? `<a href="edit_pet.html?id=${pet.id}" class="btn bg-orange text-white rounded-pill px-4">Editar mascota</a>`
           : pet.status === 'disponible'
-            ? `<a href="solicitud.html?pet_id=${pet.id}" class="btn bg-hard-pink text-white rounded-pill px-4">Solicitar adopcion</a>`
-            : '<span class="text-soft-brown-color">Esta mascota no esta disponible por ahora.</span>';
+            ? `<a href="solicitud.html?pet_id=${pet.id}" class="btn bg-hard-pink text-white rounded-pill px-4">Solicitar adopción</a>`
+            : '<span class="text-soft-brown-color">Esta mascota no está disponible por ahora.</span>';
 
-      setMain(`<div class="row"><div class="col-12 col-lg-7 mb-4"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><div class="mb-4" style="height:320px;overflow:hidden;border-radius:28px;background:#fdf8f2">${petImg(pet)}</div><div class="d-flex flex-wrap justify-content-between align-items-start mb-3"><div><h2 class="text-hard-brown-color font-weight-bold mb-1">${esc(pet.name)}</h2><p class="text-soft-brown-color mb-0">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''} - ${pet.age} anios - ${esc(pet.city)}</p></div>${badge(pet.status)}</div><p class="text-soft-brown-color">${esc(pet.description || 'Sin descripcion registrada.')}</p><div class="row text-center mt-4"><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${esc(pet.gender)}</b><small class="d-block">Genero</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${esc(pet.size)}</b><small class="d-block">Tamano</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${pet.is_vaccinated ? 'Si' : 'No'}</b><small class="d-block">Vacunada</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${pet.is_sterilized ? 'Si' : 'No'}</b><small class="d-block">Esterilizada</small></div></div></div></div></div></div><div class="col-12 col-lg-5 mb-4"><div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold">Adopcion</h4><p class="text-soft-brown-color">Si sientes conexion con esta mascota, inicia una solicitud.</p>${action}</div></div><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h5 class="text-hard-brown-color font-weight-bold">Salud y cuidados</h5><p class="text-soft-brown-color mb-1"><b>Estado:</b> ${esc(pet.health_status || 'No especificado')}</p><p class="text-soft-brown-color mb-0"><b>Necesidades:</b> ${esc(pet.special_needs || 'No especificadas')}</p></div></div></div></div>`);
+      setMain(`<div class="row"><div class="col-12 col-lg-7 mb-4"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body p-4"><div class="mb-4" style="height:320px;overflow:hidden;border-radius:28px;background:#fdf8f2">${petImg(pet)}</div><div class="d-flex flex-wrap justify-content-between align-items-start mb-3"><div><h2 class="text-hard-brown-color font-weight-bold mb-1">${esc(pet.name)}</h2><p class="text-soft-brown-color mb-0">${esc(pet.species)} ${pet.breed ? '- ' + esc(pet.breed) : ''} - ${pet.age} años - ${esc(pet.city)}</p></div>${badge(pet.status)}</div><p class="text-soft-brown-color">${esc(pet.description || 'Sin descripción registrada.')}</p><div class="row text-center mt-4"><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${esc(pet.gender)}</b><small class="d-block">Género</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${esc(pet.size)}</b><small class="d-block">Tamaño</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${pet.is_vaccinated ? 'Sí' : 'No'}</b><small class="d-block">Vacunada</small></div></div><div class="col-6 col-md-3 mb-2"><div class="bg-soft rounded p-3"><b>${pet.is_sterilized ? 'Sí' : 'No'}</b><small class="d-block">Esterilizada</small></div></div></div></div></div></div><div class="col-12 col-lg-5 mb-4"><div class="card bg-card border-soft shadow-sm mb-3"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold">Adopción</h4><p class="text-soft-brown-color">Si sientes conexión con esta mascota, inicia una solicitud.</p>${action}</div></div><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h5 class="text-hard-brown-color font-weight-bold">Salud y cuidados</h5><p class="text-soft-brown-color mb-1"><b>Estado:</b> ${esc(pet.health_status || 'No especificado')}</p><p class="text-soft-brown-color mb-0"><b>Necesidades:</b> ${esc(pet.special_needs || 'No especificadas')}</p></div></div></div></div>`);
     } catch (error) {
       errorView('No se pudo cargar la mascota', error);
     }
@@ -708,7 +909,7 @@
     loading('Cargando perfil');
     try {
       const { user } = await api('/users/profile');
-      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Mi perfil</h2><small class="text-soft-brown-color">Informacion de tu cuenta Matchcota.</small></div>${badge(user.role)}</div><div class="row"><div class="col-12 col-lg-8 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">${esc(user.name)}</h4><p class="text-soft-brown-color mb-1"><b>Usuario:</b> ${esc(user.username)}</p><p class="text-soft-brown-color mb-1"><b>Email:</b> ${esc(user.email)}</p><p class="text-soft-brown-color mb-1"><b>Ubicacion:</b> ${esc(user.location || 'No especificada')}</p><p class="text-soft-brown-color mb-1"><b>Ocupacion:</b> ${esc(user.occupation || 'No especificada')}</p><p class="text-soft-brown-color mb-1"><b>Vivienda:</b> ${esc(user.housing_type || 'No especificada')}</p><p class="text-soft-brown-color mb-0"><b>Experiencia:</b> ${esc(user.pet_experience || 'No especificada')}</p><div class="mt-4"><a href="edit_profile.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Editar perfil</a><a href="configurar_notis.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Notificaciones</a></div></div></div></div><div class="col-12 col-lg-4 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h5 class="text-hard-brown-color font-weight-bold">Actividad</h5><a href="mis_mascotas.html" class="btn btn-sm btn-outline-secondary rounded-pill mr-2 mb-2">Mis mascotas</a><a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill mb-2">Solicitudes</a></div></div></div></div>`);
+      setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Mi perfil</h2><small class="text-soft-brown-color">Información de tu cuenta Matchcota.</small></div>${badge(user.role)}</div><div class="row"><div class="col-12 col-lg-8 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h4 class="text-hard-brown-color font-weight-bold mb-3">${esc(user.name)}</h4><p class="text-soft-brown-color mb-1"><b>Usuario:</b> ${esc(user.username)}</p><p class="text-soft-brown-color mb-1"><b>Email:</b> ${esc(user.email)}</p><p class="text-soft-brown-color mb-1"><b>Ubicación:</b> ${esc(user.location || 'No especificada')}</p><p class="text-soft-brown-color mb-1"><b>Ocupación:</b> ${esc(user.occupation || 'No especificada')}</p><p class="text-soft-brown-color mb-1"><b>Vivienda:</b> ${esc(user.housing_type || 'No especificada')}</p><p class="text-soft-brown-color mb-0"><b>Experiencia:</b> ${esc(user.pet_experience || 'No especificada')}</p><div class="mt-4"><a href="edit_profile.html" class="btn bg-orange text-white rounded-pill px-4 mr-2 mb-2">Editar perfil</a><a href="configurar_notis.html" class="btn btn-outline-secondary rounded-pill px-4 mr-2 mb-2">Notificaciones</a><a href="chat.html" class="btn btn-outline-secondary rounded-pill px-4 mb-2">Chat</a></div></div></div></div><div class="col-12 col-lg-4 mb-4"><div class="card bg-card border-soft shadow-sm"><div class="card-body p-4"><h5 class="text-hard-brown-color font-weight-bold">Actividad</h5><a href="mis_mascotas.html" class="btn btn-sm btn-outline-secondary rounded-pill mr-2 mb-2">Mis mascotas</a><a href="match.html" class="btn btn-sm btn-outline-secondary rounded-pill mb-2">Solicitudes</a></div></div></div></div>`);
     } catch (error) {
       errorView('No se pudo cargar el perfil', error);
     }
@@ -722,14 +923,14 @@
     const load = async () => {
       const response = await api('/pets/my');
       const pets = response.data || [];
-      $('#my-pets-list').innerHTML = pets.length ? pets.map((pet) => `<div class="col-12 col-lg-6 mb-3"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body"><div class="d-flex align-items-center mb-3"><div class="mr-3" style="width:82px;height:82px;overflow:hidden;border-radius:20px">${petImg(pet)}</div><div class="flex-grow-1"><h5 class="font-weight-bold text-hard-brown-color mb-1">${esc(pet.name)}</h5><small class="text-soft-brown-color d-block">${esc(pet.species)} - ${esc(pet.city)}</small>${badge(pet.status)}</div></div><a href="pet_detail.html?id=${pet.id}" class="btn btn-sm bg-orange text-white rounded-pill px-3 mr-2 mb-2">Ver</a><a href="edit_pet.html?id=${pet.id}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 mr-2 mb-2">Editar</a><button class="btn btn-sm btn-outline-danger rounded-pill px-3 mb-2" data-delete-pet="${pet.id}">Eliminar</button></div></div></div>`).join('') : `<div class="col-12">${empty('Aun no publicas mascotas', 'Publica tu primera mascota para verla aqui.', '<a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4">Publicar</a>')}</div>`;
+      $('#my-pets-list').innerHTML = pets.length ? pets.map((pet) => `<div class="col-12 col-lg-6 mb-3"><div class="card bg-card border-soft shadow-sm h-100"><div class="card-body"><div class="d-flex align-items-center mb-3"><div class="mr-3" style="width:82px;height:82px;overflow:hidden;border-radius:20px">${petImg(pet)}</div><div class="flex-grow-1"><h5 class="font-weight-bold text-hard-brown-color mb-1">${esc(pet.name)}</h5><small class="text-soft-brown-color d-block">${esc(pet.species)} - ${esc(pet.city)}</small>${badge(pet.status)}</div></div><a href="pet_detail.html?id=${pet.id}" class="btn btn-sm bg-orange text-white rounded-pill px-3 mr-2 mb-2">Ver</a><a href="edit_pet.html?id=${pet.id}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 mr-2 mb-2">Editar</a><button class="btn btn-sm btn-outline-danger rounded-pill px-3 mb-2" data-delete-pet="${pet.id}">Eliminar</button></div></div></div>`).join('') : `<div class="col-12">${empty('Aún no publicas mascotas', 'Publica tu primera mascota para verla aquí.', '<a href="publicar_mascotas.html" class="btn bg-orange text-white rounded-pill px-4">Publicar</a>')}</div>`;
     };
     try {
       setMain(`<div class="d-flex flex-wrap justify-content-between align-items-end mb-4"><div><h2 class="text-hard-brown-color font-weight-bold mb-0">Mis mascotas</h2><small class="text-soft-brown-color">Mascotas que has registrado.</small></div><a href="publicar_mascotas.html" class="btn bg-hard-pink text-white rounded-pill px-4 mt-3 mt-md-0">Nueva mascota</a></div><div id="my-pets-message"></div><div id="my-pets-list" class="row"></div>`);
       await load();
       $('#my-pets-list').addEventListener('click', async (event) => {
         const button = event.target.closest('[data-delete-pet]');
-        if (!button || !window.confirm('Quieres eliminar esta mascota?')) return;
+        if (!button || !window.confirm('¿Quieres eliminar esta mascota?')) return;
         try {
           await api(`/pets/${button.dataset.deletePet}`, { method: 'DELETE' });
           await load();

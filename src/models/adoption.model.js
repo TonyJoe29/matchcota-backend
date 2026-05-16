@@ -8,10 +8,12 @@ const adoptionSelect = `
     a.id, a.user_id, a.pet_id, a.motivation, a.home_suitable,
     a.special_care_experience, a.message, a.status, a.created_at, a.updated_at,
     p.name AS pet_name, p.status AS pet_status, p.photo_url AS pet_photo_url,
-    u.username AS requester_username
+    u.username AS requester_username,
+    owner.username AS owner_username
   FROM adoption_requests a
   INNER JOIN pets p ON p.id = a.pet_id
   INNER JOIN users u ON u.id = a.user_id
+  INNER JOIN users owner ON owner.id = p.owner_id
 `;
 
 const create = async (data) => {
@@ -26,7 +28,7 @@ const create = async (data) => {
   }
 
   if (pet.status !== 'disponible') {
-    throw httpError(400, 'La mascota no esta disponible para adopcion.');
+    throw httpError(400, 'La mascota no está disponible para adopción.');
   }
 
   const duplicates = await query(
@@ -73,6 +75,13 @@ const listAll = async () => {
   return query(`${adoptionSelect} ORDER BY a.created_at DESC`);
 };
 
+const listByPetOwner = async (ownerId) => {
+  return query(
+    `${adoptionSelect} WHERE p.owner_id = ? ORDER BY a.created_at DESC`,
+    [ownerId]
+  );
+};
+
 const findById = async (id) => {
   const rows = await query(`${adoptionSelect} WHERE a.id = ? LIMIT 1`, [id]);
   return rows[0] || null;
@@ -95,7 +104,7 @@ const updateStatus = async (id, nextStatus) => {
     const request = rows[0];
 
     if (!request) {
-      throw httpError(404, 'Solicitud de adopcion no encontrada.');
+      throw httpError(404, 'Solicitud de adopción no encontrada.');
     }
 
     if (!transitions[request.status].includes(nextStatus)) {
@@ -137,6 +146,7 @@ module.exports = {
   create,
   listByUser,
   listAll,
+  listByPetOwner,
   findById,
   updateStatus
 };

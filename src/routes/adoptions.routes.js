@@ -10,6 +10,7 @@ const {
 
 router.post('/', authMiddleware, createAdoptionValidator, validate, adoptionsController.createAdoption);
 router.get('/my-requests', authMiddleware, adoptionsController.myRequests);
+router.get('/received', authMiddleware, adoptionsController.receivedRequests);
 router.get('/', authMiddleware, requireRoles('admin'), adoptionsController.listRequests);
 router.get('/:id', authMiddleware, adoptionsController.getRequest);
 router.patch(

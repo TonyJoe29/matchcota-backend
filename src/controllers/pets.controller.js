@@ -1,5 +1,5 @@
 const petModel = require('../models/pet.model');
-const { resolveCatalogId } = require('../models/catalog.model');
+const { getCatalog, resolveCatalogId } = require('../models/catalog.model');
 const httpError = require('../utils/httpError');
 
 const normalizeGender = (value) => value?.toLowerCase();
@@ -42,32 +42,45 @@ const resolvePetData = async (body, ownerId = null) => {
   if (speciesValue !== undefined) {
     data.species_id = await resolveCatalogId('species', speciesValue);
     if (!data.species_id) {
-      throw httpError(400, 'La especie no existe en el catalogo.');
+      throw httpError(400, 'La especie no existe en el catálogo.');
     }
   }
 
   if (breedValue !== undefined) {
     data.breed_id = await resolveCatalogId('breeds', breedValue);
     if (!data.breed_id) {
-      throw httpError(400, 'La raza no existe en el catalogo.');
+      throw httpError(400, 'La raza no existe en el catálogo.');
     }
   }
 
   if (sizeValue !== undefined) {
     data.size_id = await resolveCatalogId('sizes', sizeValue);
     if (!data.size_id) {
-      throw httpError(400, 'El tamanio no existe en el catalogo.');
+      throw httpError(400, 'El tamaño no existe en el catálogo.');
     }
   }
 
   if (cityValue !== undefined) {
     data.city_id = await resolveCatalogId('cities', cityValue);
     if (!data.city_id) {
-      throw httpError(400, 'La ciudad no existe en el catalogo.');
+      throw httpError(400, 'La ciudad no existe en el catálogo.');
     }
   }
 
   return data;
+};
+
+const ensureBreedMatchesSpecies = async (speciesId, breedId) => {
+  if (!speciesId || !breedId) {
+    return;
+  }
+
+  const breeds = await getCatalog('breeds');
+  const breed = breeds.find((item) => Number(item.id) === Number(breedId));
+
+  if (!breed || Number(breed.species_id) !== Number(speciesId)) {
+    throw httpError(400, 'La raza seleccionada no pertenece a la especie elegida.');
+  }
 };
 
 const listPets = async (req, res, next) => {
@@ -128,6 +141,7 @@ const getPet = async (req, res, next) => {
 const createPet = async (req, res, next) => {
   try {
     const data = await resolvePetData(req.body, req.user.id);
+    await ensureBreedMatchesSpecies(data.species_id, data.breed_id);
     const pet = await petModel.create(data);
 
     res.status(201).json({
@@ -152,6 +166,10 @@ const updatePet = async (req, res, next) => {
     }
 
     const data = await resolvePetData(req.body);
+    await ensureBreedMatchesSpecies(
+      data.species_id ?? pet.species_id,
+      data.breed_id !== undefined ? data.breed_id : pet.breed_id
+    );
     const updatedPet = await petModel.update(req.params.id, data);
 
     res.json({

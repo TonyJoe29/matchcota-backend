@@ -12,7 +12,7 @@ const resolveMany = async (catalogName, values = []) => {
   for (const value of values) {
     const id = await resolveCatalogId(catalogName, value);
     if (!id) {
-      throw httpError(400, `Valor de catalogo invalido: ${value}.`);
+      throw httpError(400, `Valor de catálogo inválido: ${value}.`);
     }
     resolved.push(id);
   }

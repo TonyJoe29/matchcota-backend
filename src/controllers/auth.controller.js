@@ -53,7 +53,7 @@ const login = async (req, res, next) => {
     const safeUser = await userModel.findById(user.id);
 
     res.json({
-      message: 'Inicio de sesion exitoso.',
+      message: 'Inicio de sesión exitoso.',
       token: generateToken(safeUser),
       user: safeUser
     });

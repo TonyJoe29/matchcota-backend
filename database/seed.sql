@@ -12,11 +12,11 @@ INSERT OR IGNORE INTO breeds (id, species_id, name) VALUES
   (1, 1, 'Schnauzer'),
   (2, 1, 'Golden Retriever'),
   (3, 1, 'Mestizo'),
-  (4, 2, 'Calico'),
+  (4, 2, 'Cálico'),
   (5, 2, 'Mestizo');
 
 INSERT OR IGNORE INTO sizes (id, name) VALUES
-  (1, 'Pequeno'),
+  (1, 'Pequeño'),
   (2, 'Mediano'),
   (3, 'Grande');
 
@@ -24,7 +24,7 @@ INSERT OR IGNORE INTO cities (id, name, state) VALUES
   (1, 'Guadalajara', 'Jalisco'),
   (2, 'Zapopan', 'Jalisco'),
   (3, 'Guanajuato', 'Guanajuato'),
-  (4, 'Monterrey', 'Nuevo Leon'),
+  (4, 'Monterrey', 'Nuevo León'),
   (5, 'Puebla', 'Puebla');
 
 -- Password admin: Admin123!
@@ -48,7 +48,7 @@ INSERT OR IGNORE INTO users (
   'adi_06',
   'adis06@gmail.com',
   '$2b$10$okkSAspSZzp0jz112V24m.Ut.zMNDrfqqSvFGaugMrRcPbkzkuO2G',
-  'Adilene Fabiola Nava Diaz',
+  'Adilene Fabiola Nava Díaz',
   'Guadalajara, Jalisco',
   3
 );
@@ -60,8 +60,8 @@ INSERT OR IGNORE INTO pets (
 ) VALUES (
   1, 2, 'Blacky', 1, 1, 10, 'hembra', 1, 2,
   'https://foto_blacky.example/blacky.jpg',
-  'Tiene un problema de higado',
-  'Pasear dos veces al dia y chequeos cada seis meses',
+  'Tiene un problema de hígado',
+  'Pasear dos veces al día y chequeos cada seis meses',
   1, 1, 0, 0, 0,
   'Color negro, juguetona, territorial y dormilona'
 );
