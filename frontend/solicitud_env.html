@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Solicitud Enviada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            overflow: hidden; /* Evita scroll en esta pantalla de mensaje */
+        }
+        .titulo-principal { 
+            font-family: 'Pacifico', cursive; 
+        }
+        .success-card {
+            border-radius: 30px;
+            max-width: 550px;
+            width: 90%;
+            margin: auto;
+        }
+        .icon-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        .circle-bg {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .check-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #fffdfb;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .animate-bounce {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+    </style>
+</head>
+<body class="bg-main d-flex align-items-center min-vh-100">
+
+    <i class="fas fa-paw paw-mark"></i>
+
+    <div class="container text-center">
+        <div class="card success-card bg-card border-soft shadow-lg p-5 animate-bounce">
+            <div class="card-body">
+                
+                <div class="icon-container">
+                    <div class="circle-bg bg-orange-soft">
+                        <i class="fas fa-paper-plane fa-4x text-orange-color"></i>
+                    </div>
+                    <div class="check-badge bg-aqua text-white">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <h2 class="titulo-principal text-hard-brown-color mb-3">¡Solicitud Enviada!</h2>
+                
+                <p class="text-soft-brown-color mb-4 px-md-4">
+                    Tu interés por <strong>Luna</strong> ha sido notificado al rescatista. 
+                    Revisa tu bandeja de mensajes periódicamente para continuar con el proceso.
+                </p>
+
+                <div class="alert bg-soft border border-hard text-hard-brown-color small mb-5">
+                    <i class="fas fa-info-circle mr-2 text-aqua"></i>
+                    Se ha creado un chat automático en tu sección de <strong>Solicitudes</strong>.
+                </div>
+
+                <a href="home.html" class="btn bg-orange text-white font-weight-bold rounded-pill px-5 py-3 shadow-sm" style="font-size: 1.1rem;">
+                    <i class="fas fa-home mr-2"></i> Volver al Inicio
+                </a>
+
+            </div>
+        </div>
+        
+        <p class="text-soft-brown-color mt-4 small font-weight-bold opacity-75">
+            Matchcota • Uniendo corazones y huellitas
+        </p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>`r`n</body>
+</html>

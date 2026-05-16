@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Solicitud de Adopción</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .titulo-principal { font-family: 'Pacifico', cursive; }
+        .input-custom { border-radius: 10px; font-size: 0.95rem; padding: 1rem; }
+        .etiqueta-pequena { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; }
+        .btn-pill-custom { border-radius: 20px; font-weight: 600; font-size: 0.85rem; padding: 0.3rem 1rem; }
+    </style>
+</head>
+<body class="bg-main text-hard-brown-color pb-5">
+
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
+            
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">PRINCIPAL</small>
+                        <a href="home.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i> <span>Inicio</span>
+                        </a>
+                        <a href="directory.html" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i> <span>Directorio</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">MI CUENTA</small>
+                        <a href="profile.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-user mr-2"></i> <span>Mi Perfil</span>
+                        </a>
+                        <a href="mis_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-paw mr-2 text-orange-color"></i> <span>Mis Mascotas</span>
+                        </a>
+                        <a href="match.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i> <span>Solicitudes</span>
+                            </div>
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">1</span>
+                        </a>
+                        <a href="Gestionar_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-edit mr-2"></i> <span>Gestor</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid p-0 p-md-2">
+                    
+                    <div class="d-flex flex-wrap align-items-center mb-4">
+                        <button class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold" onclick="window.history.back()" style="font-size: 0.9rem;">
+                            <i class="fas fa-arrow-left mr-1"></i> Volver
+                        </button>
+                        <h2 class="m-0 titulo-principal d-flex align-items-center text-hard-brown-color">
+                            <i class="fas fa-paper-plane mr-2 text-pink" style="font-size: 1.5rem;"></i> Solicitud de Adopción
+                        </h2>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12 col-lg-8 mb-4"> 
+                            
+                            <div class="card shadow-sm rounded-lg mb-4 bg-card border-soft">
+                                <div class="card-body p-4">
+                                    <h5 class="mb-3 text-orange-color font-weight-bold">
+                                        <i class="fas fa-comment-dots mr-2"></i> Preséntate con el rescatista
+                                    </h5>
+                                    <p class="text-soft-brown-color small mb-3">
+                                        Cuéntale a Adilene N. por qué quieres adoptar a Luna. Menciona un poco sobre tu rutina, tu familia o si ya tienes experiencia con perritos schnauzer. ¡Una buena primera impresión hace la diferencia!
+                                    </p>
+                                    <textarea class="form-control input-custom bg-soft border-soft text-hard-brown-color" rows="5" placeholder="¡Hola! Me encantaría darle un hogar a Luna porque..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="card shadow-sm rounded-lg mb-4 bg-card border-soft">
+                                <div class="card-body p-4">
+                                    <h5 class="mb-3 text-orange-color font-weight-bold">
+                                        <i class="fas fa-id-card mr-2"></i> Tu Perfil de Adoptante
+                                    </h5>
+                                    
+                                    <div class="alert bg-soft-pink border border-pink text-pink d-flex align-items-start mb-0 rounded-lg">
+                                        <i class="fas fa-info-circle fa-lg mt-1 mr-3"></i>
+                                        <div>
+                                            <strong class="d-block mb-1">Compartiremos tu información personal</strong>
+                                            <p class="mb-2 small text-hard-brown-color">Para garantizar la seguridad de Luna, se enviará una copia de tu perfil (Ingresos, Vivienda, Experiencia con mascotas) al rescatista de forma privada.</p>
+                                            <a href="profile.html" class="btn btn-sm bg-card border-pink text-pink rounded-pill font-weight-bold shadow-sm">
+                                                <i class="fas fa-eye mr-1"></i> Revisar mi perfil antes de enviar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow-sm rounded-lg mb-4 bg-card border-soft">
+                                <div class="card-body p-4">
+                                    <h5 class="mb-4 text-orange-color font-weight-bold">
+                                        <i class="fas fa-handshake mr-2"></i> Compromisos de Adopción
+                                    </h5>
+                                    
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="checkCompromiso1">
+                                        <label class="custom-control-label text-hard-brown-color font-weight-bold small pt-1" for="checkCompromiso1">
+                                            Entiendo que adoptar a una mascota es una responsabilidad de por vida y requiere tiempo, paciencia y recursos económicos.
+                                        </label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="checkCompromiso2">
+                                        <label class="custom-control-label text-hard-brown-color font-weight-bold small pt-1" for="checkCompromiso2">
+                                            Acepto que el rescatista realice una entrevista y seguimiento para asegurar el bienestar de la mascota.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            
+                            <h6 class="text-orange-color font-weight-bold mb-3 etiqueta-pequena text-uppercase">
+                                <i class="fas fa-paw mr-2"></i> VAS A ADOPTAR A...
+                            </h6>
+
+                            <div class="card shadow-sm rounded-lg overflow-hidden bg-card border-soft w-100 mb-4">
+                                <div class="degradado-rosa-naranja d-flex justify-content-center align-items-center" style="height: 160px;">
+                                    <i class="fas fa-dog fa-5x text-hard-brown-color"></i>
+                                </div>
+                                
+                                <div class="card-body pt-3 pb-4 px-4">
+                                    <h4 class="mt-2 mb-1 text-hard-brown-color font-weight-bold">Luna</h4>
+                                    <p class="text-soft-brown-color small mb-3">Schnauzer • Hembra • 8 años</p>
+
+                                    <div class="d-flex flex-wrap mb-3">
+                                        <span class="badge badge-pill bg-soft border border-soft text-soft-brown-color px-2 py-1 mr-1 mb-1">
+                                            <i class="fas fa-map-marker-alt text-orange-color"></i> Guadalajara
+                                        </span>
+                                        <span class="badge badge-pill bg-aqua-soft border-aqua text-aqua px-2 py-1 mr-1 mb-1">
+                                            <i class="fas fa-cut"></i> Esterilizada
+                                        </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mt-3 pt-3 border-top border-soft">
+                                        <div class="rounded-circle bg-soft border border-soft d-flex justify-content-center align-items-center mr-2" style="width: 35px; height: 35px;">
+                                            <i class="fas fa-user text-orange-color"></i>
+                                        </div>
+                                        <div style="line-height: 1.2;">
+                                            <small class="text-soft-brown-color d-block" style="font-size: 0.7rem;">Rescatista:</small>
+                                            <strong class="text-hard-brown-color small">Adilene N.</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+
+                            <button class="btn bg-orange text-white font-weight-bold btn-block rounded-pill py-3 shadow-lg" style="font-size: 1.1rem;" onclick="window.location.href='solicitud_env.html'">
+                                <i class="fas fa-paper-plane mr-2"></i> Enviar Solicitud
+                            </button>
+                            <p class="text-center text-soft-brown-color mt-3" style="font-size: 0.75rem;">
+                                Al enviar, se creará un chat directo con el rescatista.
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <div class="paw-mark">
+    
+    <a href="chat.html">
+        <i class="fas fa-paw"></i>
+    </a>
+</div>
+    <script src="app.js"></script>`r`n</body>
+</html>

@@ -12,20 +12,20 @@
 </head>
 
 <body class="bg-main">
-    <div class="container-fluid min-vh-100"> 
-        <div class="row min-vh-100"> 
-            
+    <div class="container-fluid min-vh-100">
+        <div class="row min-vh-100">
+
             <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
                 <div class="card bg-card border-soft shadow-sm h-100">
                     <div class="card-body p-2">
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
                             PRINCIPAL
                         </small>
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+                        <a href="home.html" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
                             <i class="fas fa-home mr-2 text-orange-color"></i>
                             <span>Inicio</span>
                         </a>
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                        <a href="directory.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
                             <i class="fas fa-search mr-2 text-aqua"></i>
                             <span>Directorio</span>
                         </a>
@@ -34,17 +34,17 @@
                             MI CUENTA
                         </small>
 
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                        <a href="profile.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-user mr-2"></i>
                             <span>Mi Perfil</span>
                         </a>
 
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                        <a href="mis_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-paw mr-2 text-orange-color"></i>
                             <span>Mis Mascotas</span>
                         </a>
 
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+                        <a href="match.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-envelope mr-2 text-pink"></i>
                                 <span>Solicitudes</span>
@@ -54,7 +54,7 @@
                             </span>
                         </a>
 
-                        <a href="#" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                        <a href="Gestionar_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-edit mr-2"></i>
                             <span>Gestor</span>
                         </a>
@@ -175,11 +175,11 @@
                     <div class="row">
                         <div class="col-12 col-sm-6 col-lg-3 mb-4">
                             <div class="card shadow-sm border border-hard pet-card h-100">
-                                <div class="bg-soft text-center p-4"> 
+                                <div class="bg-soft text-center p-4">
                                     <i class="fas fa-dog fa-5x"></i>
                                 </div>
 
-                                <div class="card-body bg-card d-flex flex-column">
+                                <div class="card-body bg-card d-flex flex-column" onclick="window.location.href='pet_detail.html'" " style="cursor: pointer;">
                                     <h5 class="text-hard-brown-color font-weight-bold mb-1">Luna</h5>
                                     <small class="text-soft-brown-color mb-3">Schnauzer · Guadalajara</small>
 
@@ -272,7 +272,10 @@
     </div>
 
 <div class="paw-mark">
-    <i class="fas fa-paw"></i>
+
+    <a href="chat.html">
+        <i class="fas fa-paw"></i>
+    </a>
 </div>
 
     <script src="app.js"></script>`r`n</body>

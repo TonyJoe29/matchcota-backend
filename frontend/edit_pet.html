@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchcota | Editar Mascota</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .titulo-principal { font-family: 'Pacifico', cursive; }
+        .btn-pill-custom { border-radius: 20px; font-weight: 600; font-size: 0.85rem; padding: 0.3rem 1rem; transition: all 0.2s; }
+        .input-custom { border-radius: 10px; font-size: 0.9rem; }
+        .border-dashed { border-style: dashed !important; border-width: 2px !important; }
+        .etiqueta-pequena { font-size: 0.75rem; font-weight: 700; }
+        /* Efecto al pasar el mouse por los botones toggle */
+        .btn-toggle:hover { opacity: 0.8; transform: translateY(-1px); }
+    </style>
+</head>
+<body class="bg-main text-hard-brown-color">
+
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
+
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="home.html" class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="directory.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="profile.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="mis_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="match.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="Gestionar_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid py-2 py-md-4">
+                    
+                    <div class="d-flex flex-wrap align-items-center mb-4">
+                        <button class="btn bg-card border-soft text-soft-brown-color rounded-pill shadow-sm mr-3 mb-2 mb-md-0 font-weight-bold" onclick="window.history.back()" style="font-size: 0.9rem;">
+                            <i class="fas fa-arrow-left mr-1"></i> Volver
+                        </button>
+                        <h2 class="m-0 titulo-principal d-flex align-items-center text-hard-brown-color">
+                            <i class="fas fa-pencil-alt mr-2" style="font-size: 1.5rem;"></i> Editar Mascota
+                        </h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-9">
+                            
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-3 p-md-4">
+                                    <h6 class="text-orange-color font-weight-bold mb-3 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-camera mr-2"></i> FOTO ACTUAL
+                                    </h6>
+                                    <div class="degradado-rosa-naranja border-hard border rounded d-flex flex-column align-items-center justify-content-center text-center px-2 position-relative" style="height: 200px; cursor: pointer;">
+                                        <i class="fas fa-dog fa-5x text-hard-brown-color mb-2"></i>
+                                        <span class="badge badge-pill bg-hard-pink text-white position-absolute shadow-sm" style="top: 15px; right: 15px; cursor: pointer; padding: 0.5rem 1rem;">
+                                            <i class="fas fa-sync-alt mr-1"></i> Cambiar foto
+                                        </span>
+                                        <small class="text-hard-brown-color font-weight-bold">Luna_Schnauzer_01.jpg</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-3 p-md-4">
+                                    <h6 class="text-orange-color font-weight-bold mb-4 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-paw mr-2"></i> DATOS BÁSICOS
+                                    </h6>
+                                    
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Especie</label>
+                                            <div class="d-flex flex-wrap btn-group-toggle-custom">
+                                                <button class="btn btn-pill-custom btn-toggle bg-orange text-white border-hard mr-2 mb-2 shadow-sm"><i class="fas fa-dog"></i> Perro</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mr-2 mb-2 shadow-sm"><i class="fas fa-cat"></i> Gato</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mb-2 shadow-sm"><i class="fas fa-paw"></i> Otro</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Género</label>
+                                            <div class="d-flex flex-wrap btn-group-toggle-custom">
+                                                <button class="btn btn-pill-custom btn-toggle bg-orange text-white border-hard mr-2 mb-2 shadow-sm"><i class="fas fa-venus"></i> Hembra</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mb-2 shadow-sm"><i class="fas fa-mars"></i> Macho</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Raza</label>
+                                            <input type="text" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="Schnauzer">
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Edad (Años)</label>
+                                            <input type="number" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="8">
+                                        </div>
+
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Tamaño</label>
+                                            <div class="d-flex flex-wrap btn-group-toggle-custom">
+                                                <button class="btn btn-pill-custom btn-toggle bg-orange text-white border-hard mr-2 mb-2 shadow-sm">Pequeño</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mr-2 mb-2 shadow-sm">Mediano</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mb-2 shadow-sm">Grande</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Ubicación</label>
+                                            <input type="text" class="form-control input-custom bg-card border-soft text-soft-brown-color" value="Guadalajara, Jalisco">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px;">
+                                <div class="card-body p-3 p-md-4">
+                                    <h6 class="text-pink font-weight-bold mb-4 etiqueta-pequena text-uppercase">
+                                        <i class="fas fa-heart mr-2"></i> SALUD Y DESCRIPCIÓN
+                                    </h6>
+                                    
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">¿Esterilizado/a?</label>
+                                            <div class="d-flex flex-wrap btn-group-toggle-custom">
+                                                <button class="btn btn-pill-custom btn-toggle bg-orange text-white border-hard mr-2 mb-2 shadow-sm"><i class="fas fa-check"></i> Sí</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mb-2 shadow-sm"><i class="fas fa-times"></i> No</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">¿Vacunado/a?</label>
+                                            <div class="d-flex flex-wrap btn-group-toggle-custom">
+                                                <button class="btn btn-pill-custom btn-toggle bg-orange text-white border-hard mr-2 mb-2 shadow-sm"><i class="fas fa-check"></i> Sí</button>
+                                                <button class="btn btn-pill-custom btn-toggle bg-card text-soft-brown-color border-soft mb-2 shadow-sm"><i class="fas fa-times"></i> No</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12 mt-2">
+                                            <label class="text-orange-color etiqueta-pequena text-uppercase">Descripción / Estado de Salud</label>
+                                            <textarea class="form-control input-custom bg-card border-soft text-soft-brown-color" rows="3">Negra y gordita, juguetona, territorial y dormilona. Tiene un pequeño problema de hígado que requiere dieta especial.</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-lg-3 mt-2 mt-lg-0">
+                            
+                            <h6 class="text-orange-color font-weight-bold mb-3 etiqueta-pequena text-uppercase">
+                                <i class="far fa-eye mr-2"></i> VISTA PREVIA
+                            </h6>
+
+                            <div class="card bg-card border-soft shadow-sm mb-4" style="border-radius: 15px; overflow: hidden;">
+                                <div class="degradado-rosa-naranja d-flex justify-content-center align-items-center" style="height: 180px;">
+                                    <i class="fas fa-dog fa-5x text-hard-brown-color"></i>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h6 class="font-weight-bold text-hard-brown-color mb-3">Luna • Hembra</h6>
+                                    
+                                    <div class="mb-3 d-flex flex-wrap">
+                                        <span class="badge badge-pill bg-card border-soft text-soft-brown-color font-weight-normal px-2 py-1 mr-1 mb-1 shadow-sm">
+                                            <i class="fas fa-map-marker-alt text-orange-color"></i> Guadalajara
+                                        </span>
+                                        <span class="badge badge-pill bg-card border-soft text-soft-brown-color font-weight-normal px-2 py-1 mr-1 mb-1 shadow-sm">
+                                            <i class="fas fa-ruler"></i> Pequeña
+                                        </span>
+                                        <span class="badge badge-pill bg-aqua-soft border-aqua text-aqua font-weight-normal px-2 py-1 mb-1 shadow-sm">
+                                            <i class="fas fa-cut"></i> Esterilizada
+                                        </span>
+                                    </div>
+                                    
+                                    <p class="text-soft-brown-color mb-0" style="font-size: 0.85rem;">Negra y gordita, juguetona y dormilona...</p>
+                                </div>
+                            </div>
+
+                            <button class="btn bg-orange text-white font-weight-bold btn-block rounded-pill py-3 shadow-sm mb-3" onclick="window.location.href='pet_detail.html'">
+                                <i class="fas fa-save mr-2"></i> Guardar Cambios
+                            </button>
+
+                            <button class="btn bg-card border-soft text-soft-brown-color font-weight-bold btn-block rounded-pill py-2 shadow-sm" onclick="window.history.back()">
+                                Cancelar
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+    <div class="paw-mark">
+        <a href="chat.html" class="text-hard-brown-color opacity-50">
+            <i class="fas fa-paw"></i>
+        </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Cuando se hace clic en cualquier botón con la clase 'btn-toggle'
+            $('.btn-toggle').click(function(e) {
+                e.preventDefault(); // Evitamos que haga un recargo de página accidental
+                
+                // Buscamos a qué grupo pertenece el botón que presionaste
+                var grupo = $(this).closest('.btn-group-toggle-custom');
+                
+                // Le quitamos el color naranja a todos los botones de ESE grupo
+                grupo.find('.btn-toggle')
+                    .removeClass('bg-orange text-white border-hard')
+                    .addClass('bg-card text-soft-brown-color border-soft');
+                
+                // Y le ponemos el color naranja solo al botón que presionaste
+                $(this)
+                    .removeClass('bg-card text-soft-brown-color border-soft')
+                    .addClass('bg-orange text-white border-hard');
+            });
+        });
+    </script>
+    <script src="app.js"></script>`r`n</body>
+</html>

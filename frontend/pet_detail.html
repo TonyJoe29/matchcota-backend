@@ -12,49 +12,45 @@
 </head>
 
 <body class="bg-main">
-    <!-- #Main Container -->
-    <div class="container-fluid vh-100"> <!-- fluid para todo lo ancho vh para que sea de toda la altura (por eso el 100)-->
-        <div class="row h-100"> <!-- Fila  de todo para agregar columnas -->
-            
-            <nav class="col-md-2 ">
-                <!-- PARA RESALTAR EL ELEMENTO EN EL NAV BAR SE UTILIZA  bg-orange-soft text-hard-brown-color
-                EL RESTO DE OPCIONES SOLO DEBEN LLEVAR text-soft-brown-color -->
-                <div class="card bg-card border-soft shadow-sm vh-100">
+    <div class="container-fluid min-vh-100">
+        <div class="row min-vh-100">
+
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
                     <div class="card-body p-2">
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
                             PRINCIPAL
                         </small>
-                        <a href="#"
+                        <a href="home.html"
                         class="d-flex align-items-center px-3 py-2 rounded  text-soft-brown-color text-decoration-none mb-1">
                             <i class="fas fa-home mr-2 text-orange-color"></i>
                             <span>Inicio</span>
                         </a>
-                        <a href="#"
+                        <a href="directory.html"
                         class="d-flex align-items-center px-3 py-2 rounded bg-orange-soft text-hard-brown-color text-decoration-none mb-2">
                             <i class="fas fa-search mr-2 text-aqua"></i>
                             <span>Directorio</span>
                         </a>
 
-                        <!-- MI CUENTA -->
                         <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
                             MI CUENTA
                         </small>
 
-                        <a href="#"
+                        <a href="profile.html"
                         class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
 
                             <i class="fas fa-user mr-2"></i>
                             <span>Mi Perfil</span>
                         </a>
 
-                        <a href="#"
+                        <a href="mis_mascotas.html"
                         class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
 
                             <i class="fas fa-paw mr-2 text-orange-color"></i>
                             <span>Mis Mascotas</span>
                         </a>
 
-                        <a href="#"
+                        <a href="match.html"
                         class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
 
                             <div class="d-flex align-items-center">
@@ -67,7 +63,7 @@
                             </span>
                         </a>
 
-                        <a href="#"
+                        <a href="Gestionar_mascotas.html"
                         class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
 
                             <i class="fas fa-edit mr-2"></i>
@@ -79,18 +75,19 @@
             </nav>
 
 
-            <main class="col-md-10 p-3">
-                <div class="container-fluid py-3">
-                    <div class="row align-items-center mb-4">
-                        <div class="col-md-6 d-flex align-items-center">
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <div class="container-fluid py-0 py-md-3">
 
-                            <button class="btn bg-card border border-soft rounded-pill text-hard-brown-color btn-sm px-3 mr-3">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-12 col-md-6 d-flex align-items-center flex-wrap">
+
+                            <button class="btn bg-card border border-soft rounded-pill text-hard-brown-color btn-sm px-3 mr-3 mb-2 mb-md-0" onclick="window.location.href='directory.html'">
                                 <i class="fas fa-arrow-left"></i>
                                 Volver
                             </button>
 
-                            <small class="text-soft-brown-color">
-                                Directorio / Luna
+                            <small class="text-soft-brown-color mb-2 mb-md-0">
+                                Directorio / Blacky
                             </small>
 
                         </div>
@@ -99,8 +96,7 @@
 
                     <div class="row">
 
-                        <!-- SIDEBAR -->
-                        <div class="col-lg-3 mb-4">
+                        <div class="col-12 col-lg-3 mb-4">
 
                             <div class="card bg-card border-soft rounded-lg overflow-hidden">
 
@@ -116,7 +112,6 @@
                                     </div>
 
                                     <div class="text-center py-5">
-                                        <!-- Aquí va la foto -->
                                         <i class="fas fa-dog"
                                         style="font-size:120px;"></i>
 
@@ -148,39 +143,41 @@
 
                         </div>
 
-                        <div class="col-lg-9">
-                            <!-- Info -->
+                        <div class="col-12 col-lg-9">
+
                             <div class="card bg-card border-soft rounded-lg mb-4">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <h1 class="text-hard-brown-color font-weight-bold mb-2">
-                                                Luna <i class="fas fa-dog text-orange-color"></i>
+                                            <h1 class="text-hard-brown-color font-weight-bold mb-2" style="font-size: 2rem;">
+                                                Blacky <i class="fas fa-dog text-orange-color" style="font-size: 1.5rem;"></i>
                                             </h1>
 
                                             <h6 class="text-soft-brown-color mb-3">
                                                 Schnauzer • Hembra • 8 años • Guadalajara
                                             </h6>
 
-                                            <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2">
-                                                <i class="fas fa-map-pin"></i>  Guadalajara
-                                            </span>
+                                            <div class="d-flex flex-wrap mb-2">
+                                                <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2 mb-2">
+                                                    <i class="fas fa-map-pin"></i>  Guadalajara
+                                                </span>
 
-                                            <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2">
-                                                <i class="fas fa-ruler"></i>  Pequeño
-                                            </span>
+                                                <span class="badge badge-pill bg-card border border-soft text-soft-brown-color px-3 py-2 mr-2 mb-2">
+                                                    <i class="fas fa-ruler"></i>  Pequeño
+                                                </span>
 
-                                            <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2 mr-2">
-                                                <i class="fas fa-cut"></i> Esterilizada
-                                            </span>
+                                                <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2 mr-2 mb-2">
+                                                    <i class="fas fa-cut"></i> Esterilizada
+                                                </span>
 
-                                            <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2">
-                                                <i class="fas fa-syringe"></i> Vacunada
-                                            </span>
+                                                <span class="badge badge-pill bg-aqua-soft border border-aqua text-aqua px-3 py-2 mb-2">
+                                                    <i class="fas fa-syringe"></i> Vacunada
+                                                </span>
+                                            </div>
 
                                         </div>
 
-                                        <button class="btn bg-soft-pink border border-pink rounded-circle"
+                                        <button class="btn bg-soft-pink border border-pink rounded-circle flex-shrink-0 ml-2"
                                                 style="width:50px;height:50px;">
                                             <i class="far fa-heart text-pink"></i>
                                         </button>
@@ -189,7 +186,7 @@
 
                                     <hr class="border-soft">
 
-                                    <h6 class="font-weight-bold text-orange-color mb-4">
+                                    <h6 class="font-weight-bold text-orange-color mb-3">
                                         <i class="far fa-file-alt text-soft-brown-color"></i>
                                         DESCRIPCIÓN
                                     </h6>
@@ -202,7 +199,6 @@
 
                             </div>
 
-                            <!-- SALUD -->
                             <div class="card bg-card border-soft rounded-lg mb-4">
 
                                 <div class="card-body">
@@ -223,7 +219,6 @@
 
                             </div>
 
-                            <!-- COMPATIBILIDAD -->
                             <div class="card bg-card border-soft rounded-lg mb-4">
 
                                 <div class="card-body">
@@ -234,15 +229,15 @@
 
                                     <div class="row">
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-6 col-md-3 mb-3">
 
-                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-3 py-md-4 h-100">
 
                                                 <div class="mb-2">
-                                                    <i class="fas fa-dog fa-3x"></i> 
+                                                    <i class="fas fa-dog fa-2x fa-md-3x"></i>
                                                 </div>
 
-                                                <div class="text-danger font-weight-bold">
+                                                <div class="text-danger font-weight-bold" style="font-size: 0.9rem;">
                                                     <i class="fas fa-times"></i> Perros
                                                 </div>
 
@@ -250,15 +245,15 @@
 
                                         </div>
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-6 col-md-3 mb-3">
 
-                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-3 py-md-4 h-100">
 
                                                 <div class="mb-2">
-                                                    <i class="fas fa-cat fa-3x"></i> 
+                                                    <i class="fas fa-cat fa-2x fa-md-3x"></i>
                                                 </div>
 
-                                                <div class="text-danger font-weight-bold">
+                                                <div class="text-danger font-weight-bold" style="font-size: 0.9rem;">
                                                     <i class="fas fa-times"></i>  Gatos
                                                 </div>
 
@@ -266,15 +261,15 @@
 
                                         </div>
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-6 col-md-3 mb-3">
 
-                                            <div class="bg-aqua-soft border border-aqua rounded text-center py-4">
+                                            <div class="bg-aqua-soft border border-aqua rounded text-center py-3 py-md-4 h-100">
 
                                                 <div class="mb-2">
-                                                    <i class="fas fa-male fa-3x"></i>
+                                                    <i class="fas fa-male fa-2x fa-md-3x"></i>
                                                 </div>
 
-                                                <div class="text-aqua font-weight-bold">
+                                                <div class="text-aqua font-weight-bold" style="font-size: 0.9rem;">
                                                     <i class="fas fa-check-square"></i> Adultos
                                                 </div>
 
@@ -282,15 +277,15 @@
 
                                         </div>
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-6 col-md-3 mb-3">
 
-                                            <div class="bg-soft-pink border border-pink rounded text-center py-4">
+                                            <div class="bg-soft-pink border border-pink rounded text-center py-3 py-md-4 h-100">
 
                                                 <div class="mb-2">
-                                                    <i class="fas fa-child fa-3x"></i>
+                                                    <i class="fas fa-child fa-2x fa-md-3x"></i>
                                                 </div>
 
-                                                <div class="text-danger font-weight-bold">
+                                                <div class="text-danger font-weight-bold" style="font-size: 0.9rem;">
                                                     <i class="fas fa-times"></i> Niños
                                                 </div>
 
@@ -307,18 +302,18 @@
                             <div class="card bg-card border-soft rounded-lg">
                                 <div class="card-body">
 
-                                    <div class="row align-items-center">
+                                    <div class="row align-items-center text-center text-md-left">
 
-                                        <div class="col-md-10 mb-3 mb-md-0">
+                                        <div class="col-12 col-md-10 mb-3 mb-md-0">
 
-                                            <button class="btn bg-orange text-white btn-block rounded-pill py-3 font-weight-bold">
+                                            <button class="btn bg-orange text-white btn-block rounded-pill py-3 font-weight-bold text-wrap" onclick="window.location.href='solicitud.html'">
                                                 <i class="fas fa-paw"></i>
-                                                ¡Quiero adoptar a Luna!
+                                                ¡Quiero adoptar a Blacky!
                                             </button>
                                         </div>
 
-                                        <div class="col-md-2 text-md-left">
-                                            <button class="btn bg-card border border-soft rounded-circle">
+                                        <div class="col-12 col-md-2 text-center text-md-right">
+                                            <button class="btn bg-card border border-soft rounded-circle" style="width: 50px; height: 50px;">
                                                 <i class="fas fa-external-link-alt text-aqua"></i>
                                             </button>
 
@@ -343,6 +338,5 @@
     <i class="fas fa-paw"></i>
 </div>
 
-    <script src="app.js"></script>
-</body>
+    <script src="app.js"></script>`r`n</body>
 </html>

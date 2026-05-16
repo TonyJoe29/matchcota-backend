@@ -20,7 +20,7 @@
 }
 
 .bg-hard-pink{
-    background-color:#ff5ea1 !important ;
+    background-color:#FF5EA1 !important ;
 }
 
 .bg-orange{
@@ -97,11 +97,16 @@
     height:90px;
 }
 
-.paw-mark{
+.paw-mark i{
     position:fixed;
     right:50px;
     bottom:40px;
     font-size:90px;
     color:#f4d8bb !important;
     opacity:.4;
+}
+
+.paw-mark a {
+    text-decoration: none;
+    color: inherit;
 }

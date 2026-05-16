@@ -105,7 +105,7 @@ database/
 frontend/
   paginas HTML conectadas a la API
   login.html para iniciar sesion real con JWT
-  vistas de usuario: perfil, directorio, publicar mascota, mis mascotas y solicitudes
+  vistas de usuario: perfil, editar perfil, directorio, publicar mascota, editar mascota, mis mascotas, solicitudes, notificaciones y chat
   vistas admin: panel, gestion de mascotas, estadisticas e incidencias
 postman/
   Matchcota Backend.postman_collection.json

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Soporte y Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        .titulo-principal {
+            font-family: 'Pacifico', cursive;
+        }
+        .etiqueta-pequena {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        /* Estilos específicos para el chat */
+        .chat-container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .burbuja-entrante {
+            border-radius: 15px 15px 15px 0;
+            max-width: 80%;
+        }
+        .burbuja-saliente {
+            border-radius: 15px 15px 0 15px;
+            max-width: 80%;
+        }
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .dot-unread {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        /* Ajuste de scrollbar para que se vea limpio */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #f1dfc7; /* border-soft color */
+            border-radius: 10px;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .input-chat {
+            border-radius: 25px 0 0 25px;
+            padding-left: 1.5rem;
+        }
+        .btn-enviar {
+            border-radius: 0 25px 25px 0;
+            padding: 0 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-main text-hard-brown-color">
+    <div class="container-fluid min-vh-100"> 
+        <div class="row min-vh-100"> 
+
+            <nav class="col-12 col-md-3 col-lg-2 p-0 p-md-2">
+                <div class="card bg-card border-soft shadow-sm h-100">
+                    <div class="card-body p-2">
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-2 mb-2">
+                            PRINCIPAL
+                        </small>
+                        <a href="home.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-home mr-2 text-orange-color"></i>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="directory.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-2">
+                            <i class="fas fa-search mr-2 text-aqua"></i>
+                            <span>Directorio</span>
+                        </a>
+
+                        <small class="text-soft-brown-color font-weight-bold px-3 d-block mt-3 mb-2">
+                            MI CUENTA
+                        </small>
+
+                        <a href="profile.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-user mr-2"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+
+                        <a href="mis_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-paw mr-2 text-orange-color"></i>
+                            <span>Mis Mascotas</span>
+                        </a>
+
+                        <a href="match.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1 justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope mr-2 text-pink"></i>
+                                <span>Solicitudes</span>
+                            </div>
+                            <span class="badge badge-pill bg-soft-pink text-hard-pink px-2 py-1">
+                                1
+                            </span>
+                        </a>
+
+                        <a href="Gestionar_mascotas.html" class="d-flex align-items-center px-3 py-2 rounded text-soft-brown-color text-decoration-none mb-1">
+                            <i class="fas fa-edit mr-2"></i>
+                            <span>Gestor</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-12 col-md-9 col-lg-10 p-3">
+                <i class="fas fa-paw paw-mark" style="top: 10%; right: 10%;"></i>
+                <i class="fas fa-paw paw-mark" style="bottom: 5%; right: 20%; transform: rotate(30deg); font-size: 150px;"></i>
+
+                <div class="container-fluid py-4 px-md-5 position-relative" style="z-index: 1;">
+                    
+                    <div class="mb-4">
+                        <h2 class="m-0 titulo-principal d-flex align-items-center text-hard-brown-color">
+                            <i class="far fa-comment-dots mr-2"></i> Centro de Soporte y Chat
+                        </h2>
+                        <p class="text-soft-brown-color mb-0" style="font-size: 0.9rem;">Atención en tiempo real a los usuarios</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 mb-4">
+                            <div class="card bg-card border-soft shadow-sm" style="border-radius: 15px; overflow: hidden;">
+                                <div class="card-header bg-transparent border-0 pt-3 pb-2">
+                                    <h6 class="text-orange-color font-weight-bold mb-0 etiqueta-pequena text-uppercase">Conversaciones</h6>
+                                </div>
+                                
+                                <div class="list-group list-group-flush border-top border-soft">
+                                    
+                                    <div class="list-group-item bg-soft border-bottom border-soft d-flex align-items-center p-3 cursor-pointer">
+                                        <div class="avatar-circle bg-card border-hard text-orange-color mr-3 border shadow-sm">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adilene" alt="Avatar" class="img-fluid rounded-circle p-1">
+                                        </div>
+                                        <div class="flex-grow-1" style="min-width: 0;">
+                                            <h6 class="mb-0 text-hard-brown-color font-weight-bold" style="font-size: 0.9rem;">Adilene N.</h6>
+                                            <small class="text-soft-brown-color text-truncate d-block">¡Ya me llegó! Muchas gracias 😄</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="list-group-item bg-card border-bottom border-soft d-flex align-items-center p-3 cursor-pointer">
+                                        <div class="avatar-circle bg-orange text-white mr-3 border border-soft shadow-sm">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div class="flex-grow-1" style="min-width: 0;">
+                                            <h6 class="mb-0 text-hard-brown-color font-weight-bold" style="font-size: 0.9rem;">Carlos M.</h6>
+                                            <small class="text-soft-brown-color text-truncate d-block">El formulario no me deja subir...</small>
+                                        </div>
+                                        <div class="dot-unread bg-hard-pink ml-2 shadow-sm"></div>
+                                    </div>
+
+                                    <div class="list-group-item bg-card border-bottom border-soft d-flex align-items-center p-3 cursor-pointer">
+                                        <div class="avatar-circle bg-orange text-white mr-3 border border-soft shadow-sm">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                        <div class="flex-grow-1" style="min-width: 0;">
+                                            <h6 class="mb-0 text-hard-brown-color font-weight-bold" style="font-size: 0.9rem;">María T.</h6>
+                                            <small class="text-soft-brown-color text-truncate d-block">¿Cuánto tarda el proceso de ad...</small>
+                                        </div>
+                                        <div class="dot-unread bg-hard-pink ml-2 shadow-sm"></div>
+                                    </div>
+
+                                    <div class="list-group-item bg-card border-bottom border-soft d-flex align-items-center p-3 cursor-pointer">
+                                        <div class="avatar-circle bg-orange text-white mr-3 border border-soft shadow-sm">
+                                            <i class="fas fa-user-alt"></i>
+                                        </div>
+                                        <div class="flex-grow-1" style="min-width: 0;">
+                                            <h6 class="mb-0 text-hard-brown-color font-weight-bold" style="font-size: 0.9rem;">Jorge P.</h6>
+                                            <small class="text-soft-brown-color text-truncate d-block">¿Puedo cambiar el correo de mi cu...</small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9 col-md-8">
+                            <div class="card bg-card border-soft shadow-sm chat-container" style="border-radius: 15px;">
+                                
+                                <div class="card-header bg-transparent border-bottom border-soft p-3 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-card border-hard text-orange-color mr-3 border shadow-sm">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adilene" alt="Avatar" class="img-fluid rounded-circle p-1">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0 text-hard-brown-color font-weight-bold">Adilene Nava</h6>
+                                            <small class="text-success font-weight-bold d-flex align-items-center" style="font-size: 0.75rem;">
+                                                <i class="fas fa-circle mr-1" style="font-size: 0.4rem;"></i> En línea
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-pill bg-card border-hard text-hard-orange-color px-3 py-2 font-weight-normal shadow-sm" style="border: 1px solid;">
+                                        Recuperación contraseña
+                                    </span>
+                                </div>
+
+                                <div class="card-body bg-soft chat-messages p-4">
+                                    
+                                    <div class="d-flex flex-column align-items-start mb-4">
+                                        <small class="text-soft-brown-color mb-1 ml-1 etiqueta-pequena text-uppercase">Adilene</small>
+                                        <div class="burbuja-entrante bg-card border border-soft text-soft-brown-color p-3 shadow-sm">
+                                            Hola, olvidé mi contraseña y no me llega el correo de recuperación 😔
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-end mb-4">
+                                        <small class="text-soft-brown-color mb-1 mr-1 etiqueta-pequena text-uppercase">Soporte</small>
+                                        <div class="burbuja-saliente bg-orange text-white border border-hard p-3 shadow-sm">
+                                            ¡Hola Adilene! 🐾 Con gusto te ayudamos. ¿Puedes confirmar tu correo registrado?
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-start mb-4">
+                                        <small class="text-soft-brown-color mb-1 ml-1 etiqueta-pequena text-uppercase">Adilene</small>
+                                        <div class="burbuja-entrante bg-card border border-soft text-soft-brown-color p-3 shadow-sm">
+                                            Claro, es adis06@gmail.com
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-end mb-4">
+                                        <small class="text-soft-brown-color mb-1 mr-1 etiqueta-pequena text-uppercase">Soporte</small>
+                                        <div class="burbuja-saliente bg-orange text-white border border-hard p-3 shadow-sm">
+                                            Perfecto, te reenviamos el correo de recuperación. Revisa también tu carpeta de spam 📥
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-start mb-4">
+                                        <small class="text-soft-brown-color mb-1 ml-1 etiqueta-pequena text-uppercase">Adilene</small>
+                                        <div class="burbuja-entrante bg-card border border-soft text-soft-brown-color p-3 shadow-sm">
+                                            ¡Ya me llegó! Muchas gracias 🙌
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-footer bg-transparent border-top border-soft p-3">
+                                    <div class="input-group shadow-sm" style="border-radius: 25px;">
+                                        <input type="text" class="form-control bg-card border-soft text-soft-brown-color input-chat" placeholder="Escribe tu respuesta..." aria-label="Mensaje">
+                                        <div class="input-group-append">
+                                            <button class="btn bg-orange text-white border-hard btn-enviar font-weight-bold" type="button">
+                                                Enviar <i class="fas fa-paper-plane ml-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>`r`n</body>
+</html>
