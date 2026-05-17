@@ -82,7 +82,7 @@ El repo incluye `render.yaml` para que Render detecte la configuracion.
 Si Render pide los comandos manualmente, usa:
 
 ```txt
-Build Command: npm install
+Build Command: npm install && npm rebuild sqlite3 --build-from-source
 Start Command: npm run render:start
 ```
 
