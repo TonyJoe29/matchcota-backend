@@ -75,6 +75,31 @@ Prueba rapida:
 GET http://localhost:3000/
 ```
 
+## Despliegue En Render
+
+El repo incluye `render.yaml` para que Render detecte la configuracion.
+
+Si Render pide los comandos manualmente, usa:
+
+```txt
+Build Command: npm install
+Start Command: npm run render:start
+```
+
+La ruta principal abre el frontend:
+
+```txt
+https://TU-SERVICIO.onrender.com/
+```
+
+La ruta de salud de la API queda en:
+
+```txt
+https://TU-SERVICIO.onrender.com/health
+```
+
+Nota: SQLite funciona para la demo escolar, pero en Render sin disco persistente los datos pueden reiniciarse al redesplegar o reiniciar el servicio.
+
 ## Usuarios De Prueba
 
 ```txt

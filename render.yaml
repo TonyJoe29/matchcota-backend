@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: matchcota
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run render:start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_FILE
+        value: database/matchcota.sqlite
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h

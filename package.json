@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "render:start": "npm run db:init && npm start",
     "db:init": "node scripts/setup-db.js",
     "db:reset": "node scripts/setup-db.js --reset",
     "db:show": "node scripts/show-db.js",

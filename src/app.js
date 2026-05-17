@@ -22,6 +22,10 @@ app.use(morgan('dev'));
 app.use('/frontend', express.static(path.join(__dirname, '..', 'frontend')));
 
 app.get('/', (_req, res) => {
+  res.redirect('/frontend/login.html');
+});
+
+app.get('/health', (_req, res) => {
   res.json({
     app: 'Matchcota API',
     status: 'ok',
@@ -30,7 +34,7 @@ app.get('/', (_req, res) => {
 });
 
 app.get('/frontend', (_req, res) => {
-  res.redirect('/frontend/home.html');
+  res.redirect('/frontend/login.html');
 });
 
 app.use('/auth', authRoutes);
